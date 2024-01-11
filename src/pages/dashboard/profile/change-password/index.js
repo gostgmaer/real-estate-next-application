@@ -1,32 +1,16 @@
-import ChangePassword from "@/components/forms/auth/changePassword";
-import Userlayout from "@/layout/user";
 
-import { Person, ShoppingBag } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+
+import Layout from "@/components/global/layout";
+import ChangePassword from "@/components/pages/auth/changePassword";
 import { getSession } from "next-auth/react";
 
 const Orders = (props) => {
   return (
-    <Userlayout user={props.session}>
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        alignItems={"flex-start"}
-        width={'100%'}
-        gap={3}
-      >
-        <Typography
-          fontWeight={600}
-          width={"100%"}
-          fontSize={24}
-          sx={{ display: "flex", gap: 0.5, alignItems: "center" }}
-        >
-
-          Changed Password
-        </Typography>
+    <Layout>
+      <div>
         <ChangePassword />
-      </Box>
-    </Userlayout>
+      </div>
+    </Layout>
   );
 };
 
