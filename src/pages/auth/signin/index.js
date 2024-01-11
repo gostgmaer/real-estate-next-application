@@ -75,22 +75,22 @@ const index = (props) => {
 export default index;
 
 
-export async function getServerSideProps(context) {
-  // console.log(context);
-  const session = await getSession(context);
+// export async function getServerSideProps(context) {
+//   // console.log(context);
+//   const session = await getSession(context);
 
-  if (session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      }
-    }
-  } else {
-    return {
-      props: { title: "Ecommerce Login" }
-    }
-  }
-}
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: '/',
+//         permanent: false,
+//       }
+//     }
+//   } else {
+//     return {
+//       props: { title: "Ecommerce Login" }
+//     }
+//   }
+// }
 
 

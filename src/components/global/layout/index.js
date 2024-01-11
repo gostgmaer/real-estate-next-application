@@ -5,10 +5,10 @@ import Footer from "../blocks/footer";
 const Layout = ({ children }) => {
   return (
     <div
-      className={`flex min-h-screen flex-col items-center justify-between p-24 `}
+      className={`flex flex-wrap`}
     >
       <Header />
-      <main> {children} </main>
+      <main className="w-full py-10 bg-gray-100 min-h-screen"> {children} </main>
       <Footer />
     </div>
   );
