@@ -4,7 +4,7 @@ import { notifyerror } from "@/lib/notify/notice";
 import { forgetPasswordValidation } from "@/lib/validation";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 const ForgetForm = () => {
