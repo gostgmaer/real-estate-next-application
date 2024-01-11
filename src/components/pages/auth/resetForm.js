@@ -1,5 +1,4 @@
 import PasswordField from "@/components/global/fields/PasswordField";
-import { useAuthContext } from "@/context/AuthContext";
 import { post } from "@/lib/helper/network";
 import { resetPasswordValidation } from "@/lib/validation";
 import { useFormik } from "formik";
