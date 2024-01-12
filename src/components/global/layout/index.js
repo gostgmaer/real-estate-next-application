@@ -4,11 +4,12 @@ import Footer from "../blocks/footer";
 
 const Layout = ({ children }) => {
   return (
-    <div
-      className={`flex flex-wrap`}
-    >
+    <div className={`flex flex-wrap`}>
       <Header />
-      <main className="w-full py-10 bg-gray-100 min-h-screen"> {children} </main>
+      <main className="w-full py-10 bg-gray-100 min-h-screen">
+
+        {children}
+      </main>
       <Footer />
     </div>
   );

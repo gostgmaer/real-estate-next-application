@@ -16,6 +16,9 @@
   }
 }
 
+html{
+  transition: all 0.5s;
+}
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
