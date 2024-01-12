@@ -13,6 +13,7 @@ import {
   FaParking,
   FaShare,
 } from 'react-icons/fa';
+import { useParams } from 'next/navigation';
 
 // https://sabe.io/blog/javascript-format-numbers-commas#:~:text=The%20best%20way%20to%20format,format%20the%20number%20with%20commas.
 
@@ -23,14 +24,14 @@ export default function Listing() {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);
-//   const params = useParams();
+     const params = useParams();
 //   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchListing = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/listing/get/${params.listingId}`);
+        const res = await fetch(`/api/listing/get/${params.id}`);
         const data = await res.json();
         if (data.success === false) {
           setError(true);
@@ -134,15 +135,15 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
+            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
                 className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
               >
                 Contact landlord
               </button>
-            )}
-            {contact && <Contact listing={listing} />}
+            )} */}
+            {/* {contact && <Contact listing={listing} />} */}
           </div>
         </div>
       )}
