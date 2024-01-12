@@ -12,8 +12,8 @@ const index = ({data}) => {
 
       <Head>
         <title>{"Confirm Your Account"}</title>
-        <meta name="description" content="Your eCommerce Website Description" />
-        <meta name="keywords" content="ecommerce, online shopping" />
+        <meta name="description" content="Your Real State Website Description" />
+        <meta name="keywords" content="Real State, online shopping" />
         <meta name="author" content="Kishor Sarkar" />
       </Head>
 

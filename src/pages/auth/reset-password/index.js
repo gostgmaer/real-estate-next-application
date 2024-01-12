@@ -10,8 +10,8 @@ const index = (props) => {
     <Layout>
         <Head>
         <title>Reset Password</title>
-        <meta name="description" content="Your eCommerce Website Description" />
-        <meta name="keywords" content="ecommerce, online shopping, reset Password" />
+        <meta name="description" content="Your Real State Website Description" />
+        <meta name="keywords" content="Real State, online shopping, reset Password" />
         <meta name="author" content="Kishor Sarkar" />
       </Head>
       <div className="flex w-full flex-col justify-center px-5">
