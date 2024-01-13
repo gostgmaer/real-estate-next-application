@@ -7,8 +7,8 @@ import Link from "next/link";
 import ListingItem from "@/components/blocks/Card";
 import { imgArr, imgData } from "@/assets/img/data";
 import PropertyBlock from "@/components/global/blocks/propertyBlock";
-import { Disclosure } from '@headlessui/react'
-import { ChevronUpIcon } from '@heroicons/react/20/solid'
+import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon } from "@heroicons/react/20/solid";
 
 export default function Index({ data }) {
   const [offerListings, setOfferListings] = useState([]);
@@ -133,12 +133,37 @@ export default function Index({ data }) {
           ))} */}
 
           <Swiper
-     
             slidesPerView={3}
             spaceBetween={8}
             style={{ padding: "10px 0" }}
             rewind={true}
             pagination={true}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 5,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 8,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 8,
+              },
+              '@0.00': {
+                slidesPerView: 1,
+                spaceBetween: 5,
+              },
+              '@0.75': {
+                slidesPerView: 2,
+                spaceBetween: 8,
+              },
+              '@1.00': {
+                slidesPerView: 3,
+                spaceBetween: 8,
+              },
+            }}
             loop
             autoplay={{ delay: 3000 }}
             modules={[Pagination]}
@@ -159,17 +184,17 @@ export default function Index({ data }) {
           </button>
         </div>
       </div>
-
+      <div>
+        {/* <PropertyList /> */}
+      </div>
       <div className=" max-w-full feature-properties p-5 mb-10">
         <div className="flex flex-col items-center justify-center gap-5 py-5 max-w-7xl m-auto  flex-wrap  ">
           <p className=" text-3xl text-center font-medium">
             <span>Frequenly Asked Questions</span> <br />{" "}
           </p>
-          <p>
-            Most Frequenly Asked Questions by our Customers
-          </p>
+          <p>Most Frequenly Asked Questions by our Customers</p>
         </div>
-      <HomeAccordians/>
+        <HomeAccordians />
       </div>
 
       <div></div>
@@ -236,25 +261,27 @@ const ExtraCall = (second) => {
   );
 };
 
-
-export const  HomeAccordians =()=> {
+export const HomeAccordians = () => {
   return (
     <div className="w-full px-4 pt-5">
       <div className="mx-auto w-full max-w-4xl rounded-2xl p-2 flex flex-col gap-2">
-        <Disclosure as={'div'} className="p-2 border rounded-lg  border-blue-500">
+        <Disclosure
+          as={"div"}
+          className="p-2 border rounded-lg  border-blue-500"
+        >
           {({ open }) => (
             <>
               <Disclosure.Button className="flex w-full justify-between rounded-lg  px-4 py-2 text-left text-sm font-medium text-purple-900  focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
                 <span>What is your refund policy?</span>
                 <ChevronUpIcon
                   className={`${
-                    open ? 'rotate-180 transform' : ''
+                    open ? "rotate-180 transform" : ""
                   } h-5 w-5 text-purple-500`}
                 />
               </Disclosure.Button>
               <Disclosure.Panel className="px-4 pb-2 pt-4 text-sm text-gray-500">
-                If you're unhappy with your purchase for any reason, email us
-                within 90 days and we'll refund you in full, no questions asked.
+                If you re unhappy with your purchase for any reason, email us
+                within 90 days and we ll refund you in full, no questions asked.
               </Disclosure.Panel>
             </>
           )}
@@ -266,7 +293,7 @@ export const  HomeAccordians =()=> {
                 <span>Do you offer technical support?</span>
                 <ChevronUpIcon
                   className={`${
-                    open ? 'rotate-180 transform' : ''
+                    open ? "rotate-180 transform" : ""
                   } h-5 w-5 text-purple-500`}
                 />
               </Disclosure.Button>
@@ -278,5 +305,40 @@ export const  HomeAccordians =()=> {
         </Disclosure>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export const PropertyList = () => {
+  return (
+    <div className="bg-gray-200 p-8">
+      {/* Top Section */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold">Product List</h2>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+          View All
+        </button>
+      </div>
+
+      {/* Product Elements */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Web: 3 elements */}
+        <div className="hidden md:block lg:block">
+          {/* Your slider component for web */}
+          {/* Example: <WebSlider /> */}
+        </div>
+
+        {/* Medium Screen: 2 elements */}
+        <div className="hidden lg:hidden md:block">
+          {/* Your slider component for medium screens */}
+          {/* Example: <MediumScreenSlider /> */}
+        </div>
+
+        {/* Mobile Device: 1 element */}
+        <div className="md:hidden">
+          {/* Your slider component for mobile */}
+          {/* Example: <MobileSlider /> */}
+        </div>
+      </div>
+    </div>
+  );
+};
