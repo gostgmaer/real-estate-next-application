@@ -55,18 +55,22 @@ export default index;
 
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  // const session = await getSession(context);
 
-  if (session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      }
-    }
-  } else {
-    return {
-      props: { title: "Real State Reset your password" }
-    }
+  // if (session) {
+  //   return {
+  //     redirect: {
+  //       destination: '/',
+  //       permanent: false,
+  //     }
+  //   }
+  // } else {
+  //   return {
+  //     props: { title: "Real State Reset your password" }
+  //   }
+  // }
+
+  return {
+    props: { title: "Forget Password" }
   }
 }

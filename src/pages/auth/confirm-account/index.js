@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const index = ({data}) => {
+const index = (props) => {
   return (
     <Layout>
 
@@ -37,7 +37,7 @@ const index = ({data}) => {
           </h2> */}
           </div>
 
-          <ConfirmForm userData={data} />
+          <ConfirmForm userData={props.data} />
           <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
             Please
             <Link
@@ -54,3 +54,26 @@ const index = ({data}) => {
 }
 
 export default index
+
+
+
+export async function getServerSideProps(context) {
+  // const session = await getSession(context);
+
+  // if (session) {
+  //   return {
+  //     redirect: {
+  //       destination: '/',
+  //       permanent: false,
+  //     }
+  //   }
+  // } else {
+  //   return {
+  //     props: { title: "Real State Reset your password" }
+  //   }
+  // }
+
+  return {
+    props: { title: "Forget Password" }
+  }
+}
