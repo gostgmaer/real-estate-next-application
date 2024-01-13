@@ -711,3 +711,59 @@ export const imgArr =[
         "video": "https://player.vimeo.com/external/474047302.hd.mp4?s=58dff8a8f959351b2d049bce2f381fcb05cb67b8&profile_id=172&oauth2_token_id=57447761"
     }
   ]
+
+  export const faqs= {
+    "faqs": [
+      {
+        "id": 1,
+        "question": "What services does your real estate website offer?",
+        "answer": "Our real estate website provides a platform for buying, selling, and renting properties. Users can browse listings, view property details, and connect with real estate agents."
+      },
+      {
+        "id": 2,
+        "question": "How can I list my property on your website?",
+        "answer": "To list your property, you can create an account on our website and follow the simple steps to submit your property details. Our platform allows you to upload photos, provide a description, and set your desired selling or rental price."
+      },
+      {
+        "id": 3,
+        "question": "Are there any fees for listing my property?",
+        "answer": "We offer both free and premium listing options. Free listings include basic features, while premium listings may come with additional visibility and promotion features. Check our pricing page for more details."
+      },
+      {
+        "id": 4,
+        "question": "How do I search for properties on your website?",
+        "answer": "You can easily search for properties on our website by using the search bar and applying filters such as location, property type, and price range. Our advanced search options help you find the perfect property that meets your criteria."
+      },
+      {
+        "id": 5,
+        "question": "Can I contact real estate agents through your platform?",
+        "answer": "Yes, our platform allows users to connect with real estate agents. Each property listing includes contact information for the respective agent or seller. You can use the provided contact details to inquire about the property or schedule a viewing."
+      },
+      {
+        "id": 6,
+        "question": "Is there a mobile app available for your real estate platform?",
+        "answer": "Yes, we have a mobile app available for both iOS and Android devices. You can download the app from the respective app stores and access all the features of our real estate platform on the go."
+      },
+      {
+        "id": 7,
+        "question": "How can I report a listing or user on your platform?",
+        "answer": "If you come across a suspicious or inappropriate listing or user, you can use our reporting feature. Simply navigate to the listing or user profile, click on the 'Report' button, and provide details about the issue. Our support team will review the report and take appropriate action."
+      },
+      {
+        "id": 8,
+        "question": "What security measures are in place to protect user data?",
+        "answer": "We take user data security seriously. Our platform employs industry-standard encryption protocols to secure user information. Additionally, we regularly update our security measures to stay ahead of potential threats and vulnerabilities."
+      },
+      {
+        "id": 9,
+        "question": "How can I reset my password if I forget it?",
+        "answer": "If you forget your password, you can click on the 'Forgot Password' link on the login page. Follow the instructions to reset your password, and a reset link will be sent to your registered email address."
+      },
+      {
+        "id": 10,
+        "question": "Do you offer virtual tours for properties listed on your website?",
+        "answer": "Yes, many property listings on our website include virtual tours. These tours allow you to explore the property online, providing a detailed view of the interior and exterior. Look for the 'Virtual Tour' option on the property details page."
+      }
+    ]
+  }
+  
