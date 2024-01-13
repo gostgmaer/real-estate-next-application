@@ -2,7 +2,7 @@
   "compilerOptions": {
     "checkJs": true,
     "jsx": "preserve",
-    "allowJs": true,
+  
   "reactNamespace": "React",
     "paths": {
       "@/*": ["./src/*"]

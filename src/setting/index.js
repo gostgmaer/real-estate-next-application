@@ -8,7 +8,7 @@ export const appId = process.env.NEXT_PUBLIC_APP_ID
 export const contactContiner = process.env.NEXT_PUBLIC_CONTAINER_CONTACT
 export const projectContainer = process.env.NEXT_PUBLIC_CONTAINER_PROJECT
 export const resumeContainer = process.env.NEXT_PUBLIC_CONTAINER_RESUME
-
+export const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY
 
 
 import { initializeApp,getApps } from "firebase/app";

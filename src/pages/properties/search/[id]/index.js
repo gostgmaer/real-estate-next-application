@@ -1,10 +1,14 @@
 import Layout from "@/components/global/layout";
+import { SingleContainer } from "@/components/pages/lising/single";
+
 import React from "react";
 
-const Index = () => {
+const Index = (props) => {
   return (
     <Layout>
-      <div>index</div>
+      <div>
+        <SingleContainer data={props.data}/>
+      </div>
     </Layout>
   );
 };
