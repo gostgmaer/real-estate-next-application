@@ -223,8 +223,8 @@ const Elements = ({ data }) => {
       <div>
         <p>
           Check Browser Console for Errors: Open the browser console (usually by
-          right-clicking on the page, selecting "Inspect," and going to the
-          "Console" tab) to see if there are any error messages related to the
+          right-clicking on the page, selecting Inspect and going to the
+          Console tab) to see if there are any error messages related to the
           Google Maps API or your component. Fixing any errors mentioned in the
           console may resolve the issue. Ensure Google Maps API Key is Correct:
           Make sure that the Google Maps API key you are using in the LoadScript
