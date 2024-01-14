@@ -22,6 +22,7 @@ const ProductFilter = () => {
     parkingSpaces: '',
     floorNumber: '',
     furnished: false,
+    search:router.query.search
   });
 
   const handleFilterChange = (name, value) => {
@@ -34,6 +35,7 @@ const ProductFilter = () => {
 
   const handleSearch = () => {
     const currentQuery = router.query;
+    console.log(currentQuery);
     const newQuery = { ...currentQuery, ...filters };
 
     // Remove undefined or empty string values from the query
@@ -43,7 +45,7 @@ const ProductFilter = () => {
       }
     });
 
-    const queryString = qs.stringify(newQuery, { encodeValuesOnly: true, arrayFormat: 'repeat' });
+    const queryString = qs.stringify(newQuery, { encodeValuesOnly: true, });
     console.log('Constructed Query String:', queryString);
     router.push({
       pathname: router.pathname,
