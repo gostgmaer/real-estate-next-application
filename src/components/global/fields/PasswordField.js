@@ -14,7 +14,7 @@ const PasswordField = ({ value, handleChange, placeholder, name ,...rest}) => {
         type={showPassword ? "text" : "password"}
         id={name}
         name={name}
-        className="w-full px-4 py-2 placeholder:text-sm  border-none rounded-md focus:outline-none focus:border-blue-500 pr-0"
+        className="w-full px-4 py-2 placeholder:text-sm dark:bg-gray-50 bg-white dark:text-gray-700   border-none rounded-md focus:outline-none focus:border-blue-500 pr-0"
         placeholder={placeholder ? placeholder : "Enter password"}
         value={value}
         onChange={handleChange}

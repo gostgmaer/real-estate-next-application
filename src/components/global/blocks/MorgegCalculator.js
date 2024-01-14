@@ -36,7 +36,7 @@ const MortgageCalculator = () => {
   return (
     <div className="container mt-4 ">
       <h1 className="text-xl font-bold mb-4">Mortgage Calculator</h1>
-      <div className=" flex gap-5 bg-gray-50 rounded-md shadow-md mx-auto  p-4 ">
+      <div className=" flex gap-5  rounded-md shadow-md mx-auto  p-4 ">
         {" "}
         <div className=" max-w-md flex-1">
           {" "}

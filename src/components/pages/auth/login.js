@@ -60,7 +60,7 @@ const LoginForm = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full px-4 py-2 bg-white placeholder:text-sm border rounded-md focus:outline-none focus:border-blue-500 pr-0"
+                className="w-full px-4 py-2  placeholder:text-sm border rounded-md focus:outline-none focus:border-blue-500 pr-0"
                 name="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -96,7 +96,7 @@ const LoginForm = () => {
               </label>
             </div>
             <Link
-              className="h-auto p-0 text-sm font-semibold text-gray-700 underline transition-colors hover:text-primary hover:no-underline"
+              className="h-auto p-0 text-sm font-semibold text-gray-500 underline transition-colors hover:text-primary hover:no-underline"
               href="/auth/forget-password"
             >
               Forgot Password?

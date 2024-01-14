@@ -50,8 +50,8 @@ const index = (props) => {
               <span className="truncate">Signin with Facebook</span>
             </button>
           </div>
-          <div className="before:content-[' '] relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-gray-100 mb-5 2xl:mb-7 justify-center">
-            <span className="relative z-10 inline-block bg-white text-sm font-medium text-gray-500 dark:bg-gray-50 2xl:text-base p-2.5">
+          <div className="before:content-[' ']  relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-gray-100 mb-5 2xl:mb-7 justify-center">
+            <span className="relative z-10 rounded-xl inline-block bg-white text-sm font-medium text-gray-500 dark:bg-gray-50 2xl:text-base p-2.5">
               Or, Sign in with your email
             </span>
           </div>
@@ -60,7 +60,7 @@ const index = (props) => {
           <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
             Don’t have an account?
             <Link
-              className="font-semibold text-gray-700 transition-colors hover:text-primary ml-1"
+              className="font-semibold text-gray-700 dark:text-gray-50 transition-colors hover:text-primary ml-1"
               href="/auth/signup"
             >
               Sign Up

@@ -3,13 +3,14 @@ import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import { MdMenu, MdSearch, MdClose } from "react-icons/md";
 import Link from "next/link";
 import { SearchBox } from "./elements";
+import ThemeToggle from "../DarkLight";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 
   return (
-    <header className="bg-white w-full">
+    <header className="bg-white dark:bg-gray-700 w-full">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 gap-2"
         aria-label="Global"
@@ -28,10 +29,11 @@ export default function Header() {
           <SearchBox />
         </div>
 
+      <div className=" lg:hidden">    <ThemeToggle/></div>
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md text-gray-700"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md "
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
@@ -60,16 +62,16 @@ export default function Header() {
         </Popover.Group> */}
 
         <Popover.Group className="hidden lg:flex lg:gap-x-2 lg:flex-1 lg:justify-end">
-        
+        <ThemeToggle/>
           <Link
             href="/auth/signin"
-            className="text-sm font-semibold leading-6 text-gray-900 px-5 py-1"
+            className="text-sm font-semibold leading-6  px-5 py-1"
           >
             Log in <span aria-hidden="true">&rarr;</span>
           </Link>
           <Link
             href="/auth/signup"
-            className="text-sm font-semibold leading-6 text-gray-50 bg-gray-700 rounded-md px-5 py-1 hover:text-gray-700 hover:bg-gray-50 border"
+            className="text-sm  border-gray-700 dark:border-gray-50 font-semibold leading-6 dark:bg-gray-700 bg-gray-50 rounded-md px-5 py-1 dark:hover:text-gray-50 dark:hover:bg-gray-700 hover:bg-gray-50 border"
           >
             Sign up 
           </Link>

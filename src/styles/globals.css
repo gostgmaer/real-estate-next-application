@@ -2,24 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+} */
+
+[data-theme='dark'] {
+  --background-color: @apply bg-gray-700;
+  --text-color: @apply bg-gray-50;
+}
+[data-theme='light'] {
+  --background-color: @apply bg-gray-50;
+  --text-color: @apply bg-gray-700;
+}
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 html{
   transition: all 0.5s;
 }
-body {
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -27,4 +40,4 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+} */

@@ -7,14 +7,6 @@ import { currSliderMedia, imgData } from "@/assets/img/data";
 
 export default function Home() {
 
-// var currArr =[];
-
-//   imgData.forEach(img=>{
-//     currArr.push({img:img.attributes.image.large,_id:img.id})
-   
-//   })
-
-// console.log(currArr);
   
   return (
     <Layout>
