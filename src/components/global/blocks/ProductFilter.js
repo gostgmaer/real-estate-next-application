@@ -63,6 +63,12 @@ const ProductFilter = () => {
   
   };
 
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
+
   return (
     <div className={`bg-gray-800 text-white p-4 rounded-md shadow-md ${isOpen ? 'block' : 'hidden'}`}>
       <button onClick={handleToggleFilters} className="w-full text-left mb-4 focus:outline-none">
@@ -121,11 +127,7 @@ const ProductFilter = () => {
           <Select
             value={filters.propertyType}
             onChange={(selectedOption) => handleFilterChange('propertyType', selectedOption)}
-            options={[
-              { value: 'house', label: 'House' },
-              { value: 'apartment', label: 'Apartment' },
-              // Add more property types as needed
-            ]}
+            options={options}
             className="w-full"
           />
         </div>
