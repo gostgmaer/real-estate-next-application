@@ -1,225 +1,222 @@
 // components/ProductFilter.js
-import { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import Select from 'react-select';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useRouter } from 'next/router';
-import qs from 'qs';
-const ProductFilter = () => {
-    const router = useRouter();
-  const [isOpen, setIsOpen] = useState(true); // Initially open
-  const [filters, setFilters] = useState({
-    priceMin: '',
-    priceMax: '',
-    location: '',
-    name: '',
-    propertyType: '',
-    bedrooms: '',
-    bathrooms: '',
-    squareFootage: '',
-    yearBuilt: '',
-    amenities: [],
-    parkingSpaces: '',
-    floorNumber: '',
-    furnished: false,
-    search:router.query.search
-  });
+import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+// import Select from "react-select";
+import "react-datepicker/dist/react-datepicker.css";
+import qs from "qs";
+import { Disclosure } from "@headlessui/react";
+import ChevronUpIcon from "@heroicons/react/24/outline/ChevronUpIcon";
+import ChevronDownIcon from "@heroicons/react/24/outline/ChevronDownIcon";
+import { generateUrlFromNestedObject } from "@/lib/helper/functions";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import SelectField from "../fields/SelectField";
+import TextField from "../fields/TextField";
+import { useGlobalContext } from "@/context/globalContext";
+const ProductFilter = ({ data }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const params = useParams();
 
-  const handleFilterChange = (name, value) => {
-    setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
-  };
+  console.log(data);
+  const [isOpen, setIsOpen] = useState(true); // Initially open
+  const {
+    filters,
+    setFilters,
+    handleSearch,
+    handleFilterChange,
+    pages,
+    setPages,
+    limit,
+    setLimit,
+    selectedSort,
+    setSelectedSort,
+  } = useGlobalContext();
+
+  useEffect(() => {
+    if (Object.keys(data.query).length > 0) {
+      if (data?.query?.filter) {
+        setFilters(data?.query?.filter);
+      }
+    }
+  }, []);
+  useEffect(() => {
+    handleSearch();
+  }, [pages, limit, selectedSort]);
 
   const handleToggleFilters = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSearch = () => {
-    const currentQuery = router.query;
-    console.log(currentQuery);
-    const newQuery = { ...currentQuery, ...filters };
-
-    // Remove undefined or empty string values from the query
-    Object.keys(newQuery).forEach((key) => {
-      if (!newQuery[key] || newQuery[key] === '') {
-        delete newQuery[key];
-      }
-    });
-
-    const queryString = qs.stringify(newQuery, { encodeValuesOnly: true, });
-    console.log('Constructed Query String:', queryString);
-    router.push({
-      pathname: router.pathname,
-      query: queryString ? { filter: queryString } : {},
-    });
-
-
-    const searchQuery = router.query.filter;
-
-    // Parse the search query string into a JavaScript object
-    const parsedQuery = qs.parse(searchQuery, { ignoreQueryPrefix: true });
-  
-    // Now, `parsedQuery` is a JavaScript object containing your filter values
-    console.log('Parsed Query:', parsedQuery);
-  
+  const inSearch = async () => {
+    await handleSearch();
+    if (window.innerWidth < 768) {
+      setIsOpen(false);
+    }
   };
 
   const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ]
+    { value: "1", label: "apartment" },
+    { value: "2", label: "House" },
+    { value: "3", label: "Villa" },
+
+    { value: "4", label: "Land" },
+  ];
 
   return (
-    <div className={`bg-gray-800 text-white p-4 rounded-md shadow-md ${isOpen ? 'block' : 'hidden'}`}>
-      <button onClick={handleToggleFilters} className="w-full text-left mb-4 focus:outline-none">
-        {isOpen ? 'Close Filters' : 'Open Filters'}
+    <div className={` text-gray-700 p-4 bg-white rounded-xl`}>
+      <button
+        onClick={handleToggleFilters}
+        className="w-full text-left focus:outline-none"
+      >
+        {isOpen ? "Close Filters" : "Open Filters"}
       </button>
 
-      <div className="space-y-4">
-        {/* ... Other filters ... */}
-        <div className="flex items-center">
-          <label className="mr-2">Price Range:</label>
-          <input
-            type="number"
-            name="priceMin"
-            placeholder="Min"
-            value={filters.priceMin}
-            onChange={(e) => handleFilterChange('priceMin', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
-          <span className="mx-2">to</span>
-          <input
-            type="number"
-            name="priceMax"
-            placeholder="Max"
-            value={filters.priceMax}
-            onChange={(e) => handleFilterChange('priceMax', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
-        </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Location:</label>
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            value={filters.location}
-            onChange={(e) => handleFilterChange('location', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
-        </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Product Name:</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Product Name"
-            value={filters.name}
-            onChange={(e) => handleFilterChange('name', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
-        </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Property Type:</label>
-          <Select
-            value={filters.propertyType}
-            onChange={(selectedOption) => handleFilterChange('propertyType', selectedOption)}
-            options={options}
-            className="w-full"
-          />
-        </div>
+      <div className={`space-y-4 ${isOpen ? "block" : "hidden"} mt-4`}>
+        <SelectField
+          options={options}
+          id={"propertyType"}
+          label={"Property Type"}
+          additionalAttrs={{
+            onChange: (selectedOption) => {
+              handleFilterChange("propertyType", selectedOption.target.value);
+            },
+            value: filters.propertyType,
+          }}
+          placeholder={"Select"}
+          optionkeys={{ key: "value", value: "label" }}
+        />
+        <Disclosure as="div" className=" rounded-lg ">
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
+                <span>Price Range:</span>
+                <hr />
+                <ChevronDownIcon
+                  className={`${
+                    open ? "rotate-180 transform" : ""
+                  } h-5 w-5 text-gray-500`}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className=" pb-2 pt-2 text-md text-gray-500 dark:text-gray-50">
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="10"
+                  value={filters.priceRange[1]}
+                  onChange={(e) =>
+                    handleFilterChange("priceRange", [
+                      filters.priceRange[0],
+                      parseInt(e.target.value),
+                    ])
+                  }
+                  className="w-full"
+                />
+                <span className="ml-2">{filters.priceRange[1]}</span>
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+        <Disclosure as="div" className=" rounded-lg ">
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
+                <span>Location</span>
+                <hr />
+                <ChevronDownIcon
+                  className={`${
+                    open ? "rotate-180 transform" : ""
+                  } h-5 w-5 text-gray-500`}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className=" pb-2 pt-0 text-md text-gray-500 dark:text-gray-50">
+                <TextField
+                  label={undefined}
+                  type={"text"}
+                  placeholder={undefined}
+                  additionalAttrs={undefined}
+                  value={filters.location}
+                  onChange={(e) =>
+                    handleFilterChange("location", e.target.value)
+                  }
+                  classes={undefined}
+                  icon={undefined}
+                  id={"location"}
+                />
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
 
         {/* Additional Filters */}
-        <div className="flex items-center">
-          <label className="mr-2">Bedrooms:</label>
-          <input
-            type="number"
-            name="bedrooms"
-            placeholder="Number of Bedrooms"
+        <div className="flex gap-2">
+          <TextField
+            label={"Bedrooms"}
+            type={"number"}
+            placeholder={"Number of Bedrooms"}
+            additionalAttrs={undefined}
             value={filters.bedrooms}
-            onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
+            onChange={(e) => handleFilterChange("bedrooms", e.target.value)}
+            classes={undefined}
+            icon={undefined}
+            id={"bedrooms"}
           />
-        </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Bathrooms:</label>
-          <input
-            type="number"
-            name="bathrooms"
-            placeholder="Number of Bathrooms"
+          <TextField
+            label={"Bathrooms"}
+            type={"number"}
+            placeholder={"Number of Bathrooms"}
+            additionalAttrs={undefined}
             value={filters.bathrooms}
-            onChange={(e) => handleFilterChange('bathrooms', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
+            onChange={(e) => handleFilterChange("bathrooms", e.target.value)}
+            classes={undefined}
+            icon={undefined}
+            id={"bathrooms"}
           />
         </div>
 
+        <TextField
+          label={"Year Built"}
+          type={"number"}
+          placeholder={"Year Built"}
+          additionalAttrs={undefined}
+          value={filters.yearBuilt}
+          onChange={(e) => handleFilterChange("yearBuilt", e.target.value)}
+          classes={undefined}
+          icon={undefined}
+          id={"yearBuilt"}
+        />
+
+        <TextField
+          label={"Floor Number"}
+          type={"number"}
+          placeholder={"Floor Number"}
+          additionalAttrs={undefined}
+          value={filters.floorNumber}
+          onChange={(e) => handleFilterChange("floorNumber", e.target.value)}
+          classes={undefined}
+          icon={undefined}
+          id={"floorNumber"}
+        />
         <div className="flex items-center">
-          <label className="mr-2">Square Footage:</label>
-          <input
-            type="number"
-            name="squareFootage"
-            placeholder="Square Footage"
-            value={filters.squareFootage}
-            onChange={(e) => handleFilterChange('squareFootage', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
+          <label className="mr-2">
+            Parking Space:
+            <input
+              type="checkbox"
+              name="parkingSpaces"
+              checked={filters.parkingSpaces}
+              onChange={(e) =>
+                handleFilterChange("parkingSpaces", { value: e.target.checked })
+              }
+              className="ml-2"
+            />
+          </label>
         </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Year Built:</label>
-          <input
-            type="number"
-            name="yearBuilt"
-            placeholder="Year Built"
-            value={filters.yearBuilt}
-            onChange={(e) => handleFilterChange('yearBuilt', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
-        </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Number of Amenities (Select Range):</label>
-          <input
-            type="range"
-            name="numAmenities"
-            min="0"
-            max="5"
-            step="1"
-            value={filters.amenities.length}
-            onChange={(e) => handleFilterChange('amenities', { value: e.target.value })}
-            className="w-1/2"
-          />
-          <span className="ml-2">{filters.amenities.length}</span>
-        </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Parking Spaces:</label>
-          <input
-            type="number"
-            name="parkingSpaces"
-            placeholder="Parking Spaces"
-            value={filters.parkingSpaces}
-            onChange={(e) => handleFilterChange('parkingSpaces', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
-        </div>
-
-        <div className="flex items-center">
-          <label className="mr-2">Floor Number:</label>
-          <input
-            type="number"
-            name="floorNumber"
-            placeholder="Floor Number"
-            value={filters.floorNumber}
-            onChange={(e) => handleFilterChange('floorNumber', e.target.value)}
-            className="p-2 border bg-gray-700 text-white"
-          />
-        </div>
-
         <div className="flex items-center">
           <label className="mr-2">
             Furnished:
@@ -227,14 +224,19 @@ const ProductFilter = () => {
               type="checkbox"
               name="furnished"
               checked={filters.furnished}
-              onChange={(e) => handleFilterChange('furnished', { value: e.target.checked })}
+              onChange={(e) =>
+                handleFilterChange("furnished", { value: e.target.checked })
+              }
               className="ml-2"
             />
           </label>
         </div>
         {/* End of Additional Filters */}
 
-        <button onClick={handleSearch} className="bg-blue-500 text-white p-2 w-full">
+        <button
+          onClick={inSearch}
+          className="bg-blue-500 text-white p-2 w-full"
+        >
           Search
         </button>
       </div>

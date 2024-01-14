@@ -13,7 +13,7 @@ import {
 const PropertyBlock = ({ data }) => {
   return (
     <Link href={`/properties/search/${data._id}`} className=" w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer flex flex-col gap-2 dark:shadow-gray-500">
-      <div className=" relative">
+      <div className=" relative bg-gray-700 rounded-2xl flex items-center justify-center">
         <div className=" flex justify-between px-5 absolute w-full top-4">
           <p className="bg-[#00000080] text-gray-50  rounded-md py-1 px-2">
             {" "}
@@ -26,13 +26,16 @@ const PropertyBlock = ({ data }) => {
         <img
           src={data.img}
           alt=""
-          className=" rounded-2xl h-full w-full"
+          className=" rounded-2xl h-80 w-full hover:opacity-70 "
         />
+        <div className=" absolute top-0 bottom-0 flex items-center "><MdZoomIn onClick={()=>{{
+          console.log("data");
+        }}} className=" h-10 w-10 text-gray-200 z-50"/></div>
         <div className="flex items-center justify-end absolute bottom-[-30px] right-0 bg-white rounded-full ">
           <img
             src={data.img}
             alt="User Image"
-            className="w-16 h-16 rounded-full object-cover opacity-5"
+            className="w-16 h-16 rounded-full object-cover opacity-5 "
           />
         </div>
       </div>

@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import Layout from "@/components/global/layout";
 import Head from "next/head";
 import Index from "@/components/pages/home";
