@@ -16,6 +16,7 @@ import {
 } from "next/navigation";
 import SelectField from "../fields/SelectField";
 import TextField from "../fields/TextField";
+import { useGlobalContext } from "@/context/globalContext";
 const ProductFilter = ({ data }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -24,44 +25,36 @@ const ProductFilter = ({ data }) => {
 
   console.log(data);
   const [isOpen, setIsOpen] = useState(true); // Initially open
-  const [filters, setFilters] = useState({
-    priceMin: "",
-    priceMax: "",
-    location: "",
-    name: "",
-    propertyType: "",
-    priceRange: "",
-    bedrooms: "",
-    bathrooms: "",
-    squareFootage: "",
-    yearBuilt: "",
-    amenities: [],
-    parkingSpaces: false,
-    floorNumber: "",
-    furnished: false,
-    search: searchParams.getAll("search"),
-  });
+  const {
+    filters,
+    setFilters,
+    handleSearch,
+    handleFilterChange,
+    pages,
+    setPages,
+    limit,
+    setLimit,
+    selectedSort,
+    setSelectedSort,
+  } = useGlobalContext();
 
   useEffect(() => {
-    if (Object.keys(data.filter).length > 0) {
-      setFilters(data.filter);
+    if (Object.keys(data.query).length > 0) {
+      if (data?.query?.filter) {
+        setFilters(data?.query?.filter);
+      }
     }
   }, []);
-
-  const handleFilterChange = (name, value) => {
-    setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
-  };
+  useEffect(() => {
+    handleSearch
+  }, [pages,limit,selectedSort]);
 
   const handleToggleFilters = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSearch = () => {
-    const queryString = qs.stringify(filters, { encodeValuesOnly: true });
-    console.log(queryString);
-    const checkQuerydata = generateUrlFromNestedObject({ filter: filters });
-    router.replace(`${pathname}${checkQuerydata}`);
-
+  const inSearch = async () => {
+    await handleSearch();
     if (window.innerWidth < 768) {
       setIsOpen(false);
     }
@@ -87,11 +80,13 @@ const ProductFilter = ({ data }) => {
       <div className={`space-y-4 ${isOpen ? "block" : "hidden"} mt-4`}>
         <SelectField
           options={options}
-          id={"value"}
+          id={"propertyType"}
           label={"Property Type"}
           additionalAttrs={{
-            onchange: (selectedOption) =>
-              handleFilterChange("propertyType", selectedOption),
+            onChange: (selectedOption) => {
+              handleFilterChange("propertyType", selectedOption.target.value);
+            },
+            value: filters.propertyType,
           }}
           placeholder={"Select"}
           optionkeys={{ key: "value", value: "label" }}
@@ -197,6 +192,17 @@ const ProductFilter = ({ data }) => {
           id={"yearBuilt"}
         />
 
+        <TextField
+          label={"Floor Number"}
+          type={"number"}
+          placeholder={"Floor Number"}
+          additionalAttrs={undefined}
+          value={filters.floorNumber}
+          onChange={(e) => handleFilterChange("floorNumber", e.target.value)}
+          classes={undefined}
+          icon={undefined}
+          id={"floorNumber"}
+        />
         <div className="flex items-center">
           <label className="mr-2">
             Parking Space:
@@ -211,19 +217,6 @@ const ProductFilter = ({ data }) => {
             />
           </label>
         </div>
-
-        <TextField
-          label={"Floor Number"}
-          type={"number"}
-          placeholder={"Floor Number"}
-          additionalAttrs={undefined}
-          value={filters.floorNumber}
-          onChange={(e) => handleFilterChange("floorNumber", e.target.value)}
-          classes={undefined}
-          icon={undefined}
-          id={"floorNumber"}
-        />
-
         <div className="flex items-center">
           <label className="mr-2">
             Furnished:
@@ -241,7 +234,7 @@ const ProductFilter = ({ data }) => {
         {/* End of Additional Filters */}
 
         <button
-          onClick={handleSearch}
+          onClick={inSearch}
           className="bg-blue-500 text-white p-2 w-full"
         >
           Search
