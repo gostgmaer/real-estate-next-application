@@ -40,7 +40,7 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
+      <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 ">
         <div className="rizzui-input-root flex flex-col [&amp;>label>span]:font-medium">
           <label className="block">
             <span className="rizzui-input-label block text-sm mb-1.5">
@@ -49,7 +49,7 @@ const RegisterForm = () => {
             <span className="rizzui-input-container bg-white flex items-center peer w-full transition duration-200 px-4 py-2 h-12 rounded-md bg-transparent [&amp;.is-focus]:ring-[0.6px] border border-gray-300 [&amp;_input::placeholder]:text-gray-500 hover:border-blue [&amp;.is-focus]:border-blue [&amp;.is-focus]:ring-blue text-sm">
               <input
                 placeholder="Enter your first name"
-                className="rizzui-input-field w-full border-0 bg-transparent p-0 focus:outline-none focus:ring-0"
+                className="rizzui-input-field w-full border-0 bg-transparent p-0 focus:outline-none focus:ring-0 dark:text-gray-700"
                 type="text"
                 name="firstName"
                 required
@@ -73,7 +73,7 @@ const RegisterForm = () => {
               <input
                 spellCheck="false"
                 placeholder="Enter your last name"
-                className="rizzui-input-field w-full border-0 bg-transparent p-0 focus:outline-none focus:ring-0"
+                className="rizzui-input-field w-full border-0 bg-transparent p-0 focus:outline-none focus:ring-0 dark:text-gray-700"
                 type="text"
                 name="lastName"
                 value={formik.values.lastName}
@@ -93,7 +93,7 @@ const RegisterForm = () => {
             <span className="rizzui-input-container bg-white flex items-center peer w-full transition duration-200 px-4 py-2 h-12 rounded-md bg-transparent [&amp;.is-focus]:ring-[0.6px] border border-gray-300 [&amp;_input::placeholder]:text-gray-500 hover:border-blue [&amp;.is-focus]:border-blue [&amp;.is-focus]:ring-blue text-sm">
               <input
                 placeholder="Enter your email"
-                className="rizzui-input-field  w-full border-0 bg-transparent p-0 focus:outline-none focus:ring-0"
+                className="rizzui-input-field  w-full border-0 bg-transparent p-0 focus:outline-none focus:ring-0 dark:text-gray-700"
                 type="email"
                 name="email"
                 value={formik.values.email}
@@ -123,8 +123,8 @@ const RegisterForm = () => {
           )}
         </div>
         <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
-          <label className="block">
-            <span className="rizzui-password-label block text-sm mb-1.5">
+          <label className="block ">
+            <span className="rizzui-password-label block text-sm mb-1.5 ">
               Confirm Password
             </span>
             <PasswordField
@@ -140,10 +140,10 @@ const RegisterForm = () => {
             </div>
           )}
         </div>
-        <div className="col-span-2 flex items-start text-black">
+        <div className="col-span-2 flex items-start ">
           <div className="rizzui-checkbox-root flex flex-col [&amp;>label>span]:font-medium [&amp;>label]:items-start">
             <label className="rizzui-checkbox-container flex flex-row items-center">
-              <span className="relative leading-none">
+              <span className="relative leading-none ">
                 <input
                   className="rizzui-checkbox-input peer disabled:bg-gray-50 disabled:border-gray-200 h-5 w-5 rounded bg-transparent border border-gray-300 checked:!bg-gray-1000 focus:ring-gray-900/30 checked:!border-gray-1000 hover:enabled:border-gray-1000"
                   type="checkbox"

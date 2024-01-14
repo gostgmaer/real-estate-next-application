@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <div className={`flex flex-wrap`}>
       <Header />
-      <main className="w-full bg-gray-100 min-h-screen">
+      <main className="w-full bg-gray-100 min-h-screen dark:bg-gray-800">
 
         {children}
       </main>

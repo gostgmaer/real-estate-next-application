@@ -77,7 +77,7 @@ export default function Index({ data }) {
         <div className="flex flex-col items-center justify-center gap-5 py-10 max-w-7xl m-auto  flex-wrap  ">
           <p className=" text-3xl text-center font-medium">
             <span>Hi, What do You Want your</span> <br />{" "}
-            <span className=" text-slate-700">Dream House</span>
+            <span className=" text-slate-700 dark:text-slate-300">Dream House</span>
           </p>
           <p>Select Property Type to begins</p>
         </div>
@@ -85,7 +85,7 @@ export default function Index({ data }) {
           {imgData.map((item) => (
             <div
               key={item.id}
-              className=" xs:w-[45%] md:w-[22.5%] w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer"
+              className=" xs:w-[45%] md:w-[22.5%] w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer dark:shadow-slate-600"
               onClick={() => handleRadioChange(item.id)}
             >
               <img
@@ -215,15 +215,15 @@ export const HomeAccordians = () => {
          <Disclosure as="div" className=" p-2 border rounded-lg border-blue-500" key={faq.id}>
          {({ open }) => (
            <>
-             <Disclosure.Button className="flex w-full justify-between rounded-lg   px-4 py-2 text-left text-lg font-medium text-purple-900  focus:outline-none focus-visible:ring focus-visible:ring-purple-500/75">
+             <Disclosure.Button className="flex w-full justify-between rounded-lg   px-4 py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
                <span>{faq.question}</span>
                <ChevronUpIcon
                  className={`${
                    open ? "rotate-180 transform" : ""
-                 } h-8 w-8 text-purple-500`}
+                 } h-8 w-8 text-gray-500`}
                />
              </Disclosure.Button>
-             <Disclosure.Panel className="px-4 pb-2 pt-4 text-md text-gray-500">
+             <Disclosure.Panel className="px-4 pb-2 pt-4 text-md text-gray-500 dark:text-gray-50">
               {faq.answer}
              </Disclosure.Panel>
            </>

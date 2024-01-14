@@ -12,14 +12,14 @@ import {
 
 const PropertyBlock = ({ data }) => {
   return (
-    <Link href={`/properties/search/${data._id}`} className=" w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer flex flex-col gap-2">
+    <Link href={`/properties/search/${data._id}`} className=" w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer flex flex-col gap-2 dark:shadow-gray-500">
       <div className=" relative">
         <div className=" flex justify-between px-5 absolute w-full top-4">
-          <p className="bg-[#00000080] text-white rounded-md py-1 px-2">
+          <p className="bg-[#00000080] text-gray-50  rounded-md py-1 px-2">
             {" "}
             20 km Away
           </p>
-          <p className=" bg-green-600 text-white rounded-md py-1 px-2">
+          <p className=" bg-green-600 text-gray-50 rounded-md py-1 px-2">
             For Rent
           </p>
         </div>
@@ -38,14 +38,14 @@ const PropertyBlock = ({ data }) => {
       </div>
       <div className="mt-2">
         <p className="flex gap-2 items-center">
-          <MdLocationPin className=" text-orange-500" /> Location Name
+          <MdLocationPin className=" text-orange-500 w-5 h-5" /> Location Name
         </p>
         <p className=" text-sky-800 text-xl font-semibold">
           {" "}
           <span>$</span> 3000
         </p>
         <p className=" font-bold text-xl">Studio Appoitment</p>
-        <p className=" text-gray-700">
+        <p className=" text-gray-500 dark:text-gray-500">
           If you need to use a one-off breakpoint that doesn t make sense to
           include in your theme
         </p>
