@@ -46,8 +46,8 @@ const ProductFilter = ({ data }) => {
     }
   }, []);
   useEffect(() => {
-    handleSearch
-  }, [pages,limit,selectedSort]);
+    handleSearch();
+  }, [pages, limit, selectedSort]);
 
   const handleToggleFilters = () => {
     setIsOpen(!isOpen);
