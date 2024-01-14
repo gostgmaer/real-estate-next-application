@@ -12,8 +12,7 @@ import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import { PropertyList } from "@/components/global/blocks/ListBlock";
 
 export default function Index({ data }) {
-
-  SwiperCore.use([Navigation,Pagination]);
+  SwiperCore.use([Navigation, Pagination]);
 
   const [selectedItemId, setSelectedItemId] = useState(null);
 
@@ -77,7 +76,9 @@ export default function Index({ data }) {
         <div className="flex flex-col items-center justify-center gap-5 py-10 max-w-7xl m-auto  flex-wrap  ">
           <p className=" text-3xl text-center font-medium">
             <span>Hi, What do You Want your</span> <br />{" "}
-            <span className=" text-slate-700 dark:text-slate-300">Dream House</span>
+            <span className=" text-slate-700 dark:text-slate-300">
+              Dream House
+            </span>
           </p>
           <p>Select Property Type to begins</p>
         </div>
@@ -102,7 +103,7 @@ export default function Index({ data }) {
                   className=" flex items-center w-4 h-4"
                   value={item.id}
                   checked={selectedItemId === item.id}
-                  // onChange={(e) => setSelectedItemId(e.target.value)}
+                  onChange={(e) => setSelectedItemId(e.target.value)}
                 />
               </p>
             </div>
@@ -150,15 +151,15 @@ export default function Index({ data }) {
                 slidesPerView: 3,
                 spaceBetween: 8,
               },
-              '@0.00': {
+              "@0.00": {
                 slidesPerView: 1,
                 spaceBetween: 5,
               },
-              '@0.75': {
+              "@0.75": {
                 slidesPerView: 2,
                 spaceBetween: 8,
               },
-              '@1.00': {
+              "@1.00": {
                 slidesPerView: 3,
                 spaceBetween: 8,
               },
@@ -184,10 +185,10 @@ export default function Index({ data }) {
         </div>
       </div>
       <div className="max-w-full feature-properties p-5">
-        <PropertyList data={{title:"New Items"}} />
+        <PropertyList data={{ title: "New Items" }} />
       </div>
       <div className="max-w-full feature-properties p-5">
-        <PropertyList data={{title:"On Sale Listings"}} />
+        <PropertyList data={{ title: "On Sale Listings" }} />
       </div>
       <div className=" max-w-full feature-properties p-5 mb-10">
         <div className="flex flex-col items-center justify-center gap-5 py-5 max-w-7xl m-auto  flex-wrap  ">
@@ -204,34 +205,34 @@ export default function Index({ data }) {
   );
 }
 
-
-
 export const HomeAccordians = () => {
   return (
     <div className="w-full pt-5">
       <div className="mx-auto w-full max-w-4xl rounded-2xl p-2 flex flex-col gap-2">
-       
-     {faqs.faqs.map(faq=>(
-         <Disclosure as="div" className=" p-2 border rounded-lg border-blue-500" key={faq.id}>
-         {({ open }) => (
-           <>
-             <Disclosure.Button className="flex w-full justify-between rounded-lg   px-4 py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
-               <span>{faq.question}</span>
-               <ChevronUpIcon
-                 className={`${
-                   open ? "rotate-180 transform" : ""
-                 } h-8 w-8 text-gray-500`}
-               />
-             </Disclosure.Button>
-             <Disclosure.Panel className="px-4 pb-2 pt-4 text-md text-gray-500 dark:text-gray-50">
-              {faq.answer}
-             </Disclosure.Panel>
-           </>
-         )}
-       </Disclosure>
-     ))}
+        {faqs.faqs.map((faq) => (
+          <Disclosure
+            as="div"
+            className=" p-2 border rounded-lg border-blue-500"
+            key={faq.id}
+          >
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="flex w-full justify-between rounded-lg   px-4 py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
+                  <span>{faq.question}</span>
+                  <ChevronUpIcon
+                    className={`${
+                      open ? "rotate-180 transform" : ""
+                    } h-8 w-8 text-gray-500`}
+                  />
+                </Disclosure.Button>
+                <Disclosure.Panel className="px-4 pb-2 pt-4 text-md text-gray-500 dark:text-gray-50">
+                  {faq.answer}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        ))}
       </div>
     </div>
   );
 };
-

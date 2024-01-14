@@ -19,13 +19,13 @@ const PaginationBlock = ({ totalItems, limit, currentPage, onPageChange, onItems
   };
 
   return (
-    <div className="flex items-center my-2 px-5">
-      <div className="ml-4 flex-1">
+    <div className="flex items-center my-2">
+      <div className=" flex-1">
         <label className="mr-2">Items per Page:</label>
         <select
           value={limit}
           onChange={handleItemsPerPageChange}
-          className="border rounded-md px-2 py-1 bg-gray-700 "
+          className="border rounded-md px-2 py-1  "
         >
           {[5, 10, 15, 20].map((value) => (
             <option key={value} value={value}>
