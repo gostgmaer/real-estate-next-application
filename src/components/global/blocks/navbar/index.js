@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  console.log(pathname);
+ 
 
   return (
     <header className="bg-white dark:bg-gray-700 w-full">
@@ -27,7 +27,7 @@ export default function Header() {
             />
           </Link>
         </div>
-        {!pathname.includes("dashboard") && !pathname.includes("auth") && (
+        {!pathname?.includes("dashboard") && !pathname?.includes("auth") && (
           <div className=" lg:flex lg:gap-x-10 lg:flex-1 lg:justify-center">
             <SearchBox />
           </div>
