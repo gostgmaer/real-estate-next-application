@@ -4,10 +4,12 @@ import { MdMenu, MdSearch, MdClose } from "react-icons/md";
 import Link from "next/link";
 import { SearchBox } from "./elements";
 import ThemeToggle from "../DarkLight";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const pathname = usePathname();
+  console.log(pathname);
 
   return (
     <header className="bg-white dark:bg-gray-700 w-full">
@@ -25,13 +27,14 @@ export default function Header() {
             />
           </Link>
         </div>
-        <div className=" lg:flex lg:gap-x-10 lg:flex-1 lg:justify-center">
-          <SearchBox />
-        </div>
+        {!pathname.includes("dashboard") && !pathname.includes("auth") && (
+          <div className=" lg:flex lg:gap-x-10 lg:flex-1 lg:justify-center">
+            <SearchBox />
+          </div>
+        )}
 
-     
         <div className="flex lg:hidden gap-2">
-        <ThemeToggle/>
+          <ThemeToggle />
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md "
@@ -63,7 +66,7 @@ export default function Header() {
         </Popover.Group> */}
 
         <Popover.Group className="hidden lg:flex lg:gap-x-2 lg:flex-1 lg:justify-end">
-        <ThemeToggle/>
+          <ThemeToggle />
           <Link
             href="/auth/signin"
             className="text-sm font-semibold leading-6  px-5 py-1"
@@ -74,7 +77,7 @@ export default function Header() {
             href="/auth/signup"
             className="text-sm  border-gray-700 dark:border-gray-50 font-semibold leading-6 dark:bg-gray-700 bg-gray-50 rounded-md px-5 py-1 dark:hover:text-gray-50 dark:hover:bg-gray-700 hover:bg-gray-50 border"
           >
-            Sign up 
+            Sign up
           </Link>
         </Popover.Group>
       </nav>

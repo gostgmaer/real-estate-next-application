@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const MortgageCalculator = () => {
   const [principal, setPrincipal] = useState("");
-  const [initialFee, setInitialFee] = useState("");
+  const [initialFee, setInitialFee] = useState('');
   const [interestRate, setInterestRate] = useState("");
   const [loanTerm, setLoanTerm] = useState("");
   const [monthlyPayment, setMonthlyPayment] = useState(null);
@@ -23,8 +23,8 @@ const MortgageCalculator = () => {
 
       const totalAmountPaid = monthlyPayment * n;
       const extraPaid = totalAmountPaid - p;
-      const loanOverpay = extraPaid - initialFee;
-      const creditAmount = p - initialFee;
+      const loanOverpay = extraPaid - parseFloat(initialFee);
+      const creditAmount = p - parseFloat(initialFee);
 
       setTotalAmountPaid(totalAmountPaid.toFixed(2));
       setExtraPaid(extraPaid.toFixed(2));

@@ -9,7 +9,7 @@ import { faqs, imgArr, imgData } from "@/assets/img/data";
 import PropertyBlock from "@/components/global/blocks/propertyBlock";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
-import { PropertyList } from "@/components/global/blocks/ListBlock";
+import { PropertyListSlider } from "@/components/global/blocks/ListBlock";
 
 export default function Index({ data }) {
   SwiperCore.use([Navigation, Pagination]);
@@ -185,10 +185,10 @@ export default function Index({ data }) {
         </div>
       </div>
       <div className="max-w-full feature-properties p-5">
-        <PropertyList data={{ title: "New Items" }} />
+        <PropertyListSlider data={{ title: "New Items" }} />
       </div>
       <div className="max-w-full feature-properties p-5">
-        <PropertyList data={{ title: "On Sale Listings" }} />
+        <PropertyListSlider data={{ title: "On Sale Listings" }} />
       </div>
       <div className=" max-w-full feature-properties p-5 mb-10">
         <div className="flex flex-col items-center justify-center gap-5 py-5 max-w-7xl m-auto  flex-wrap  ">
