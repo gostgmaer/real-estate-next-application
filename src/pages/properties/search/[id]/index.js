@@ -6,7 +6,7 @@ import React from "react";
 const Index = (props) => {
   return (
     <Layout>
-      <div>
+      <div >
         <SingleContainer data={props.data}/>
       </div>
     </Layout>

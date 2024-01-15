@@ -1,4 +1,7 @@
-import * as Yup from "yup";
+import * as Yup from "Yup";
+
+
+const commonErrorMessage = 'This field is required';
 
 export const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -113,3 +116,55 @@ export const profileValidationSchema = Yup.object({
   phoneNumber: Yup.string().required("Required"),
   dateOfBirth: Yup.date().required("Required"),
 });
+
+
+ export const propertySchema = Yup.object().shape({
+   property_id: Yup.string().required(commonErrorMessage),
+   name: Yup.string().required(commonErrorMessage),
+   type: Yup.string().required(commonErrorMessage),
+   location: Yup.object().shape({
+     city: Yup.string().required(commonErrorMessage),
+     state: Yup.string().required(commonErrorMessage),
+     country: Yup.string().required(commonErrorMessage),
+     zipcode: Yup.string().required(commonErrorMessage),
+   }),
+   description: Yup.string().required(commonErrorMessage),
+   amenities: Yup.array().of(Yup.string()),
+   capacity: Yup.number().required(commonErrorMessage),
+   bedrooms: Yup.number().required(commonErrorMessage),
+   bathrooms: Yup.number().required(commonErrorMessage),
+   price_per_night: Yup.number().required(commonErrorMessage),
+   currency: Yup.string().required(commonErrorMessage),
+   availability: Yup.object().shape({
+     start_date: Yup.date().required(commonErrorMessage),
+     end_date: Yup.date().required(commonErrorMessage),
+   }),
+   images: Yup.array().of(Yup.string()),
+   host: Yup.object().shape({
+     host_id: Yup.string().required(commonErrorMessage),
+     host_name: Yup.string().required(commonErrorMessage),
+     host_contact: Yup.string().email(commonErrorMessage).required(commonErrorMessage),
+   }),
+   year_of_construction: Yup.number().required(commonErrorMessage),
+   construction_status: Yup.string().required(commonErrorMessage),
+   parking: Yup.boolean().required(commonErrorMessage),
+   is_furnished: Yup.boolean().required(commonErrorMessage),
+   floor: Yup.object().shape({
+     number: Yup.number().required(commonErrorMessage),
+     total_floors: Yup.number().required(commonErrorMessage),
+   }),
+   size: Yup.object().shape({
+     area: Yup.number().required(commonErrorMessage),
+     unit: Yup.string().required(commonErrorMessage),
+   }),
+
+   rules: Yup.array().of(Yup.string().required(commonErrorMessage)),
+   contact_person: Yup.object().shape({
+     name: Yup.string().required(commonErrorMessage),
+     email: Yup.string().email(commonErrorMessage).required(commonErrorMessage),
+     phone: Yup.string().required(commonErrorMessage),
+   }),
+   booking_policy: Yup.string().required(commonErrorMessage),
+   additional_info: Yup.string().required(commonErrorMessage),
+ });
+ 
