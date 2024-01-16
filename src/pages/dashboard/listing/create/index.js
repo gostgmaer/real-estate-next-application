@@ -23,7 +23,7 @@ const Index = () => {
         <title>Add a new property</title>
       </Head>
       <div className="container mx-auto my-10 ">
-        <div className="flex flex-col max-w-7xl bg-gray-50 p-10 m-auto rounded-lg">
+        <div className="flex flex-col max-w-7xl bg-gray-50 dark:bg-gray-600 p-10 m-auto rounded-lg">
           <div className=" flex justify-between w-full mb-10 uppercase">
             <h1 className="text-2xl font-bold mb-4 text-left">
               Create a new property
@@ -35,8 +35,8 @@ const Index = () => {
               back
             </Link>
           </div>
-          <div className=" bg-white">
-            <PropertyForm />
+          <div className=" ">
+            <PropertyForm props={undefined} />
           </div>
         </div>
       </div>

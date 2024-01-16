@@ -49,19 +49,24 @@ const Profile = ({ props }) => {
   };
 
   return (
-    <div className=" bg-white max-w-7xl m-auto rounded-lg ">
-      <div className="flex w-full justify-between">
+    <div className="  max-w-7xl m-auto rounded-lg ">
+      <div className="flex w-full justify-between bg-white p-5 rounded-3xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
           {props.session.user.name}
         </h2>
-        {editMode && (
+        {editMode ? (
           <button
             onClick={handleCancelClick}
             className="bg-gray-500 text-white px-4 py-2 rounded-md"
           >
             Cancel
           </button>
-        )}
+        ):   <button
+        onClick={handleEditClick}
+        className="bg-blue-500 text-white  px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+      >
+        Edit profile
+      </button>}
       </div>
 
       <div className=" mx-auto mt-8 p-5 bg-gray-50 grid rounded-lg">
@@ -90,7 +95,7 @@ const Profile = ({ props }) => {
         </div>
 
         <div className="col-span-full  w-2/6 mx-auto mt-20">
-          {editMode ? (
+          {editMode && (
             <button
               type="submit"
               onClick={handleSaveClick}
@@ -98,14 +103,7 @@ const Profile = ({ props }) => {
             >
               Save Profile
             </button>
-          ) : (
-            <button
-              onClick={handleEditClick}
-              className="bg-blue-500 text-white m-auto px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 w-full"
-            >
-              Edit profile
-            </button>
-          )}
+          ) }
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import Layout from "@/components/global/layout";
 import { SingleContainer } from "@/components/pages/listing/single";
+import { serverMethod } from "@/lib/helper/network";
+import { appId, propertyContainer } from "@/setting";
 
 import Head from "next/head";
 import Link from "next/link";
@@ -29,3 +31,24 @@ const Index = (props) => {
 };
 
 export default Index;
+
+
+export const getServerSideProps = async (ctx) => {
+  console.log(ctx);
+
+  const {id}= ctx.params
+  const params = {
+    method: "get",
+    header: {},
+  };
+  const result = await serverMethod(
+    `/record/${appId}/container/${propertyContainer}/${id}`,
+    params
+  );
+
+  return {
+    props: {
+      data: result,
+    },
+  };
+};

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { propertySchema } from "@/lib/validation";
 import TextField from "../fields/TextField";
@@ -7,62 +7,71 @@ import SelectField from "../fields/SelectField";
 import { FaDollarSign } from "react-icons/fa";
 import { Country, State, City } from "country-state-city";
 import MultiImageUploadr from "../fields/multiImageUploadr";
-export const PropertyForm = () => {
-    const [file, setFile] = useState([]);
-  const formik = useFormik({
-    initialValues: {
-      property_id: "",
-      name: "",
-      type: "",
-      location: {
-        city: "",
-        state: "",
-        country: "",
-        zipcode: "",
-      },
-      description: "",
-      amenities: [],
-      capacity: 0,
-      bedrooms: 0,
-      bathrooms: 0,
-      price_per_night: 0,
-      currency: "",
-      availability: {
-        start_date: "",
-        end_date: "",
-      },
-      images: [],
-      host: {
-        host_id: "",
-        host_name: "",
-        host_contact: "",
-      },
-      year_of_construction: 0,
-      construction_status: "",
-      parking: false,
-      is_furnished: false,
-      floor: {
-        number: 0,
-        total_floors: 0,
-      },
-      size: {
-        area: 0,
-        unit: "",
-      },
-      rating: 0,
-      reviews: [],
-      rules: [],
-      contact_person: {
-        name: "",
-        email: "",
-        phone: "",
-      },
-      booking_policy: "",
-      additional_info: "",
+import ImageUpload from "../fields/ImageUpload";
+export const PropertyForm = ({ props }) => {
+  const [file, setFile] = useState([]);
+  const [hostimg, setHostimg] = useState(undefined);
+  var currValues = {
+    property_id: "",
+    name: "",
+    type: "",
+    location: {
+      city: "",
+      state: "",
+      country: "",
+      zipcode: "",
     },
-    validationSchema: propertySchema,
+    description: "",
+    amenities: [],
+    capacity: 0,
+    bedrooms: 0,
+    bathrooms: 0,
+    price_per_night: 0,
+    currency: "",
+    availability: {
+      start_date: "",
+      end_date: "",
+    },
+    images: [],
+    host: {
+      host_id: "",
+      host_name: "",
+      host_contact: "",
+      host_image: [],
+    },
+    year_of_construction: 0,
+    construction_status: "",
+    parking: false,
+    is_furnished: false,
+    floor: {
+      number: 0,
+      total_floors: 0,
+    },
+    size: {
+      area: 0,
+      unit: "",
+    },
+    rating: 0,
+    reviews: [],
+    rules: [],
+    contact_person: {
+      name: "",
+      email: "",
+      phone: "",
+    },
+    booking_policy: "",
+    additional_info: "",
+  };
+
+  useEffect(() => {
+    if (props?.data?.result) {
+      currValues = props.data.result;
+    }
+  }, []);
+  const formik = useFormik({
+    initialValues: currValues,
+    // validationSchema: propertySchema,
     onSubmit: (values) => {
-      // Handle form submission here
       console.log(values);
     },
   });
@@ -91,13 +100,13 @@ export const PropertyForm = () => {
   ];
 
   return (
-    <div className=" bg-white max-w-7xl m-auto rounded-lg p-5">
+    <div className=" bg-white max-w-7xl m-auto rounded-xl dark:bg-gray-700 p-5">
       <form
         onSubmit={formik.handleSubmit}
-        className=" mx-auto mt-8 p-5 bg-gray-50 grid rounded-lg"
+        className=" mx-auto mt-8 p-5 bg-gray-50 dark:bg-gray-900 grid rounded-lg"
       >
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-          <h2 className="col-span-full">Basic Info</h2>
+          <h2 className="col-span-full text-2xl font-semibold mb-2">Basic Info</h2>
           <div className="sm:col-span-1">
             <Input
               label={"Property Name"}
@@ -239,12 +248,15 @@ export const PropertyForm = () => {
                 </div>
               )}
           </div>
-            <div className="col-span-full">
-            <MultiImageUploadr selectedFiles={file} setSelectedFiles={setFile} label={"Property Images"}/>
-           
+          <div className="col-span-full">
+            <MultiImageUploadr
+              selectedFiles={file}
+              setSelectedFiles={setFile}
+              label={"Property Images"}
+            />
           </div>
           <div className="col-span-full">
-            <span className=" block text-sm capitalize font-semibold text-gray-600 mb-1.5">
+            <span className=" block text-sm capitalize font-semibold  mb-1.5">
               Descriptions :{" "}
             </span>
             <textarea
@@ -266,51 +278,48 @@ export const PropertyForm = () => {
           </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-        <h2 className="col-span-full">Availability</h2>
-        <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.start_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.start_date"}
-             />
-             {formik.errors.availability?.start_date &&
-               formik.touched.availability?.start_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.start_date}
-                 </div>
-               )}
-           </div>
-           <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start end_date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.end_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.end_date"}
-             />
-             {formik.errors.availability?.end_date &&
-               formik.touched.availability?.end_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.end_date}
-                 </div>
-               )}
-           </div>
-        
+          <h2 className="col-span-full text-2xl font-semibold mb-2">Availability</h2>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Start date"}
+              type={"date"}
+              additionalAttrs={{
+                ...formik.getFieldProps("availability.start_date"),
+                placeholder: "00/00/0000",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"availability.start_date"}
+            />
+            {formik.errors.availability?.start_date &&
+              formik.touched.availability?.start_date && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.availability?.start_date}
+                </div>
+              )}
+          </div>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Start end_date"}
+              type={"date"}
+              additionalAttrs={{
+                ...formik.getFieldProps("availability.end_date"),
+                placeholder: "00/00/0000",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"availability.end_date"}
+            />
+            {formik.errors.availability?.end_date &&
+              formik.touched.availability?.end_date && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.availability?.end_date}
+                </div>
+              )}
+          </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-          <h2 className="col-span-full">Location</h2>
+          <h2 className="col-span-full text-2xl font-semibold mb-2">Location Details</h2>
 
           <div className="sm:col-span-1">
             <SelectField
@@ -350,8 +359,7 @@ export const PropertyForm = () => {
               )}
           </div>
           <div className="sm:col-span-1">
-           
-          <Input
+            <Input
               label={"City"}
               type={"text"}
               additionalAttrs={{
@@ -362,12 +370,11 @@ export const PropertyForm = () => {
               icon={undefined}
               id={"location.city"}
             />
-            {formik.errors.location?.city &&
-              formik.touched.location?.city && (
-                <div className="text-red-500 text-sm">
-                  {formik.errors.location?.city}
-                </div>
-              )}
+            {formik.errors.location?.city && formik.touched.location?.city && (
+              <div className="text-red-500 text-sm">
+                {formik.errors.location?.city}
+              </div>
+            )}
           </div>
           <div className="sm:col-span-1">
             <Input
@@ -381,61 +388,62 @@ export const PropertyForm = () => {
               icon={undefined}
               id={"location.zipcode"}
             />
-            {formik.errors.location?.zipcode && formik.touched.location?.zipcode && (
-              <div className="text-red-500 text-sm">
-                {formik.errors.location?.zipcode}
-              </div>
-            )}
+            {formik.errors.location?.zipcode &&
+              formik.touched.location?.zipcode && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.location?.zipcode}
+                </div>
+              )}
           </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-        <h2 className="col-span-full">Host</h2>
-        <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.start_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.start_date"}
-             />
-             {formik.errors.availability?.start_date &&
-               formik.touched.availability?.start_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.start_date}
-                 </div>
-               )}
-           </div>
-           <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start end_date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.end_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.end_date"}
-             />
-             {formik.errors.availability?.end_date &&
-               formik.touched.availability?.end_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.end_date}
-                 </div>
-               )}
-           </div>
-        
+          <h2 className="col-span-full text-2xl font-semibold mb-2">Host Details</h2>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Person Name"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("host.host_name"),
+                placeholder: "john doi",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"host.host_name"}
+            />
+            {formik.errors.host?.host_name &&
+              formik.touched.host?.host_name && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.host?.host_name}
+                </div>
+              )}
+          </div>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Host Contact info"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("host.host_contact"),
+                placeholder: "info@mail.com/1245634874",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"host.host_contact"}
+            />
+            {formik.errors.host?.host_contact &&
+              formik.touched.host?.host_contact && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.host?.host_contact}
+                </div>
+              )}
+          </div>
+          <div className="col-span-full">
+           <ImageUpload imagePreview={hostimg} setImagePreview={setHostimg} label={"Host Image"}/>
+          </div>
         </div>
         <div className="col-span-full  w-2/6 mx-auto mt-20">
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 w-full"
+            className="bg-blue-500 text-white px-4 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 w-full"
           >
             Submit
           </button>

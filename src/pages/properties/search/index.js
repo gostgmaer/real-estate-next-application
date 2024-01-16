@@ -1,12 +1,13 @@
 import Layout from "@/components/global/layout";
 import Search from "@/components/pages/listing/search";
 import { convertObject, parseUrlWithQueryParams } from "@/lib/helper/functions";
+import { serverMethod } from "@/lib/helper/network";
+import { appId, propertyContainer } from "@/setting";
 import Head from "next/head";
 import React from "react";
 var Url = require("url-parse");
 
 const Index = (props) => {
-
   return (
     <Layout>
       <Head>
@@ -28,13 +29,23 @@ const Index = (props) => {
 export default Index;
 
 export const getServerSideProps = async (ctx) => {
+  console.log(ctx);
 
   var url = new Url(ctx.resolvedUrl);
   const parsedObject = parseUrlWithQueryParams(`${url.query}`);
-  const filter = parsedObject ? parsedObject : {};
 
+  const filter = parsedObject ? parsedObject : {};
+  const params = {
+    method: "get",
+    header: {},
+    params: filter,
+  };
+  const result = await serverMethod(
+    `/record/${appId}/container/${propertyContainer}`,
+    params
+  );
 
   return {
-    props: { query: filter },
+    props: { query: filter, data: result },
   };
 };

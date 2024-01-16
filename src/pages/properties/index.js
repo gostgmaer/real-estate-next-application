@@ -7,3 +7,13 @@ const Index = () => {
 }
 
 export default Index
+
+
+export const getServerSideProps = async (ctx) => {
+  return {
+    redirect: {
+      destination: '/properties/search',
+      permanent: true,
+    },
+  };
+};
