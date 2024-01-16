@@ -17,7 +17,7 @@ const Orders = (props) => {
               Changes password
             </h1>
             <Link
-              href={"/dashboard/profile"}
+              href={"/dashboard/my-profile"}
               className="px-4 py-1 flex items-center bg-[#186aa5] text-white font-semibold rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring focus:border-[#186aad]"
             >
               Back

@@ -1,3 +1,4 @@
+import { AuthContextProvider } from "@/context/AuthContext";
 import { AppProvider } from "@/context/globalContext";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -12,9 +13,11 @@ export default function App({ Component, pageProps }) {
         defaultTheme="light"
         attribute="class"
       >
-        <AppProvider>
-          <Component {...pageProps} />
-        </AppProvider>
+        <AuthContextProvider>
+          <AppProvider>
+            <Component {...pageProps} />
+          </AppProvider>
+        </AuthContextProvider>
       </ThemeProvider>
     </SessionProvider>
   );
