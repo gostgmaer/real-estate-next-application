@@ -58,10 +58,10 @@ export const findIndex = (array, index) => {
 };
 
 
-export const setClientCookie = (name, value, timestamp) => {
-  const expirationDate = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
-  Cookies.set(name, value, { expires: expirationDate });
-};
+// export const setClientCookie = (name, value, timestamp) => {
+//   const expirationDate = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
+//   Cookies.set(name, value, { expires: expirationDate });
+// };
 
 
  
@@ -216,19 +216,19 @@ export function leftFillNum(num, targetLength) {
 
 
 const AUTH_TOKEN = "asdjkashdjkashdjashduiasgdhiuasdijahsdiuhasuidhauisdhiauhdiuhaid"
-export const getToken = () => {
-  window.localStorage.getItem(AUTH_TOKEN);
-};
+// export const getToken = () => {
+//   window.localStorage.getItem(AUTH_TOKEN);
+// };
 
-export const setToken = (token) => {
-  if (token) {
-    window.localStorage.setItem(AUTH_TOKEN, token);
-  }
-};
+// export const setToken = (token) => {
+//   if (token) {
+//     window.localStorage.setItem(AUTH_TOKEN, token);
+//   }
+// };
 
-export const removeToken = () => {
-  window.localStorage.removeItem(AUTH_TOKEN);
-};
+// export const removeToken = () => {
+//   window.localStorage.removeItem(AUTH_TOKEN);
+// };
 
 // @ts-ignore
 export const fetcher = (...args) => axios(...args).then((res) => res.data);
@@ -387,3 +387,18 @@ export function convertObject(inputObject) {
 }
 
 
+export const setToken = (name, value, days, type) => {
+  if (type === "ACCESS_TOKEN") {
+    const token = value.split(".");
+    setClientCookie("headerPayload", `${token[0]}.${token[1]}`, days);
+    setClientCookie("signature", `${token[2]}`, days);
+  } else {
+    setClientCookie(name, value, days);
+  }
+};
+
+
+export const setClientCookie = (name, value, timestamp) => {
+  const expirationDate = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
+  Cookies.set(name, value, { expires: expirationDate });
+};

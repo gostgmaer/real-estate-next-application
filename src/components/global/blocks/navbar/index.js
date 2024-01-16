@@ -1,15 +1,26 @@
 import { Fragment, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  Disclosure,
+  Menu,
+  Popover,
+  Transition,
+} from "@headlessui/react";
 import { MdMenu, MdSearch, MdClose } from "react-icons/md";
 import Link from "next/link";
 import { SearchBox } from "./elements";
 import ThemeToggle from "../DarkLight";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
- 
+  const { data: session, status } = useSession();
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   return (
     <header className="bg-white dark:bg-gray-700 w-full">
@@ -44,41 +55,98 @@ export default function Header() {
             <MdMenu className="h-10 w-10" aria-hidden="true" />
           </button>
         </div>
-        {/* <Popover.Group className="hidden lg:flex lg:gap-x-10 lg:flex-1 lg:justify-end">
+
+        <Popover.Group className="hidden lg:flex lg:gap-x-2 lg:flex-1 lg:justify-end items-center">
+          <ThemeToggle />
           <Link
             href="/properties/search"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6 "
           >
             Properties
           </Link>
-          <Link
-            href="/dashboard"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/auth/signin"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-         User
-          </Link>
-        </Popover.Group> */}
+          {session ? (
+           <Menu as="div" className="relative ml-3">
+           <div>
+             <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+               <span className="absolute -inset-1.5" />
+               <span className="sr-only">Open user menu</span>
+               <img
+                 className="h-8 w-8 rounded-full"
+                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                 alt=""
+               />
+             </Menu.Button>
+           </div>
+           <Transition
+             as={Fragment}
+             enter="transition ease-out duration-100"
+             enterFrom="transform opacity-0 scale-95"
+             enterTo="transform opacity-100 scale-100"
+             leave="transition ease-in duration-75"
+             leaveFrom="transform opacity-100 scale-100"
+             leaveTo="transform opacity-0 scale-95"
+           >
+             <Menu.Items className="absolute right-0 z-10 mt-2 w-28 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+               <Menu.Item>
+                 {({ active }) => (
+                   <Link
+                     href="/dashboard"
+                     className={classNames(
+                       active ? "bg-gray-100" : "",
+                       "block px-4 py-2 text-sm text-gray-700 "
+                     )}
+                   >
+                     Dashboard
+                   </Link>
+                 )}
+               </Menu.Item>
+               <Menu.Item>
+                 {({ active }) => (
+                   <Link
+                     href="/dashboard/my-profile"
+                     className={classNames(
+                       active ? "bg-gray-100" : "",
+                       "block px-4 py-2 text-sm text-gray-700"
+                     )}
+                   >
+                     Your Profile
+                   </Link>
+                 )}
+               </Menu.Item>
+               <Menu.Item>
+                 {({ active }) => (
+                   <button
+                     className={classNames(
+                       active ? "bg-gray-100" : "",
+                       "block px-4 py-2 text-sm text-gray-700 w-full text-start"
+                     )}
+                   >
+                     Sign out
+                   </button>
+                 )}
+               </Menu.Item>
+             </Menu.Items>
+           </Transition>
+         </Menu>
+          ) : (
+            <>
+              {" "}
+              <Link
+                href="/auth/signin"
+                className="text-sm font-semibold leading-6  px-5 py-1"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="text-sm  border-gray-700 dark:border-gray-50 font-semibold leading-6 dark:bg-gray-700 bg-gray-50 rounded-md px-5 py-1 dark:hover:text-gray-50 dark:hover:bg-gray-700 hover:bg-gray-50 border"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
 
-        <Popover.Group className="hidden lg:flex lg:gap-x-2 lg:flex-1 lg:justify-end">
-          <ThemeToggle />
-          <Link
-            href="/auth/signin"
-            className="text-sm font-semibold leading-6  px-5 py-1"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
-          <Link
-            href="/auth/signup"
-            className="text-sm  border-gray-700 dark:border-gray-50 font-semibold leading-6 dark:bg-gray-700 bg-gray-50 rounded-md px-5 py-1 dark:hover:text-gray-50 dark:hover:bg-gray-700 hover:bg-gray-50 border"
-          >
-            Sign up
-          </Link>
+         
         </Popover.Group>
       </nav>
       <Dialog
@@ -112,32 +180,46 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <a
-                  href="#"
+                <Link
+                  href="/properties/search"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
+                  Properties
+                </Link>
+                {session && (
+                  <Link
+                    href="/dashboard"
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Dashboard
+                  </Link>
+                )}
               </div>
               <div className="py-6">
-                <Link
-                  href="/auth/signin"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                {!session ? (
+                  <>
+                    <Link
+                      href="/auth/signin"
+                      className="text-sm font-semibold leading-6  px-5 py-1"
+                    >
+                      Log in <span aria-hidden="true">&rarr;</span>
+                    </Link>
+                    <Link
+                      href="/auth/signup"
+                      className="text-sm  border-gray-700 dark:border-gray-50 font-semibold leading-6 dark:bg-gray-700 bg-gray-50 rounded-md px-5 py-1 dark:hover:text-gray-50 dark:hover:bg-gray-700 hover:bg-gray-50 border"
+                    >
+                      Sign up
+                    </Link>
+                  </>
+                ) : (
+                  <button
+                    className={classNames(
+                      "block px-4 py-2 text-sm text-gray-700"
+                    )}
+                  >
+                    Sign out
+                  </button>
+                )}
               </div>
             </div>
           </div>

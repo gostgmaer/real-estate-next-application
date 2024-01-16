@@ -33,7 +33,7 @@ export const getsingle = async (endpint, id, query,header) => {
 
     const option = {
         method: "get",
-        url: baseURL + endpint + `/${id}`,
+        url: baseurl + endpint + `/${id}`,
         headers: {
             ...tokens,...header
         },
@@ -130,7 +130,7 @@ export const put = async (endpint, body, id,header) => {
 
     const option = {
         method: "put",
-        url: baseURL + endpint + `/${id}`,
+        url: baseurl + endpint + `/${id}`,
         headers: {
         ...tokens,...header
         },
@@ -154,7 +154,7 @@ export const del = async (endpoint, id,header) => {
 
     const option = {
         method: "delete",
-        url: baseURL + endpoint + `/${id}`,
+        url: baseurl + endpoint + `/${id}`,
         headers: {
           ...tokens,...header
         },
@@ -175,12 +175,9 @@ export const del = async (endpoint, id,header) => {
 
 
 
-const getCookiesData = (second) => {
+export const getCookiesData = (second) => {
     const cookiesData = Cookies.get();
-    
     const Authorization = "bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
-
-
     return {
         Authorization
     }

@@ -29,7 +29,7 @@ export default NextAuth({
           password: credentials.password,
         }
 
-        const res = await fetch(baseurl + `/user/auth/login`, {
+        const res = await fetch(baseurl + `/authentication/user/signin`, {
           method: 'POST',
           body: JSON.stringify(payload),
           headers: {
