@@ -102,8 +102,8 @@ export const post = async (endpint, body,header) => {
 };
 
 export const patch = async (endpint, body, id,header) => {
-    const tokens = getCookiesData()
 
+    const tokens = getCookiesData()
     const option = {
         method: "patch",
         url: baseurl + endpint + `/${id}`,
@@ -177,7 +177,7 @@ export const del = async (endpoint, id,header) => {
 
 export const getCookiesData = (second) => {
     const cookiesData = Cookies.get();
-    const Authorization = "bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
+    const Authorization = "Bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
     return {
         Authorization
     }

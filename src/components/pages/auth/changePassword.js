@@ -18,8 +18,8 @@ const ChangePassword = () => {
   const handleSubmit = async (values) => {
     try {
       const reset = await post(
-        `/user/auth/change-password`,
-        { password: values.password }
+        `/authentication/user/change-password`,
+        formik.values
       );
       if (reset.status == "OK") {
        notifySuccess(reset.message,2000)
@@ -42,7 +42,7 @@ const ChangePassword = () => {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: resetPasswordValidation,
+   
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: (values) => {
