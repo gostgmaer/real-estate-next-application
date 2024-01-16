@@ -7,8 +7,8 @@ import SelectField from "../fields/SelectField";
 import { FaDollarSign } from "react-icons/fa";
 import { Country, State, City } from "country-state-city";
 import MultiImageUploadr from "../fields/multiImageUploadr";
-export const PropertyForm = () => {
-    const [file, setFile] = useState([]);
+export const PropertyForm = ({props}) => {
+  const [file, setFile] = useState([]);
   const formik = useFormik({
     initialValues: {
       property_id: "",
@@ -62,10 +62,14 @@ export const PropertyForm = () => {
     },
     validationSchema: propertySchema,
     onSubmit: (values) => {
-      // Handle form submission here
       console.log(values);
     },
   });
+
+
+  
+
+
 
   const propertType = [
     {
@@ -239,9 +243,12 @@ export const PropertyForm = () => {
                 </div>
               )}
           </div>
-            <div className="col-span-full">
-            <MultiImageUploadr selectedFiles={file} setSelectedFiles={setFile} label={"Property Images"}/>
-           
+          <div className="col-span-full">
+            <MultiImageUploadr
+              selectedFiles={file}
+              setSelectedFiles={setFile}
+              label={"Property Images"}
+            />
           </div>
           <div className="col-span-full">
             <span className=" block text-sm capitalize font-semibold text-gray-600 mb-1.5">
@@ -266,48 +273,45 @@ export const PropertyForm = () => {
           </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-        <h2 className="col-span-full">Availability</h2>
-        <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.start_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.start_date"}
-             />
-             {formik.errors.availability?.start_date &&
-               formik.touched.availability?.start_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.start_date}
-                 </div>
-               )}
-           </div>
-           <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start end_date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.end_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.end_date"}
-             />
-             {formik.errors.availability?.end_date &&
-               formik.touched.availability?.end_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.end_date}
-                 </div>
-               )}
-           </div>
-        
+          <h2 className="col-span-full">Availability</h2>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Start date"}
+              type={"date"}
+              additionalAttrs={{
+                ...formik.getFieldProps("availability.start_date"),
+                placeholder: "00/00/0000",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"availability.start_date"}
+            />
+            {formik.errors.availability?.start_date &&
+              formik.touched.availability?.start_date && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.availability?.start_date}
+                </div>
+              )}
+          </div>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Start end_date"}
+              type={"date"}
+              additionalAttrs={{
+                ...formik.getFieldProps("availability.end_date"),
+                placeholder: "00/00/0000",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"availability.end_date"}
+            />
+            {formik.errors.availability?.end_date &&
+              formik.touched.availability?.end_date && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.availability?.end_date}
+                </div>
+              )}
+          </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
           <h2 className="col-span-full">Location</h2>
@@ -350,8 +354,7 @@ export const PropertyForm = () => {
               )}
           </div>
           <div className="sm:col-span-1">
-           
-          <Input
+            <Input
               label={"City"}
               type={"text"}
               additionalAttrs={{
@@ -362,12 +365,11 @@ export const PropertyForm = () => {
               icon={undefined}
               id={"location.city"}
             />
-            {formik.errors.location?.city &&
-              formik.touched.location?.city && (
-                <div className="text-red-500 text-sm">
-                  {formik.errors.location?.city}
-                </div>
-              )}
+            {formik.errors.location?.city && formik.touched.location?.city && (
+              <div className="text-red-500 text-sm">
+                {formik.errors.location?.city}
+              </div>
+            )}
           </div>
           <div className="sm:col-span-1">
             <Input
@@ -381,56 +383,54 @@ export const PropertyForm = () => {
               icon={undefined}
               id={"location.zipcode"}
             />
-            {formik.errors.location?.zipcode && formik.touched.location?.zipcode && (
-              <div className="text-red-500 text-sm">
-                {formik.errors.location?.zipcode}
-              </div>
-            )}
+            {formik.errors.location?.zipcode &&
+              formik.touched.location?.zipcode && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.location?.zipcode}
+                </div>
+              )}
           </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-        <h2 className="col-span-full">Host</h2>
-        <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.start_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.start_date"}
-             />
-             {formik.errors.availability?.start_date &&
-               formik.touched.availability?.start_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.start_date}
-                 </div>
-               )}
-           </div>
-           <div className="sm:col-span-1">
-           
-           <Input
-               label={"Start end_date"}
-               type={"date"}
-               additionalAttrs={{
-                 ...formik.getFieldProps("availability.end_date"),
-                 placeholder: "00/00/0000",
-               }}
-               classes={undefined}
-               icon={undefined}
-               id={"availability.end_date"}
-             />
-             {formik.errors.availability?.end_date &&
-               formik.touched.availability?.end_date && (
-                 <div className="text-red-500 text-sm">
-                   {formik.errors.availability?.end_date}
-                 </div>
-               )}
-           </div>
-        
+          <h2 className="col-span-full">Host</h2>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Start date"}
+              type={"date"}
+              additionalAttrs={{
+                ...formik.getFieldProps("availability.start_date"),
+                placeholder: "00/00/0000",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"availability.start_date"}
+            />
+            {formik.errors.availability?.start_date &&
+              formik.touched.availability?.start_date && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.availability?.start_date}
+                </div>
+              )}
+          </div>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Start end_date"}
+              type={"date"}
+              additionalAttrs={{
+                ...formik.getFieldProps("availability.end_date"),
+                placeholder: "00/00/0000",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"availability.end_date"}
+            />
+            {formik.errors.availability?.end_date &&
+              formik.touched.availability?.end_date && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.availability?.end_date}
+                </div>
+              )}
+          </div>
         </div>
         <div className="col-span-full  w-2/6 mx-auto mt-20">
           <button

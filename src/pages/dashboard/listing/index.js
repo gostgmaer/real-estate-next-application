@@ -1,5 +1,6 @@
 import Table from "@/components/global/blocks/Table";
 import Layout from "@/components/global/layout";
+import Listing from "@/components/pages/dashboard/listing";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,50 +8,8 @@ import React from "react";
 import { MdEdit, MdDelete, MdPageview } from "react-icons/md";
 
 const Index = () => {
-  const route = useRouter();
 
-  const data = React.useMemo(
-    () => [
-      { id: 1, name: "Property 1", price: "$500,000", location: "City A" },
-      { id: 2, name: "Property 2", price: "$600,000", location: "City B" },
-      // Add more properties as needed
-    ],
-    []
-  );
 
-  const columns = React.useMemo(
-    () => [
-      { Header: "ID", accessor: "id" },
-      { Header: "Name", accessor: "name" },
-      { Header: "Price", accessor: "price" },
-      { Header: "Location", accessor: "location" },
-    ],
-    []
-  );
-
-  const buttons = [
-    {
-      label: <MdEdit className=" w-5 h-5" />,
-      onClick: (property) => {
-        route.push(`/dashboard/listing/${property.id}/update`);
-       
-      },
-    },
-    {
-      label: <MdPageview className=" w-5 h-5" />,
-      onClick: (property) => {
-        route.push(`/dashboard/listing/${property.id}`);
-     
-      },
-    },
-    {
-      label: <MdDelete className=" w-5 h-5" />,
-      onClick: (property) => {
-        console.log("Delete property:", property);
-      },
-    },
-    // Add more buttons as needed
-  ];
 
   return (
     <Layout>
@@ -71,12 +30,7 @@ const Index = () => {
             </Link>
           </div>
           <div className=" bg-white">
-            <Table
-              columns={columns}
-              data={data}
-              buttons={buttons}
-              params={{ setpage: 0, setLimit: 0 }}
-            />
+           <Listing/>
           </div>
         </div>
       </div>

@@ -1,23 +1,13 @@
 import { PropertyForm } from "@/components/global/forms/addproperty";
 import Layout from "@/components/global/layout";
+import { serverMethod } from "@/lib/helper/network";
+import { appId, propertyContainer } from "@/setting";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
 const Index = (props) => {
   return (
-    //   <Layout>
-    //     <Head>
-    //       <title>Add a new property</title>
-    //     </Head>
-    //    <div className="container mx-auto my-8">
-    //     <h1 className="text-3xl font-bold  m-auto text-center mb-10">Add a new property</h1>
-    //     <div>
-    //       <PropertyForm/>
-    //     </div>
-    //   </div>
-    //  </Layout>
-
     <Layout>
       <Head>
         <title>Update Property: {props?.name} </title>
@@ -36,7 +26,7 @@ const Index = (props) => {
             </Link>
           </div>
           <div className=" bg-white">
-            <PropertyForm />
+            <PropertyForm props={props.data} />
           </div>
         </div>
       </div>
@@ -45,3 +35,23 @@ const Index = (props) => {
 };
 
 export default Index;
+
+export const getServerSideProps = async (ctx) => {
+  console.log(ctx);
+
+  const { id } = ctx.params;
+  const params = {
+    method: "get",
+    header: {},
+  };
+  const result = await serverMethod(
+    `/record/${appId}/container/${propertyContainer}/${id}`,
+    params
+  );
+
+  return {
+    props: {
+      data: result,
+    },
+  };
+};

@@ -43,18 +43,14 @@ const AppProvider = ({ children }) => {
   const [limit, setLimit] = useState(10);
   const [selectedSort, setSelectedSort] = useState("");
 
+
   const { data: session, status } = useSession();
 
   const handleSearch = () => {
     console.log(filters);
     var sortItem = selectedSort.split('-');
     let mysort = `${sortItem[0]}:${sortItem[1]}`
-
-    // const queryString = qs.stringify(filters, { encodeValuesOnly: true });
-    // console.log(queryString);
-
     const paramsQuery = { filter: filters, page: pages, limit,sort:mysort };
-
     const checkQuerydata = generateUrlFromNestedObject({ ...paramsQuery });
     router.replace(`/properties/search${checkQuerydata}`);
   };

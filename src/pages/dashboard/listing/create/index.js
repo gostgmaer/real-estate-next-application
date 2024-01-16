@@ -36,7 +36,7 @@ const Index = () => {
             </Link>
           </div>
           <div className=" bg-white">
-            <PropertyForm />
+            <PropertyForm props={undefined} />
           </div>
         </div>
       </div>

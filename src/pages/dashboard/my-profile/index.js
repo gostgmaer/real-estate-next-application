@@ -13,7 +13,7 @@ const Orders = (props) => {
         <title>Profile : {props.session.user.name}</title>
       </Head>
       <div className="container mx-auto my-10 ">
-        <div className="flex flex-col max-w-7xl bg-gray-50 bg-gray-950 p-10 m-auto rounded-lg">
+        <div className="flex flex-col max-w-7xl bg-gray-50 dark:bg-gray-950 p-10 m-auto rounded-lg">
           <div className=" flex justify-between w-full mb-10 uppercase">
             <h1 className="text-2xl font-bold mb-4 text-left">My Profile</h1>
             <Link
@@ -34,26 +34,6 @@ const Orders = (props) => {
 
 export default Orders;
 
-// export const getServerSideProps = async (ctx) => {
-//   const session = await getSession(ctx);
-//   // console.log(session);
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: `/auth/signin?callbackUrl=${appBaseUrl}/order`,
-//         parmanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {
-//       session,
-//       data: session ? "List of 100 pro blog" : "list of free blogs",
-//     },
-//   };
-// };
-
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
 
@@ -66,7 +46,6 @@ export const getServerSideProps = async (ctx) => {
     };
   } else {
     const cookies = parse(ctx.req.headers.cookie || "");
-    console.log(cookies);
     const tokendata =
       "Bearer " + cookies["headerPayload"] + "." + cookies["signature"];
     const params = {
