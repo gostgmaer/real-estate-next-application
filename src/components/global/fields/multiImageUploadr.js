@@ -82,10 +82,10 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
 
   return (
     <div className="mb-4 w-full">
-      <label className="block text-gray-700 text-sm font-bold mb-2">
+      <label className="block text-sm font-bold mb-2">
         {label}
       </label>
-      <div className="relative border-dashed border-2 border-gray-300 bg-gray-100 rounded-md">
+      <div className="relative border-dashed border-2 border-gray-300 rounded-md">
         <input
           type="file"
           multiple
@@ -95,7 +95,7 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
         />
         <div className="text-center m-4">
           <svg
-            className="mx-auto h-10 w-10 text-gray-400"
+            className="mx-auto h-10 w-10 "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 48 48"
@@ -108,10 +108,10 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
             ></path>
           </svg>
           <div className="@5xl::ps-10 pt-2 text-center @2xl:ps-5 @2xl:text-left">
-            <h5 className="mb-2 text-sm font-bold text-gray-900 @2xl:text-base @3xl:mb-3 @3xl:text-lg">
+            <h5 className="mb-2 text-sm font-bold  @2xl:text-base @3xl:mb-3 @3xl:text-lg">
               Drop or select file
             </h5>
-            <p className="text-sm leading-relaxed text-gray-900">
+            <p className="text-sm leading-relaxed ">
               Drop files here or click{" "}
               <span className="font-semibold underline hover:no-underline">
                 browse
@@ -127,9 +127,9 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
             {selectedFiles.map((file, index) => (
               <li
                 key={index}
-                className="text-sm text-gray-700 flex justify-between rounded-md shadow-md p-3 items-start gap-2"
+                className="text-sm  flex justify-between rounded-md shadow-md p-3 items-start gap-2"
               >
-                <div className="text-sm text-gray-700 flex justify-between  items-start gap-2">
+                <div className="text-sm  flex justify-between  items-start gap-2">
                   <Image
                     key={index}
                     className="rounded w-10 h-10 object-cover"

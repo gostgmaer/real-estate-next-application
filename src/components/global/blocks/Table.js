@@ -12,10 +12,10 @@ const Table = ({ columns, data, buttons, params }) => {
     },useSortBy);
 
   return (
-    <div className="overflow-x-auto min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+    <div className="overflow-x-auto min-w-full rounded-xl bg-white dark:bg-gray-600 border border-gray-300 shadow-md ">
       <table
         {...getTableProps()}
-        className="min-w-full bg-white border border-gray-300 rounded-lg"
+        className="min-w-full bg-white border border-gray-300 "
       >
         <thead className="bg-gray-100 thead">
           {headerGroups.map((headerGroup, index) => (
@@ -70,7 +70,7 @@ const Table = ({ columns, data, buttons, params }) => {
         </tbody>
       </table>
 
-      <div className=" px-2 pt-5 pb-2 ">
+      <div className=" px-2 pt-2 pb-2 ">
         <PaginationBlock
           totalItems={params.total}
           limit={params.limit}

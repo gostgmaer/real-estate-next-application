@@ -13,7 +13,7 @@ const Index = (props) => {
         <title>Update Property: {props?.name} </title>
       </Head>
       <div className="container mx-auto my-10 ">
-        <div className="flex flex-col max-w-7xl bg-gray-50 p-10 m-auto rounded-lg">
+        <div className="flex flex-col max-w-7xl bg-gray-50 dark:bg-gray-700 p-10 m-auto rounded-lg">
           <div className=" flex justify-between w-full mb-10 uppercase">
             <h1 className="text-2xl font-bold mb-4 text-left">
               Update a property
@@ -25,7 +25,7 @@ const Index = (props) => {
               back
             </Link>
           </div>
-          <div className=" bg-white">
+          <div className=" dark:bg-gray-700">
             <PropertyForm props={props.data} />
           </div>
         </div>
