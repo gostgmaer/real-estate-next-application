@@ -1,5 +1,5 @@
 import Layout from "@/components/global/layout";
-import { SingleContainer } from "@/components/pages/lising/single";
+import { SingleContainer } from "@/components/pages/listing/single";
 
 import React from "react";
 

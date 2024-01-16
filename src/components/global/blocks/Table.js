@@ -1,8 +1,9 @@
 // components/PropertyTable.js
 import React from 'react';
 import { useTable } from 'react-table';
+import PaginationBlock from './pagination/paginationBlock';
 
-const Table = ({ columns, data, buttons }) => {
+const Table = ({ columns, data, buttons,params }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -15,15 +16,15 @@ const Table = ({ columns, data, buttons }) => {
   });
 
   return (
-    <div className="overflow-x-auto">
-      <table {...getTableProps()} className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+    <div className="overflow-x-auto min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+      <table {...getTableProps()} className="min-w-full bg-white border border-gray-300 rounded-lg">
         <thead className="bg-gray-100 thead">
           {headerGroups.map((headerGroup, index) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, columnIndex) => (
                 <th
                   {...column.getHeaderProps()}
-                  className="py-3 px-4 border-b font-semibold text-sm text-gray-600 uppercase tracking-wider"
+                  className="py-3 px-4 border-b font-semibold text-sm text-gray-600 uppercase tracking-wider text-start"
                   key={columnIndex}
                 >
                   {column.render('Header')}
@@ -43,14 +44,14 @@ const Table = ({ columns, data, buttons }) => {
                 {row.cells.map((cell, cellIndex) => (
                   <td
                     {...cell.getCellProps()}
-                    className="py-4 px-6 border-b text-sm text-gray-800"
+                    className="py-4 px-6 border-b text-sm text-gray-800 text-start"
                     key={cellIndex}
                   >
                     {cell.render('Cell')}
                   </td>
                 ))}
                 {buttons && (
-                  <td className="py-4 px-6 border-b text-sm text-gray-800">
+                  <td className="py-4 px-6 border-b text-sm text-gray-800 text-end ">
                     {buttons.map((button, buttonIndex) => (
                       <button
                         key={buttonIndex}
@@ -67,6 +68,9 @@ const Table = ({ columns, data, buttons }) => {
           })}
         </tbody>
       </table>
+      <div className=' px-2 pt-5 pb-2 '>
+      <PaginationBlock totalItems={1000} limit={20} currentPage={1} setPage={params.setPage} setLimit={params.setLimit}/>
+      </div>
     </div>
   );
 };

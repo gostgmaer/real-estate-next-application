@@ -1,5 +1,5 @@
 import Layout from "@/components/global/layout";
-import Search from "@/components/pages/lising/search";
+import Search from "@/components/pages/listing/search";
 import { convertObject, parseUrlWithQueryParams } from "@/lib/helper/functions";
 import Head from "next/head";
 import React from "react";
