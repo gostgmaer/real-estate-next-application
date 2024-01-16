@@ -23,7 +23,7 @@ const navigation = [
     iscurrent: true,
   },
 ];
-const userNavigation = [{ name: "Your Profile", href: "/dashboard/profile" }];
+const userNavigation = [{ name: "Your Profile", href: "/dashboard/my-profile" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

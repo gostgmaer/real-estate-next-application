@@ -10,21 +10,21 @@ const Orders = (props) => {
   return (
     <Layout>
       <Head>
-        <title>Profile : Name</title>
+        <title>Profile : {props.session.user.name}</title>
       </Head>
       <div className="container mx-auto my-10 ">
         <div className="flex flex-col max-w-7xl bg-gray-50 bg-gray-950 p-10 m-auto rounded-lg">
           <div className=" flex justify-between w-full mb-10 uppercase">
             <h1 className="text-2xl font-bold mb-4 text-left">My Profile</h1>
             <Link
-              href={"/dashboard/profile/change-password"}
+              href={"/dashboard/my-profile/change-password"}
               className="px-4 py-1 flex items-center bg-[#186aa5] text-white font-semibold rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring focus:border-[#186aad]"
             >
               Change Password
             </Link>
           </div>
-          <div className=" bg-gray-50 py-10 rounded-xl">
-            <Profile />
+          <div className=" bg-gray-50 py-10 px-5 rounded-xl">
+            <Profile props={{...props}} />
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@ export const getServerSideProps = async (ctx) => {
     const cookies = parse(ctx.req.headers.cookie || "");
     console.log(cookies);
     const tokendata =
-      "bearer " + cookies["headerPayload"] + "." + cookies["signature"];
+      "Bearer " + cookies["headerPayload"] + "." + cookies["signature"];
     const params = {
       method: "get",
       header: {

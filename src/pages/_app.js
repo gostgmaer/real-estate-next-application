@@ -3,6 +3,7 @@ import { AppProvider } from "@/context/globalContext";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import { ToastContainer } from "react-toastify";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }) {
         <AuthContextProvider>
           <AppProvider>
             <Component {...pageProps} />
+            <ToastContainer/>
           </AppProvider>
         </AuthContextProvider>
       </ThemeProvider>
