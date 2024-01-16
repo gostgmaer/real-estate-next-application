@@ -51,7 +51,7 @@ const ChangePassword = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="w-[50%]">
+    <form onSubmit={formik.handleSubmit} className="w-full  md:w-1/2 m-auto h-full">
       <div className="space-y-5 text-black">
         <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
           <label className="block">
