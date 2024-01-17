@@ -1,12 +1,13 @@
 import Layout from "@/components/global/layout";
 import ChangePassword from "@/components/pages/auth/changePassword";
+import DashboardLayout from "@/components/pages/dashboard/blocks/DashboardLayout";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 
 const Orders = (props) => {
   return (
-    <Layout>
+    <DashboardLayout>
       <Head>
         <title>Changes password</title>
       </Head>
@@ -28,7 +29,7 @@ const Orders = (props) => {
           </div>
         </div>
       </div>
-    </Layout>
+    </DashboardLayout>
   );
 };
 

@@ -1,5 +1,6 @@
 import { PropertyForm } from "@/components/global/forms/addproperty";
 import Layout from "@/components/global/layout";
+import DashboardLayout from "@/components/pages/dashboard/blocks/DashboardLayout";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
@@ -18,12 +19,12 @@ const Index = () => {
     //   </div>
     //  </Layout>
 
-    <Layout>
+    <DashboardLayout>
       <Head>
         <title>Add a new property</title>
       </Head>
-      <div className="container mx-auto my-10 ">
-        <div className="flex flex-col max-w-7xl bg-gray-50 dark:bg-gray-600 p-10 m-auto rounded-lg">
+      <div className="container mx-auto ">
+        <div className="flex flex-col    m-auto rounded-lg">
           <div className=" flex justify-between w-full mb-10 uppercase">
             <h1 className="text-2xl font-bold mb-4 text-left">
               Create a new property
@@ -40,7 +41,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </DashboardLayout>
   );
 };
 
