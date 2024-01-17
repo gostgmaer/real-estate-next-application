@@ -41,7 +41,7 @@ const AppProvider = ({ children }) => {
   });
   const [pages, setPages] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [selectedSort, setSelectedSort] = useState("");
+  const [selectedSort, setSelectedSort] = useState("popularity-desc");
 
 
   const { data: session, status } = useSession();

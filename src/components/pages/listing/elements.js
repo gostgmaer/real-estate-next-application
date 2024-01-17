@@ -9,7 +9,7 @@ export const SortItem = () => {
   const { selectedSort, setSelectedSort } =
     useGlobalContext();
   const sortOption = [
-    { value: "popularity-desc", label: "Popularity" },
+    { value: "popularity-desc", label: "Popularity" ,default: true  },
     { value: "price-asc", label: "Price: Low to High" },
     { value: "price-desc", label: "Price: High to Low" },
   ];
@@ -22,6 +22,7 @@ export const SortItem = () => {
         className="border p-2 rounded-lg"
         value={selectedSort}
         onChange={(e) => setSelectedSort(e.target.value)}
+        defaultValue={"popularity-desc"}
       >
         {sortOption.map((option) => (
           <option key={option.value} value={option.value}>

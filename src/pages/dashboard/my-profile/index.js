@@ -6,9 +6,10 @@ import { getSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { parse } from "cookie";
+import DashboardLayout from "@/components/pages/dashboard/blocks/DashboardLayout";
 const Orders = (props) => {
   return (
-    <Layout>
+    <DashboardLayout>
       <Head>
         <title>Profile : {props.session.user.name}</title>
       </Head>
@@ -28,7 +29,7 @@ const Orders = (props) => {
           </div>
         </div>
       </div>
-    </Layout>
+    </DashboardLayout>
   );
 };
 

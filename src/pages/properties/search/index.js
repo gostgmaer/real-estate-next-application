@@ -29,23 +29,30 @@ const Index = (props) => {
 export default Index;
 
 export const getServerSideProps = async (ctx) => {
-  console.log(ctx);
-
   var url = new Url(ctx.resolvedUrl);
   const parsedObject = parseUrlWithQueryParams(`${url.query}`);
 
-  const filter = parsedObject ? parsedObject : {};
+  const query = parsedObject ? parsedObject : {};
   const params = {
     method: "get",
     header: {},
-    params: filter,
+    query: { ...query, filter: JSON.stringify(query.filter) },
   };
   const result = await serverMethod(
     `/record/${appId}/container/${propertyContainer}`,
     params
   );
 
-  return {
-    props: { query: filter, data: result },
-  };
+  if (result?.data?.error || result?.status != 200) {
+    return {
+      props: {
+        query,
+        data: result?.data?.error ? result?.data?.error : result?.data,
+      },
+    };
+  } else {
+    return {
+      props: { query, data: result },
+    };
+  }
 };

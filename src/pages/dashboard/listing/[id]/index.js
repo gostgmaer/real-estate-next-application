@@ -1,4 +1,5 @@
 import Layout from "@/components/global/layout";
+import DashboardLayout from "@/components/pages/dashboard/blocks/DashboardLayout";
 import { SingleContainer } from "@/components/pages/listing/single";
 import { serverMethod } from "@/lib/helper/network";
 import { appId, propertyContainer } from "@/setting";
@@ -10,7 +11,7 @@ import React from "react";
 
 const Index = (props) => {
   return (
-    <Layout>
+    <DashboardLayout>
        <Head>
         <title>Update Property: {props?.name} </title>
       </Head>
@@ -26,7 +27,7 @@ const Index = (props) => {
       <div>
         <SingleContainer data={props.data} />
       </div>
-    </Layout>
+    </DashboardLayout>
   );
 };
 
