@@ -29,7 +29,7 @@ const DashboardLayout = ({ children }) => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-8 bg-gray-100">{children}</div>
+        <div className="flex-1 p-8 bg-gray-100 dark:bg-gray-800">{children}</div>
       </div>
     </Layout>
   );

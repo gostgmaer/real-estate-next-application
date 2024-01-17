@@ -17,13 +17,13 @@ import {
 import SelectField from "../fields/SelectField";
 import TextField from "../fields/TextField";
 import { useGlobalContext } from "@/context/globalContext";
+import { FaDollarSign } from "react-icons/fa";
+import { MdCalendarViewMonth, MdLocationPin } from "react-icons/md";
 const ProductFilter = ({ data }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = useParams();
-
-  console.log(data);
   const [isOpen, setIsOpen] = useState(true); // Initially open
   const {
     filters,
@@ -37,6 +37,8 @@ const ProductFilter = ({ data }) => {
     selectedSort,
     setSelectedSort,
   } = useGlobalContext();
+
+
 
   useEffect(() => {
     if (Object.keys(data.query).length > 0) {
@@ -68,8 +70,13 @@ const ProductFilter = ({ data }) => {
     { value: "4", label: "Land" },
   ];
 
+  const furnishedoptions = [
+    { value: "1", label: "Furnished" },
+    { value: "2", label: "Semi-Furnished" },
+    { value: "3", label: "Not Furnished" }
+  ];
   return (
-    <div className={` text-gray-700 p-4 bg-white rounded-xl`}>
+    <div className={`  p-4 rounded-xl`}>
       <button
         onClick={handleToggleFilters}
         className="w-full text-left focus:outline-none"
@@ -78,88 +85,53 @@ const ProductFilter = ({ data }) => {
       </button>
 
       <div className={`space-y-4 ${isOpen ? "block" : "hidden"} mt-4`}>
-        <SelectField
-          options={options}
-          id={"propertyType"}
-          label={"Property Type"}
-          additionalAttrs={{
-            onChange: (selectedOption) => {
-              handleFilterChange("propertyType", selectedOption.target.value);
-            },
-            value: filters.propertyType,
-          }}
-          placeholder={"Select"}
-          optionkeys={{ key: "value", value: "label" }}
-        />
-        <Disclosure as="div" className=" rounded-lg ">
+        <Disclosure as="div" className=" rounded-lg border border-gray-400 dark:border-gray-100 px-2 ">
           {({ open }) => (
             <>
-              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
-                <span>Price Range:</span>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-md font-medium   focus:outline-none focus-visible:ring ">
+                <span>Property Type:</span>
                 <hr />
                 <ChevronDownIcon
-                  className={`${
-                    open ? "rotate-180 transform" : ""
-                  } h-5 w-5 text-gray-500`}
+                  className={`${open ? "rotate-180 transform" : ""} h-5 w-5 `}
                 />
               </Disclosure.Button>
-              <Disclosure.Panel className=" pb-2 pt-2 text-md text-gray-500 dark:text-gray-50">
-                <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  step="10"
-                  value={filters.priceRange[1]}
-                  onChange={(e) =>
-                    handleFilterChange("priceRange", [
-                      filters.priceRange[0],
-                      parseInt(e.target.value),
-                    ])
-                  }
-                  className="w-full"
-                />
-                <span className="ml-2">{filters.priceRange[1]}</span>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-        <Disclosure as="div" className=" rounded-lg ">
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
-                <span>Location</span>
-                <hr />
-                <ChevronDownIcon
-                  className={`${
-                    open ? "rotate-180 transform" : ""
-                  } h-5 w-5 text-gray-500`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className=" pb-2 pt-0 text-md text-gray-500 dark:text-gray-50">
-                <TextField
+              <Disclosure.Panel className=" pb-2 pt-2 text-md ">
+                <SelectField
+                  options={options}
+                  id={"propertyType"}
                   label={undefined}
-                  type={"text"}
-                  placeholder={undefined}
-                  additionalAttrs={undefined}
-                  value={filters.location}
-                  onChange={(e) =>
-                    handleFilterChange("location", e.target.value)
-                  }
-                  classes={undefined}
-                  icon={undefined}
-                  id={"location"}
+                  additionalAttrs={{
+                    onChange: (selectedOption) => {
+                      handleFilterChange(
+                        "propertyType",
+                        selectedOption.target.value
+                      );
+                    },
+                    value: filters.propertyType,
+                  }}
+                  placeholder={"All"}
+                  optionkeys={{ key: "value", value: "label" }}
                 />
               </Disclosure.Panel>
             </>
           )}
         </Disclosure>
-
-        {/* Additional Filters */}
-        <div className="flex gap-2">
+        <Disclosure as="div" className=" rounded-lg border border-gray-400 dark:border-gray-100 px-2 ">
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-md font-medium   focus:outline-none focus-visible:ring ">
+                <span>Bed & Bathroom:</span>
+                <hr />
+                <ChevronDownIcon
+                  className={`${open ? "rotate-180 transform" : ""} h-5 w-5 `}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className=" pb-2 pt-2 text-md ">
+              <div className="flex gap-2">
           <TextField
             label={"Bedrooms"}
             type={"number"}
-            placeholder={"Number of Bedrooms"}
+            placeholder={"2"}
             additionalAttrs={undefined}
             value={filters.bedrooms}
             onChange={(e) => handleFilterChange("bedrooms", e.target.value)}
@@ -170,7 +142,7 @@ const ProductFilter = ({ data }) => {
           <TextField
             label={"Bathrooms"}
             type={"number"}
-            placeholder={"Number of Bathrooms"}
+            placeholder={"1"}
             additionalAttrs={undefined}
             value={filters.bathrooms}
             onChange={(e) => handleFilterChange("bathrooms", e.target.value)}
@@ -179,23 +151,25 @@ const ProductFilter = ({ data }) => {
             id={"bathrooms"}
           />
         </div>
-
-        <TextField
-          label={"Year Built"}
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+        <Disclosure as="div" className=" rounded-lg border border-gray-400 dark:border-gray-100 px-2">
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-md font-medium   focus:outline-none focus-visible:ring ">
+                <span>Floor Number:</span>
+                <hr />
+                <ChevronDownIcon
+                  className={`${open ? "rotate-180 transform" : ""} h-5 w-5 `}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className=" pb-2 pt-0 text-md ">
+              <TextField
+          label={undefined}
           type={"number"}
-          placeholder={"Year Built"}
-          additionalAttrs={undefined}
-          value={filters.yearBuilt}
-          onChange={(e) => handleFilterChange("yearBuilt", e.target.value)}
-          classes={undefined}
-          icon={undefined}
-          id={"yearBuilt"}
-        />
-
-        <TextField
-          label={"Floor Number"}
-          type={"number"}
-          placeholder={"Floor Number"}
+          placeholder={"3"}
           additionalAttrs={undefined}
           value={filters.floorNumber}
           onChange={(e) => handleFilterChange("floorNumber", e.target.value)}
@@ -203,36 +177,90 @@ const ProductFilter = ({ data }) => {
           icon={undefined}
           id={"floorNumber"}
         />
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+
+        <Disclosure as="div" className=" rounded-lg border border-gray-400 dark:border-gray-100 px-2">
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-md font-medium   focus:outline-none focus-visible:ring ">
+                <span>is Furnished ?</span>
+                <hr />
+                <ChevronDownIcon
+                  className={`${open ? "rotate-180 transform" : ""} h-5 w-5 `}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className=" pb-2 pt-0 text-md ">
+              <SelectField
+                  options={furnishedoptions}
+                  id={"furnished"}
+                  label={undefined}
+                  additionalAttrs={{
+                    onChange: (selectedOption) => {
+                      handleFilterChange(
+                        "furnished",
+                        selectedOption.target.value
+                      );
+                    },
+                    value: filters.furnished,
+                  }}
+                  placeholder={"All"}
+                  optionkeys={{ key: "value", value: "label" }}
+                />
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+        <TextField
+          label={"Year of Build"}
+          type={"number"}
+          placeholder={"2018"}
+          additionalAttrs={undefined}
+          value={filters.yearBuilt}
+          onChange={(e) => handleFilterChange("yearBuilt", e.target.value)}
+          classes={undefined}
+          icon={<MdCalendarViewMonth/>}
+          id={"yearBuilt"}
+        />
+        <TextField
+          label={"Location"}
+          type={"text"}
+          placeholder={"Kolkata"}
+          additionalAttrs={undefined}
+          value={filters.location}
+          onChange={(e) => handleFilterChange("location", e.target.value)}
+          classes={undefined}
+          icon={<MdLocationPin />}
+          id={"location"}
+        />
+        <TextField
+          label={"Price"}
+          type={"number"}
+          placeholder={"10"}
+          additionalAttrs={undefined}
+          value={filters.priceRange}
+          onChange={(e) => handleFilterChange("priceRange", e.target.value)}
+          classes={undefined}
+          icon={<FaDollarSign />}
+          id={"priceRange"}
+        />
         <div className="flex items-center">
-          <label className="mr-2">
+          <label className="mr-2 flex items-center">
             Parking Space:
             <input
               type="checkbox"
               name="parkingSpaces"
               checked={filters.parkingSpaces}
               onChange={(e) =>
-                handleFilterChange("parkingSpaces", { value: e.target.checked })
+                handleFilterChange("parkingSpaces", e.target.checked )
               }
-              className="ml-2"
+              className="ml-2 w-5 h-5"
             />
           </label>
         </div>
-        <div className="flex items-center">
-          <label className="mr-2">
-            Furnished:
-            <input
-              type="checkbox"
-              name="furnished"
-              checked={filters.furnished}
-              onChange={(e) =>
-                handleFilterChange("furnished", { value: e.target.checked })
-              }
-              className="ml-2"
-            />
-          </label>
-        </div>
-        {/* End of Additional Filters */}
-
+    
         <button
           onClick={inSearch}
           className="bg-blue-500 text-white p-2 w-full"
@@ -245,3 +273,26 @@ const ProductFilter = ({ data }) => {
 };
 
 export default ProductFilter;
+
+export const AccordionData = ({ data }) => {
+  return (
+    <>
+      <Disclosure as="div" className=" rounded-lg border px-2 ">
+        {({ open }) => (
+          <>
+            <Disclosure.Button className="flex w-full justify-between rounded-lg py-2 text-left text-lg font-medium   focus:outline-none focus-visible:ring ">
+              <span>{data.label}</span>
+              <hr />
+              <ChevronDownIcon
+                className={`${open ? "rotate-180 transform" : ""} h-5 w-5 `}
+              />
+            </Disclosure.Button>
+            <Disclosure.Panel className=" pb-2 pt-2 text-md ">
+              {data.field}
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+    </>
+  );
+};

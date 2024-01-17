@@ -36,7 +36,7 @@ const AppProvider = ({ children }) => {
     amenities: [],
     parkingSpaces: false,
     floorNumber: "",
-    furnished: false,
+    furnished: "",
     search: "",
   });
   const [pages, setPages] = useState(1);
