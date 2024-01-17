@@ -16,7 +16,7 @@ export const SortItem = () => {
 
 
   return (
-    <div className="flex items-center space-x-4 justify-between bg-gray-200 rounded-lg p-2 px-4 mb-5">
+    <div className="flex items-center space-x-4 justify-between bg-gray-300 dark:bg-gray-500 rounded-lg p-2 px-4 mb-5 ">
       <label className="text-sm">Sort By:</label>
       <select
         className="border p-2 rounded-lg"
@@ -47,7 +47,7 @@ export const ElementsList = () => {
           <PropertyBlock key={index} data={listing} />
         ))}
       </div>
-      <div className=" px-2 py-3">
+      <div className=" px-2 py-3 bg-gray-300 dark:bg-gray-500 rounded-lg mt-10">
         <PaginationBlock
           totalItems={1000}
           limit={limit}

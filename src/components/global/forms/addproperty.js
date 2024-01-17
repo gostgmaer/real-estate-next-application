@@ -8,7 +8,12 @@ import { FaDollarSign } from "react-icons/fa";
 import { Country, State, City } from "country-state-city";
 import MultiImageUploadr from "../fields/multiImageUploadr";
 import ImageUpload from "../fields/ImageUpload";
+import { useParams } from "next/navigation";
+import { patch, post } from "@/lib/helper/network";
+import { appId, propertyContainer } from "@/setting";
+import { notifySuccess, notifyinfo } from "@/lib/notify/notice";
 export const PropertyForm = ({ props }) => {
+  const params = useParams();
   const [file, setFile] = useState([]);
   const [hostimg, setHostimg] = useState(undefined);
   var currValues = {
@@ -73,6 +78,7 @@ export const PropertyForm = ({ props }) => {
     // validationSchema: propertySchema,
     onSubmit: (values) => {
       console.log(values);
+      handleSubmit();
     },
   });
 
@@ -99,6 +105,50 @@ export const PropertyForm = ({ props }) => {
     },
   ];
 
+  const handleSubmit = (second) => {
+    const { id } = params;
+
+    if (id) {
+      handleUpdate(formik.values, id);
+    } else {
+      handleSave(formik.values);
+    }
+  };
+
+  const handleUpdate = async (values, id) => {
+    console.log(id, params);
+    const body = generateBody(values);
+    const request = await patch(
+      `/record/${appId}/container/${propertyContainer}`,
+      body,
+      id
+    );
+    if (request.status === "OK") {
+      notifyinfo(request.message, 5000);
+    }
+  };
+
+  const handleSave = async (values) => {
+    const body = generateBody(values);
+    const request = await post(
+      `/record/${appId}/container/${propertyContainer}`,
+      body
+    );
+    if (request.status === "Created") {
+      notifySuccess(request.message, 5000);
+    }
+  };
+
+  const generateBody = (values) => {
+    const body = {
+      ...values,
+      images: file,
+      host: { ...values.host, host_image: hostimg },
+    };
+
+    return body;
+  };
+
   return (
     <div className=" bg-white max-w-7xl m-auto rounded-xl dark:bg-gray-700 p-5">
       <form
@@ -106,7 +156,9 @@ export const PropertyForm = ({ props }) => {
         className=" mx-auto mt-8 p-5 bg-gray-50 dark:bg-gray-900 grid rounded-lg"
       >
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-          <h2 className="col-span-full text-2xl font-semibold mb-2">Basic Info</h2>
+          <h2 className="col-span-full text-2xl font-semibold mb-2">
+            Basic Info
+          </h2>
           <div className="sm:col-span-1">
             <Input
               label={"Property Name"}
@@ -278,7 +330,9 @@ export const PropertyForm = ({ props }) => {
           </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-          <h2 className="col-span-full text-2xl font-semibold mb-2">Availability</h2>
+          <h2 className="col-span-full text-2xl font-semibold mb-2">
+            Availability
+          </h2>
           <div className="sm:col-span-1">
             <Input
               label={"Start date"}
@@ -319,7 +373,9 @@ export const PropertyForm = ({ props }) => {
           </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-          <h2 className="col-span-full text-2xl font-semibold mb-2">Location Details</h2>
+          <h2 className="col-span-full text-2xl font-semibold mb-2">
+            Location Details
+          </h2>
 
           <div className="sm:col-span-1">
             <SelectField
@@ -397,7 +453,9 @@ export const PropertyForm = ({ props }) => {
           </div>
         </div>
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
-          <h2 className="col-span-full text-2xl font-semibold mb-2">Host Details</h2>
+          <h2 className="col-span-full text-2xl font-semibold mb-2">
+            Host Details
+          </h2>
           <div className="sm:col-span-1">
             <Input
               label={"Person Name"}
@@ -437,7 +495,11 @@ export const PropertyForm = ({ props }) => {
               )}
           </div>
           <div className="col-span-full">
-           <ImageUpload imagePreview={hostimg} setImagePreview={setHostimg} label={"Host Image"}/>
+            <ImageUpload
+              imagePreview={hostimg}
+              setImagePreview={setHostimg}
+              label={"Host Image"}
+            />
           </div>
         </div>
         <div className="col-span-full  w-2/6 mx-auto mt-20">

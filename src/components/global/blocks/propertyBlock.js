@@ -48,7 +48,7 @@ const PropertyBlock = ({ data }) => {
           <span>$</span> 3000
         </p>
         <p className=" font-bold text-xl">Studio Appoitment</p>
-        <p className=" text-gray-500 dark:text-gray-500">
+        <p className=" text-gray-500 dark:text-gray-400">
           If you need to use a one-off breakpoint that doesn t make sense to
           include in your theme
         </p>

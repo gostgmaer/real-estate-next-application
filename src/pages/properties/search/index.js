@@ -43,7 +43,7 @@ export const getServerSideProps = async (ctx) => {
     params
   );
 
-  if (result?.data?.error || result?.status != 200) {
+  if (result?.data?.error || result?.status != 200 && result?.status != "OK") {
     return {
       props: {
         query,

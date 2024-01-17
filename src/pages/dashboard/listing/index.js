@@ -1,14 +1,22 @@
 import Table from "@/components/global/blocks/Table";
-import Layout from "@/components/global/layout";
+
 import DashboardLayout from "@/components/pages/dashboard/blocks/DashboardLayout";
 import Listing from "@/components/pages/dashboard/listing";
+
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+
 import { MdEdit, MdDelete, MdPageview } from "react-icons/md";
 
-const Index = () => {
+import { convertObject, parseUrlWithQueryParams } from "@/lib/helper/functions";
+import { serverMethod } from "@/lib/helper/network";
+import { appId, propertyContainer } from "@/setting";
+
+import React from "react";
+var Url = require("url-parse");
+
+const Index = (props) => {
 
 
 
@@ -31,7 +39,7 @@ const Index = () => {
             </Link>
           </div>
           <div className=" ">
-           <Listing/>
+           <Listing props={props}/>
           </div>
         </div>
       </div>
@@ -40,3 +48,33 @@ const Index = () => {
 };
 
 export default Index;
+
+
+export const getServerSideProps = async (ctx) => {
+  var url = new Url(ctx.resolvedUrl);
+  const parsedObject = parseUrlWithQueryParams(`${url.query}`);
+
+  const query = parsedObject ? parsedObject : {};
+  const params = {
+    method: "get",
+    header: {},
+    query: { ...query},
+  };
+  const result = await serverMethod(
+    `/record/${appId}/container/${propertyContainer}`,
+    params
+  );
+
+  if (result?.data?.error || result?.status != 200 && result?.status != "OK") {
+    return {
+      props: {
+        query,
+        data: result?.data?.error ? result?.data?.error : result?.data,
+      },
+    };
+  } else {
+    return {
+      props: { query, data: result },
+    };
+  }
+};

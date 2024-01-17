@@ -1,9 +1,7 @@
-import Layout from "@/components/global/layout";
 import DashboardLayout from "@/components/pages/dashboard/blocks/DashboardLayout";
 import { SingleContainer } from "@/components/pages/listing/single";
 import { serverMethod } from "@/lib/helper/network";
 import { appId, propertyContainer } from "@/setting";
-
 import Head from "next/head";
 import Link from "next/link";
 
@@ -12,8 +10,8 @@ import React from "react";
 const Index = (props) => {
   return (
     <DashboardLayout>
-       <Head>
-        <title>Update Property: {props?.name} </title>
+      <Head>
+        <title>Update Property: {props?.data.result.name} </title>
       </Head>
       <div className=" flex justify-between w-full mb-10 uppercase max-w-7xl m-auto my-10">
         <h1 className="text-2xl font-bold mb-4 text-left">Property Listings</h1>
@@ -33,11 +31,10 @@ const Index = (props) => {
 
 export default Index;
 
-
 export const getServerSideProps = async (ctx) => {
   console.log(ctx);
 
-  const {id}= ctx.params
+  const { id } = ctx.params;
   const params = {
     method: "get",
     header: {},

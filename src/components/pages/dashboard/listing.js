@@ -4,21 +4,18 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdDelete, MdEdit, MdPageview } from "react-icons/md";
 
-const Listing = () => {
+const Listing = ({props}) => {
   const route = useRouter();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(100);
+  const [limit, setLimit] = useState(10);
   const [sort, setSort] = useState("");
   const pathname = usePathname();
 
   const handleSearch = () => {
-    // var sortItem = sort.split("-");
-    // let mysort = `${sortItem[0]}:${sortItem[1]}`;
     const paramsQuery = { page, limit };
     const checkQuerydata = generateUrlFromNestedObject({ ...paramsQuery });
-    route.replace(`${pathname}${checkQuerydata}`);
+    route.push(`${pathname}${checkQuerydata}`);
   };
-
 
   useEffect(() => {
     handleSearch();
@@ -36,10 +33,10 @@ const Listing = () => {
 
   const columns = React.useMemo(
     () => [
-      { Header: "ID", accessor: "id",isSortable: true },
+      { Header: "ID", accessor: "_id",isSortable: true },
       { Header: "Name", accessor: "name" },
-      { Header: "Price", accessor: "price" },
-      { Header: "Location", accessor: "location" },
+      { Header: "Price", accessor: "price_per_night" },
+      { Header: "Host", accessor: "host.host_contact" },
     ],
     []
   );
@@ -48,13 +45,13 @@ const Listing = () => {
     {
       label: <MdEdit className=" w-5 h-5" />,
       onClick: (property) => {
-        route.push(`/dashboard/listing/${property.id}/update`);
+        route.push(`/dashboard/listing/${property._id}/update`);
       },
     },
     {
       label: <MdPageview className=" w-5 h-5" />,
       onClick: (property) => {
-        route.push(`/dashboard/listing/${property.id}`);
+        route.push(`/dashboard/listing/${property._id}`);
       },
     },
     {
@@ -70,14 +67,14 @@ const Listing = () => {
     <div>
       <Table
         columns={columns}
-        data={data}
+        data={props?.data?.result}
         buttons={buttons}
         params={{
           setPage: setPage,
           setLimit: setLimit,
           limit,
           page,
-          total: 1000,
+          total: props?.data?.total_record,
         }}
       />
     </div>
