@@ -61,7 +61,6 @@ const FilterOptions = (
   page,
   limit,
   filter,
-  extra,
   select_keys
 ) => {
   var arrayOfValues = {};

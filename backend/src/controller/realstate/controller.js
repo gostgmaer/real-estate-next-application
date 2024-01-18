@@ -11,34 +11,22 @@ const {
   createProjectionFromArray,
   FilterOptions,
 } = require("../../utils/service");
-
-const { collection } = require("../../config/setting");
-
-const genericSchema = mongoose.connection.collection(collection);
+const Property = require("../../models/listing");
 
 const get = async (req, res) => {
   try {
-    const { appId, containerId } = req.params;
 
     const { sort, page, limit, filter, select_keys } = req.query;
-
-    const filterData = FilterOptions(
-      sort,
-      page,
-      limit,
-      filter,
-      (extra = { appId }),
-      select_keys
-    );
-    let query = { ...filterData.query, appId, containerId };
+    const filterData = FilterOptions(sort, page, limit, filter, select_keys);
+    let query = { ...filterData.query };
     let projection = { projection: filterData.arrayOfValues };
 
-    const objects = await genericSchema.find(query).toArray;
-    // .sort(filterData.options.sort)
-    // .skip(filterData.options.skip)
-    // .limit(parseInt(filterData.options.limit))
-    //  .toArray();
-    const totalCount = await genericSchema.countDocuments(query);
+    const objects = await Property.find(query, projection)
+      .sort(filterData.options.sort)
+      .skip(filterData.options.skip)
+      .limit(parseInt(filterData.options.limit))
+      .toArray();
+    const totalCount = await Property.countDocuments(query);
 
     res.status(StatusCodes.OK).json({
       result: objects,
@@ -69,7 +57,7 @@ const getSingleRecord = async (req, res) => {
       });
     }
     const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await genericSchema.findOne({ appId, containerId, _id: ID });
+    const object = await Property.findOne({ appId, containerId, _id: ID });
     if (!object) {
       res.status(StatusCodes.NOT_FOUND).json({
         result: object,
@@ -96,7 +84,7 @@ const getSingleRecord = async (req, res) => {
 };
 const create = async (req, res) => {
   try {
-    const result = await genericSchema.insertOne(req.body);
+    const result = await Property.create(req.body);
     res.status(StatusCodes.CREATED).json({
       message: "Record Created Successfully!",
       status: ReasonPhrases.CREATED,
@@ -112,23 +100,6 @@ const create = async (req, res) => {
   }
 };
 
-const createMany = async (req, res) => {
-  try {
-    const result = await genericSchema.insertMany(req.body);
-    res.status(StatusCodes.CREATED).json({
-      message: "Record Created Successfully!",
-      status: ReasonPhrases.CREATED,
-      statusCode: StatusCodes.CREATED,
-      result: result,
-    });
-  } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: error.message,
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      status: ReasonPhrases.INTERNAL_SERVER_ERROR,
-    });
-  }
-};
 const remove = async (req, res) => {
   try {
     const { appId } = req.params;
@@ -142,7 +113,7 @@ const remove = async (req, res) => {
       });
     }
     const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await genericSchema.findOneAndUpdate(
+    const object = await Property.findOneAndUpdate(
       { _id: ID },
       { $set: { ...req.body, status: "INACTIVE" } },
       { returnOriginal: false }
@@ -183,7 +154,7 @@ const removeMany = async (req, res) => {
       });
     }
     const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await genericSchema.bulkWrite(
+    const object = await Property.bulkWrite(
       { _id: ID },
       { $set: { ...req.body, status: "INACTIVE" } },
       { returnOriginal: false }
@@ -225,7 +196,7 @@ const update = async (req, res) => {
     const ID = new mongoose.Types.ObjectId(objectId);
     const objectToUpdate = req.body;
 
-    const result = await genericSchema.findOneAndUpdate(
+    const result = await Property.findOneAndUpdate(
       { _id: ID },
       { $set: objectToUpdate },
       { returnOriginal: false }
@@ -257,7 +228,6 @@ const update = async (req, res) => {
 
 module.exports = {
   create,
-  createMany,
   get,
   getSingleRecord,
   remove,
