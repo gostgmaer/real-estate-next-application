@@ -18,14 +18,14 @@ export default function Header() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
 
-  console.log(session);
+  // console.log(session);
 const route= useRouter()
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
 
-  
+
   const signouthandler = () => { 
 
     signOut()
