@@ -44,8 +44,6 @@ function createProjectionFromArray(fields) {
   }
 }
 
-
-
 function decodeToken(token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, jwtSecret, (err, decoded) => {
@@ -58,17 +56,25 @@ function decodeToken(token) {
   });
 }
 
-const FilterOptions = (sort = "updatedAt:desc", page, limit, filter, extra,select_keys) => {
-
-  var arrayOfValues = {}
+const FilterOptions = (
+  sort = "updatedAt:desc",
+  page,
+  limit,
+  filter,
+  extra,
+  select_keys
+) => {
+  var arrayOfValues = {};
 
   var query = {};
 
   if (filter) {
     const filterObj = JSON.parse(filter);
-    const selectKeys = select_keys
+    const selectKeys = select_keys;
     if (selectKeys) {
-      const cleanedArray = selectKeys.split(',').map(value => value.replace(/'/g, ''));
+      const cleanedArray = selectKeys
+        .split(",")
+        .map((value) => value.replace(/'/g, ""));
       arrayOfValues = createProjectionFromArray(cleanedArray);
     }
 
@@ -79,7 +85,6 @@ const FilterOptions = (sort = "updatedAt:desc", page, limit, filter, extra,selec
   let statusFilter = { status: { $ne: "INACTIVE" } };
 
   if (query.status != "" && query.status) {
-
     statusFilter = { ...statusFilter, status: query.status };
   }
 
@@ -106,7 +111,8 @@ const FilterOptions = (sort = "updatedAt:desc", page, limit, filter, extra,selec
   };
   return {
     options: options,
-    query: query, arrayOfValues
+    query: query,
+    arrayOfValues,
   };
 };
 
@@ -192,7 +198,7 @@ function removeEmptyKeys(obj) {
 
       if (value === null || value === undefined || value === "") {
         delete obj[key];
-      } else if (typeof value === 'object' && !Array.isArray(value)) {
+      } else if (typeof value === "object" && !Array.isArray(value)) {
         // Recursively remove empty keys in nested objects
         removeEmptyKeys(value);
 
@@ -216,12 +222,9 @@ const generateMatchQuery = (query) => {
   return dynamicQuery;
 };
 
-
-
 const invoke = async (endpint, param, req) => {
+  const { authorization, session } = req.headers;
 
-  const { authorization, session } = req.headers
-  
   const option = {
     method: param.method,
     url: authHost + endpint,
@@ -236,36 +239,27 @@ const invoke = async (endpint, param, req) => {
   let error;
   try {
     response = await axios.request(option);
-    return response?.data
-
+    return response?.data;
   } catch (e) {
     error = e.response.data;
-    return e.response.data
+    return e.response.data;
   }
-
-
 };
-
-
 
 const getUserInfo = (req) => {
   const token = req.headers.authorization;
-  if (!token || !token.startsWith('Bearer ')) {
-    return {}
+  if (!token || !token.startsWith("Bearer ")) {
+    return {};
   } else {
-    const tokenValue = token.split(' ')[1];
-    const decode = jwtDecode(tokenValue)
+    const tokenValue = token.split(" ")[1];
+    const decode = jwtDecode(tokenValue);
     return {
       user: decode.user_id,
       user_email: decode.email,
       username: decode.username,
-    }
+    };
   }
-}
-
-
-
-
+};
 
 module.exports = {
   decodeToken,
@@ -275,5 +269,7 @@ module.exports = {
   FilterOptionsSearch,
   getAppIdAndEntity,
   createProjectionFromArray,
-  isemptyObject, invoke,getUserInfo
+  isemptyObject,
+  invoke,
+  getUserInfo,
 };
