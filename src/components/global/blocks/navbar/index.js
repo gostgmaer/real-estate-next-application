@@ -10,18 +10,32 @@ import { MdMenu, MdSearch, MdClose } from "react-icons/md";
 import Link from "next/link";
 import { SearchBox } from "./elements";
 import ThemeToggle from "../DarkLight";
-import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
-
+import { usePathname, useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import Cookies from "js-cookie";
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { data: session, status } = useSession();
 
   console.log(session);
+const route= useRouter()
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+
+
+  const signouthandler = () => { 
+
+    signOut()
+    localStorage.clear()
+    sessionStorage.clear()
+    const cookies = Cookies.get();
+    for (const cookie in cookies) {
+      Cookies.remove(cookie);
+    }
+    route.push('/')
+   }
 
   return (
     <header className="bg-white dark:bg-gray-700 w-full">
@@ -121,6 +135,7 @@ export default function Header() {
                        active ? "bg-gray-100" : "",
                        "block px-4 py-2 text-sm text-gray-700 w-full text-start"
                      )}
+                     onClick={signouthandler}
                    >
                      Sign out
                    </button>
@@ -217,6 +232,7 @@ export default function Header() {
                     className={classNames(
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
+                    onClick={signouthandler}
                   >
                     Sign out
                   </button>

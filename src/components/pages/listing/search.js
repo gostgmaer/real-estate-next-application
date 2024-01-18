@@ -11,7 +11,7 @@ export default function Search({data}) {
       </div>
       <div className=" flex-[3]">
         <SortItem />
-        <ElementsList />
+        <ElementsList props={data} />
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ export const PropertyForm = ({ props }) => {
     year_of_construction: 0,
     construction_status: "",
     parking: false,
-    is_furnished: false,
+    is_furnished: "",
     floor: {
       number: 0,
       total_floors: 0,

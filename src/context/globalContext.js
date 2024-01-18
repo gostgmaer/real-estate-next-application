@@ -23,34 +23,33 @@ const AppProvider = ({ children }) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [filters, setFilters] = useState({
-    priceMin: "",
+    price_per_night: "",
     priceMax: "",
-    location: "",
+    location: { city: "" },
     name: "",
-    propertyType: "",
+    type: "",
     priceRange: "",
     bedrooms: "",
     bathrooms: "",
     squareFootage: "",
-    yearBuilt: "",
+    year_of_construction: "",
     amenities: [],
-    parkingSpaces: false,
-    floorNumber: "",
-    furnished: "",
+    // parking: false,
+    // floor: { number: 0 },
+    is_furnished: "",
     search: "",
   });
   const [pages, setPages] = useState(1);
   const [limit, setLimit] = useState(10);
   const [selectedSort, setSelectedSort] = useState("popularity-desc");
 
-
   const { data: session, status } = useSession();
 
   const handleSearch = () => {
     console.log(filters);
-    var sortItem = selectedSort.split('-');
-    let mysort = `${sortItem[0]}:${sortItem[1]}`
-    const paramsQuery = { filter: filters, page: pages, limit,sort:mysort };
+    var sortItem = selectedSort.split("-");
+    let mysort = `${sortItem[0]}:${sortItem[1]}`;
+    const paramsQuery = { filter: filters, page: pages, limit, sort: mysort };
     const checkQuerydata = generateUrlFromNestedObject({ ...paramsQuery });
     router.replace(`/properties/search${checkQuerydata}`);
   };
@@ -59,8 +58,6 @@ const AppProvider = ({ children }) => {
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
-
-  
   return (
     <AppContext.Provider
       value={{
