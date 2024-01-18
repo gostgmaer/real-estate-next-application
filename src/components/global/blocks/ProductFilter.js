@@ -98,16 +98,16 @@ const ProductFilter = ({ data }) => {
               <Disclosure.Panel className=" pb-2 pt-2 text-md ">
                 <SelectField
                   options={options}
-                  id={"propertyType"}
+                  id={"type"}
                   label={undefined}
                   additionalAttrs={{
                     onChange: (selectedOption) => {
                       handleFilterChange(
-                        "propertyType",
+                        "type",
                         selectedOption.target.value
                       );
                     },
-                    value: filters.propertyType,
+                    value: filters.type,
                   }}
                   placeholder={"All"}
                   optionkeys={{ key: "value", value: "label" }}
@@ -171,11 +171,11 @@ const ProductFilter = ({ data }) => {
           type={"number"}
           placeholder={"3"}
           additionalAttrs={undefined}
-          value={filters.floorNumber}
-          onChange={(e) => handleFilterChange("floorNumber", e.target.value)}
+          value={filters?.floor?.number}
+          onChange={(e) => handleFilterChange("floor.number", e.target.value)}
           classes={undefined}
           icon={undefined}
-          id={"floorNumber"}
+          id={"floor.number"}
         />
               </Disclosure.Panel>
             </>
@@ -195,16 +195,16 @@ const ProductFilter = ({ data }) => {
               <Disclosure.Panel className=" pb-2 pt-0 text-md ">
               <SelectField
                   options={furnishedoptions}
-                  id={"furnished"}
+                  id={"is_furnished"}
                   label={undefined}
                   additionalAttrs={{
                     onChange: (selectedOption) => {
                       handleFilterChange(
-                        "furnished",
+                        "is_furnished",
                         selectedOption.target.value
                       );
                     },
-                    value: filters.furnished,
+                    value: filters.is_furnished,
                   }}
                   placeholder={"All"}
                   optionkeys={{ key: "value", value: "label" }}
@@ -218,43 +218,43 @@ const ProductFilter = ({ data }) => {
           type={"number"}
           placeholder={"2018"}
           additionalAttrs={undefined}
-          value={filters.yearBuilt}
-          onChange={(e) => handleFilterChange("yearBuilt", e.target.value)}
+          value={filters.year_of_construction}
+          onChange={(e) => handleFilterChange("year_of_construction", e.target.value)}
           classes={undefined}
           icon={<MdCalendarViewMonth/>}
-          id={"yearBuilt"}
+          id={"year_of_construction"}
         />
         <TextField
           label={"Location"}
           type={"text"}
           placeholder={"Kolkata"}
           additionalAttrs={undefined}
-          value={filters.location}
-          onChange={(e) => handleFilterChange("location", e.target.value)}
+          value={filters.location.city}
+          onChange={(e) => handleFilterChange("location.city", e.target.value)}
           classes={undefined}
           icon={<MdLocationPin />}
-          id={"location"}
+          id={"location.city"}
         />
         <TextField
           label={"Price"}
           type={"number"}
           placeholder={"10"}
           additionalAttrs={undefined}
-          value={filters.priceRange}
-          onChange={(e) => handleFilterChange("priceRange", e.target.value)}
+          value={filters.price_per_night}
+          onChange={(e) => handleFilterChange("price_per_night", e.target.value)}
           classes={undefined}
           icon={<FaDollarSign />}
-          id={"priceRange"}
+          id={"price_per_night"}
         />
         <div className="flex items-center">
           <label className="mr-2 flex items-center">
             Parking Space:
             <input
               type="checkbox"
-              name="parkingSpaces"
-              checked={filters.parkingSpaces}
+              name="parking"
+              checked={filters.parking}
               onChange={(e) =>
-                handleFilterChange("parkingSpaces", e.target.checked )
+                handleFilterChange("parking", e.target.checked )
               }
               className="ml-2 w-5 h-5"
             />
