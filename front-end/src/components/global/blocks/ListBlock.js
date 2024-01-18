@@ -5,6 +5,7 @@ import "swiper/css/bundle";
 
 import { faqs, imgArr, imgData } from "@/assets/img/data";
 import PropertyBlock from "@/components/global/blocks/propertyBlock";
+import Link from "next/link";
 
 export const PropertyListSlider = ({ data }) => {
   SwiperCore.use([Pagination, Navigation]);
@@ -14,9 +15,12 @@ export const PropertyListSlider = ({ data }) => {
       {/* Top Section */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <h2 className="text-2xl font-semibold mb-2 md:mb-0">{data.title}</h2>
-        <button className="text-center px-5 py-2 bg-[#186aa5] text-white font-semibold rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring focus:border-[#186aad]">
+        <Link
+          href={"/properties/search"}
+          className="text-center px-5 py-2 bg-[#186aa5] text-white font-semibold rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring focus:border-[#186aad]"
+        >
           View All
-        </button>
+        </Link>
       </div>
 
       {/* Product Elements */}
@@ -82,7 +86,12 @@ export const Propertieslist = ({ data }) => {
       {/* Top Section */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <h2 className="text-2xl font-semibold mb-2 md:mb-0">{data.title}</h2>
-        <button className="text-center px-5 py-2 bg-[#186aa5] text-white font-semibold rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring focus:border-[#186aad]">View All</button>
+        <Link
+          href={"/properties/search"}
+          className="text-center px-5 py-2 bg-[#186aa5] text-white font-semibold rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring focus:border-[#186aad]"
+        >
+          View All
+        </Link>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {/* Swiper for Web */}

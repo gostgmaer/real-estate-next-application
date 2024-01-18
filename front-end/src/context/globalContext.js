@@ -9,8 +9,13 @@ import {
   useSearchParams,
   useSelectedLayoutSegments,
 } from "next/navigation";
-import { generateUrlFromNestedObject } from "@/lib/helper/functions";
+import {
+  generateUrlFromNestedObject,
+  parseUrlWithQueryParams,
+} from "@/lib/helper/functions";
 import qs from "qs";
+import { get } from "@/lib/helper/network";
+import { appId, propertyContainer } from "@/setting";
 
 var Url = require("url-parse");
 const AppContext = createContext(null);
@@ -42,16 +47,34 @@ const AppProvider = ({ children }) => {
   const [pages, setPages] = useState(1);
   const [limit, setLimit] = useState(10);
   const [selectedSort, setSelectedSort] = useState("popularity-desc");
+  const [searchData, setSearchData] = useState(undefined);
 
   const { data: session, status } = useSession();
 
   const handleSearch = () => {
-    console.log(filters);
+    // console.log(filters);
     var sortItem = selectedSort.split("-");
     let mysort = `${sortItem[0]}:${sortItem[1]}`;
     const paramsQuery = { filter: filters, page: pages, limit, sort: mysort };
     const checkQuerydata = generateUrlFromNestedObject({ ...paramsQuery });
     router.replace(`/properties/search${checkQuerydata}`);
+  };
+  const fetchSearchData = async (second) => {
+    var currentURL = window.location.href;
+    var url = new Url(currentURL);
+    const parsedObject = parseUrlWithQueryParams(`${url.query}`);
+
+    const query = parsedObject ? parsedObject : {};
+    const params = {
+      ...query,
+      filter: JSON.stringify(query.filter),
+    };
+    const request = await get(
+      `/record/${appId}/container/${propertyContainer}`,
+      params
+    );
+    setSearchData(request)
+   
   };
 
   const handleFilterChange = (name, value) => {
@@ -71,6 +94,7 @@ const AppProvider = ({ children }) => {
         setLimit,
         selectedSort,
         setSelectedSort,
+        fetchSearchData,searchData
       }}
     >
       {children}
