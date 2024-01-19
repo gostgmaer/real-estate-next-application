@@ -422,7 +422,7 @@ export const generatePropertyRecord = () => {
         host_image: [generateImageURL()],
       },
       property_id: faker.string.uuid(),
-      name: `Property${index}`,
+      name: faker.commerce.productName(),
       type: String(faker.number.int({ min: 1, max: 3 })),
       description: faker.lorem.paragraph(),
       amenities: Array.from(

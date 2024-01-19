@@ -3,78 +3,30 @@ import { useFormik } from "formik";
 import { propertySchema } from "@/lib/validation";
 import Input from "../fields/input";
 import SelectField from "../fields/SelectField";
-import { FaDollarSign, FaRubleSign, FaRupeeSign } from "react-icons/fa";
+import { FaRupeeSign } from "react-icons/fa";
 import { Country, State, City } from "country-state-city";
 import MultiImageUploadr from "../fields/multiImageUploadr";
 import ImageUpload from "../fields/ImageUpload";
 import { useParams } from "next/navigation";
 import { patch, post } from "@/lib/helper/network";
-import { appId, propertyContainer } from "@/setting";
+
 import { notifySuccess, notifyinfo } from "@/lib/notify/notice";
-import { MdBathroom, MdBed, MdCalendarMonth, MdLandscape, MdPerson, MdPhone } from "react-icons/md";
-export const PropertyForm = ({ props }) => {
+import {
+  MdBathroom,
+  MdBed,
+  MdCalendarMonth,
+  MdLandscape,
+  MdPerson,
+  MdPhone,
+} from "react-icons/md";
+export const PropertyForm = ({ props, initialValues }) => {
   const params = useParams();
   const [file, setFile] = useState([]);
   const [hostimg, setHostimg] = useState(undefined);
-  var currValues = {
-    property_id: "",
-    name: "",
-    type: "",
-    location: {
-      city: "",
-      state: "",
-      country: "",
-      zipcode: "",
-    },
-    description: "",
-    amenities: [],
-    capacity: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    price_per_night: 0,
-    currency: "",
-    availability: {
-      start_date: "",
-      end_date: "",
-    },
-    images: [],
-    host: {
-      host_id: "",
-      host_name: "",
-      host_contact: "",
-      host_image: [],
-    },
-    year_of_construction: 0,
-    construction_status: "",
-    parking: false,
-    is_furnished: "",
-    floor: {
-      number: 0,
-      total_floors: 0,
-    },
-    size: {
-      area: 0,
-      unit: "",
-    },
-    rating: 0,
-    reviews: [],
-    rules: [],
-    contact_person: {
-      name: "",
-      email: "",
-      phone: "",
-    },
-    booking_policy: "",
-    additional_info: "",
-  };
 
-  useEffect(() => {
-    if (props?.data?.result) {
-      currValues = props.data.result;
-    }
-  }, []);
+
   const formik = useFormik({
-    initialValues: currValues,
+    initialValues: initialValues,
     // validationSchema: propertySchema,
     onSubmit: (values) => {
       console.log(values);
@@ -118,11 +70,7 @@ export const PropertyForm = ({ props }) => {
   const handleUpdate = async (values, id) => {
     console.log(id, params);
     const body = generateBody(values);
-    const request = await patch(
-      `/realstate/record`,
-      body,
-      id
-    );
+    const request = await patch(`/realstate/record`, body, id);
     if (request.status === "OK") {
       notifyinfo(request.message, 5000);
     }
@@ -130,10 +78,7 @@ export const PropertyForm = ({ props }) => {
 
   const handleSave = async (values) => {
     const body = generateBody(values);
-    const request = await post(
-      `/realstate/record`,
-      body
-    );
+    const request = await post(`/realstate/record`, body);
     if (request.status === "Created") {
       notifySuccess(request.message, 5000);
     }
@@ -168,7 +113,7 @@ export const PropertyForm = ({ props }) => {
                 placeholder: "Name",
               }}
               classes={undefined}
-              icon={<MdLandscape/>}
+              icon={<MdLandscape />}
               id={"name"}
             />
             {formik.errors.name && formik.touched.name && (
@@ -216,7 +161,7 @@ export const PropertyForm = ({ props }) => {
                 placeholder: "price_per_night",
               }}
               classes={undefined}
-              icon={<FaRupeeSign/>}
+              icon={<FaRupeeSign />}
               id={"price_per_night"}
             />
             {formik.errors.price_per_night &&
@@ -235,7 +180,7 @@ export const PropertyForm = ({ props }) => {
                 placeholder: "bedrooms",
               }}
               classes={undefined}
-              icon={<MdBed/>}
+              icon={<MdBed />}
               id={"bedrooms"}
             />
             {formik.errors.bedrooms && formik.touched.bedrooms && (
@@ -253,7 +198,7 @@ export const PropertyForm = ({ props }) => {
                 placeholder: "bathrooms",
               }}
               classes={undefined}
-              icon={<MdBathroom/>}
+              icon={<MdBathroom />}
               id={"bathrooms"}
             />
             {formik.errors.bathrooms && formik.touched.bathrooms && (
@@ -271,7 +216,7 @@ export const PropertyForm = ({ props }) => {
                 placeholder: "year_of_construction",
               }}
               classes={undefined}
-              icon={<MdCalendarMonth/>}
+              icon={<MdCalendarMonth />}
               id={"year_of_construction"}
             />
             {formik.errors.year_of_construction &&
@@ -465,7 +410,7 @@ export const PropertyForm = ({ props }) => {
                 placeholder: "john doi",
               }}
               classes={undefined}
-              icon={<MdPerson/>}
+              icon={<MdPerson />}
               id={"host.host_name"}
             />
             {formik.errors.host?.host_name &&
@@ -484,7 +429,7 @@ export const PropertyForm = ({ props }) => {
                 placeholder: "info@mail.com/1245634874",
               }}
               classes={undefined}
-              icon={<MdPhone/>}
+              icon={<MdPhone />}
               id={"host.host_contact"}
             />
             {formik.errors.host?.host_contact &&
