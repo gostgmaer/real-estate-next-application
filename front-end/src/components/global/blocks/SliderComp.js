@@ -5,27 +5,28 @@ const { useState, useEffect } = require("react");
 
 
 
-export const Slider = () => {
+export const Slider = ({data}) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
-  const images = [
-    'https://source.unsplash.com/random/800x400',
-    'https://source.unsplash.com/random/801x400',
-    'https://source.unsplash.com/random/802x400',
-    'https://source.unsplash.com/random/803x400',
-    // Add more image URLs as needed
-  ];
+    console.log(data);
+  // const images = [
+  //   'https://source.unsplash.com/random/800x400',
+  //   'https://source.unsplash.com/random/801x400',
+  //   'https://source.unsplash.com/random/802x400',
+  //   'https://source.unsplash.com/random/803x400',
+  //   // Add more image URLs as needed
+  // ];
 
   const handleThumbnailClick = (index) => {
     setActiveIndex(index);
   };
 
   const handleNext = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setActiveIndex((prevIndex) => (prevIndex + 1) % data.length);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    setActiveIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
   };
 
   useEffect(() => {
@@ -37,10 +38,10 @@ export const Slider = () => {
   return (
     <div className="relative w-full h-full overflow-hidden ">
       <div className="flex h-full transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
-        {images.map((image, index) => (
+        {data.map((image, index) => (
           <img
             key={index}
-            src={image}
+            src={image.url}
             alt={`Slider Image ${index}`}
             className="w-full h-full object-cover p-10 border rounded-lg"
           />
@@ -49,7 +50,7 @@ export const Slider = () => {
 
       <div className="absolute bottom-0 -translate-y-1/2 flex items-center w-full justify-center px-4">
       <div className="flex items-center  ">
-          {images.map((_, index) => (
+          {data.map((_, index) => (
             <div
               key={index}
               onClick={() => handleThumbnailClick(index)}

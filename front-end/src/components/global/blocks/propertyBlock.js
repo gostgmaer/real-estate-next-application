@@ -3,14 +3,17 @@ import React from "react";
 import {
   MdAdd,
   MdAreaChart,
+  MdBathroom,
   MdBathtub,
   MdBed,
   MdFavorite,
+  MdLandscape,
   MdLocationPin,
   MdZoomIn,
 } from "react-icons/md";
 
 const PropertyBlock = ({ data }) => {
+  console.log(data);
   return (
     <Link href={`/properties/search/${data._id}`} className=" w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer flex flex-col gap-2 dark:shadow-gray-500">
       <div className=" relative bg-gray-700 rounded-2xl flex items-center justify-center">
@@ -24,18 +27,18 @@ const PropertyBlock = ({ data }) => {
           </p>
         </div>
         <img
-          src={data.img}
+          src={data?.images[0]?.url}
           alt=""
           className=" rounded-2xl h-80 w-full hover:opacity-70 "
         />
         <div className=" absolute top-0 bottom-0 flex items-center "><MdZoomIn onClick={()=>{{
           console.log("data");
         }}} className=" h-10 w-10 text-gray-200 z-50"/></div>
-        <div className="flex items-center justify-end absolute bottom-[-30px] right-0 bg-white rounded-full ">
+        <div className="flex items-center justify-end absolute bottom-[-30px] right-0 bg-gray-50 dark:bg-gray-600  rounded-full ">
           <img
-            src={data.img}
+            src={data?.images[0]?.url}
             alt="User Image"
-            className="w-16 h-16 rounded-full object-cover opacity-5 "
+            className="w-16 h-16 rounded-full object-cover opacity-50 "
           />
         </div>
       </div>
@@ -47,10 +50,9 @@ const PropertyBlock = ({ data }) => {
           {" "}
           <span>$</span> 3000
         </p>
-        <p className=" font-bold text-xl">Studio Appoitment</p>
+        <p className=" font-bold text-xl">{data.name}</p>
         <p className=" text-gray-500 dark:text-gray-400">
-          If you need to use a one-off breakpoint that doesn t make sense to
-          include in your theme
+        {data.description}
         </p>
       </div>
       <div className="flex justify-between my-4">
@@ -58,26 +60,26 @@ const PropertyBlock = ({ data }) => {
           <p className="flex flex-col">
             <span className=" flex  items-center gap-2">
               {" "}
-              2 <MdBed />
+             {data.bedrooms} <MdBed />
             </span>{" "}
             <small className=" text-xs xs:text-sm">BedRoom</small>
           </p>
           <p className="flex flex-col">
             <span className=" flex  items-center gap-2">
               {" "}
-              1 <MdBathtub />{" "}
+             {data.bathrooms} <MdBathroom />{" "}
             </span>
-            <small className=" text-xs xs:text-sm">BedRoom</small>{" "}
+            <small className=" text-xs xs:text-sm">Bathrooms</small>{" "}
           </p>
           <p className="flex flex-col">
             <span className=" flex  items-center gap-2">
               {" "}
-              1702 <MdAreaChart />{" "}
+              {data.size.area} <MdLandscape />{" "}
             </span>
-            <small className=" text-xs xs:text-sm">Squire Ft</small>{" "}
+            <small className=" text-xs xs:text-sm">{data.size.unit}</small>{" "}
           </p>
         </div>
-        <div>
+        <div className="&[svg]:w-5 &[svg]:h-5">
           <button>
             <MdZoomIn className="h-4 w-4" />
           </button>
