@@ -12,7 +12,7 @@ const RegisterForm = () => {
   const handleSubmit = async (values) => {
     try {
       const res = await post("/authentication/user/register", values);
-      if (res) {
+      if (res.status="OK") {
         router.push("/auth/signin");
       }
     } catch (error) {

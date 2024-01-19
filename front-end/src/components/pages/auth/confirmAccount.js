@@ -10,6 +10,7 @@ const ConfirmForm = ({userData}) => {
   // const router = useRouter();
   // const [axios, spinner] = useAxios();
 
+  console.log(userData);
   const param = useSearchParams();
 
   const confirmAccountAction = async (e) => {
@@ -30,13 +31,13 @@ const ConfirmForm = ({userData}) => {
 
 
   return (
-    <div className=" flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md ">
+    <div className=" flex items-center justify-center ">
+      <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-md ">
         <h1 className="text-2xl font-semibold text-center mb-4">
           {userData && userData.message}
           {/* Account Confirmed! */}
         </h1>
-        <p className="text-gray-700 text-center mb-6">
+        <p className="text-gray-700 dark:text-gray-400 text-center mb-6">
           Thank you for confirming your account. You can now access our
           services.
         </p>
