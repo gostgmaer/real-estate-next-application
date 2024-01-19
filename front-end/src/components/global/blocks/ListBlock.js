@@ -65,7 +65,7 @@ export const PropertyListSlider = ({ data }) => {
             modules={[Pagination]}
             className="mySwiper"
           >
-            {imgArr.map((listing, index) => (
+            {data.data.map((listing, index) => (
               <SwiperSlide key={index}>
                 <PropertyBlock data={listing} />
               </SwiperSlide>
@@ -95,7 +95,7 @@ export const Propertieslist = ({ data }) => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {/* Swiper for Web */}
-        {imgArr.map((listing, index) => (
+        {data.list.map((listing, index) => (
           <div
             key={index}
             className=" col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 "

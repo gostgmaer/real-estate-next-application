@@ -5,15 +5,16 @@ import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import Link from "next/link";
 import ListingItem from "@/components/blocks/Card";
-import { faqs, imgArr, imgData } from "@/assets/img/data";
+import { currSliderMedia, faqs, imgArr, imgData } from "@/assets/img/data";
 import PropertyBlock from "@/components/global/blocks/propertyBlock";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
-import { PropertyListSlider } from "@/components/global/blocks/ListBlock";
+import { Propertieslist, PropertyListSlider } from "@/components/global/blocks/ListBlock";
 
 export default function Index({ data }) {
   SwiperCore.use([Navigation, Pagination]);
 
+  console.log(data);
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   const handleRadioChange = (id) => {
@@ -24,9 +25,8 @@ export default function Index({ data }) {
     <div className="w-full">
       <div className="max-w-full slider-elements">
         <Swiper navigation loop autoplay={{ delay: 5000 }}>
-          {data.currSliderMedia &&
-            data.currSliderMedia.length > 0 &&
-            data.currSliderMedia.map((listing, index) => (
+          {data &&
+            data.data.result.map((listing, index) => (
               <SwiperSlide key={index}>
                 <div className="relative flex flex-col items-center justify-center gap-6 min-h-screen mx-auto bg-gray-900">
                   {listing.video ? (
@@ -41,7 +41,7 @@ export default function Index({ data }) {
                     </video>
                   ) : (
                     <img
-                      src={listing.img}
+                      src={listing.images[0].url}
                       alt=""
                       className="absolute inset-0 object-cover w-full h-full opacity-50 pointer-events-none"
                     />
@@ -83,26 +83,26 @@ export default function Index({ data }) {
           <p>Select Property Type to begins</p>
         </div>
         <div className="max-w-7xl m-auto  gap-5 flex flex-col xs:flex-row  flex-wrap justify-center ">
-          {imgData.map((item) => (
+          {data.data.result.map((item) => (
             <div
               key={item.id}
               className=" xs:w-[45%] md:w-[22.5%] w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer dark:shadow-slate-600"
               onClick={() => handleRadioChange(item.id)}
             >
               <img
-                src={item.attributes.image.medium}
+                src={item.images[0].url}
                 alt=""
                 className=" rounded-2xl"
               />
               <p className=" flex items-center justify-center py-2 pb-3 gap-2">
-                {item.attributes.title.substring(0, 20)}{" "}
+                {/* {item.attributes.title.substring(0, 20)}{" "} */}
                 <input
                   type="radio"
-                  id={`radio-${item.id}`}
+                  id={`radio-${item._id}`}
                   name="radioGroup"
                   className=" flex items-center w-4 h-4"
-                  value={item.id}
-                  checked={selectedItemId === item.id}
+                  value={item._id}
+                  checked={selectedItemId === item._id}
                   onChange={(e) => setSelectedItemId(e.target.value)}
                 />
               </p>
@@ -169,9 +169,8 @@ export default function Index({ data }) {
             modules={[Pagination]}
             className="mySwiper"
           >
-            {data.currSliderMedia &&
-              data.currSliderMedia.length > 0 &&
-              imgArr.map((listing, index) => (
+            {data &&
+              data.data.result.map((listing, index) => (
                 <SwiperSlide key={index}>
                   <PropertyBlock data={listing} />
                 </SwiperSlide>
@@ -185,10 +184,10 @@ export default function Index({ data }) {
         </div>
       </div>
       <div className="max-w-full feature-properties p-5">
-        <PropertyListSlider data={{ title: "New Items" }} />
+        <PropertyListSlider data={{ title: "New Items",data:data.data.result }} />
       </div>
       <div className="max-w-full feature-properties p-5">
-        <PropertyListSlider data={{ title: "On Sale Listings" }} />
+        <Propertieslist data={{title:"New Sale Items",list:data.data.result}}  />
       </div>
       <div className=" max-w-full feature-properties p-5 mb-10">
         <div className="flex flex-col items-center justify-center gap-5 py-5 max-w-7xl m-auto  flex-wrap  ">
