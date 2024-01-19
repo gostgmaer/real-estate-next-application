@@ -26,7 +26,7 @@ export const getServerSideProps = async (ctx) => {
     header: {},
   };
   const result = await serverMethod(
-    `/record/${appId}/container/${propertyContainer}/${id}`,
+    `/realstate/record/${id}`,
     params
   );
 

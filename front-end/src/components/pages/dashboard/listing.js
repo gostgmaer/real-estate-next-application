@@ -22,14 +22,14 @@ const Listing = ({props}) => {
   }, [sort, page, limit]);
 
 
-  const data = React.useMemo(
-    () => [
-      { id: 1, name: "Property 1", price: "$500,000", location: "City A" },
-      { id: 2, name: "Property 2", price: "$600,000", location: "City B" },
-      // Add more properties as needed
-    ],
-    []
-  );
+  // const data = React.useMemo(
+  //   () => [
+  //     { id: 1, name: "Property 1", price: "$500,000", location: "City A" },
+  //     { id: 2, name: "Property 2", price: "$600,000", location: "City B" },
+  //     // Add more properties as needed
+  //   ],
+  //   []
+  // );
 
   const columns = React.useMemo(
     () => [

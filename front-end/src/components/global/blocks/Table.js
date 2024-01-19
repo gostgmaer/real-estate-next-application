@@ -5,11 +5,13 @@ import PaginationBlock from "./pagination/paginationBlock";
 
 const Table = ({ columns, data, buttons, params }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data,
-     
-    },useSortBy);
+    useTable(
+      {
+        columns,
+        data,
+      },
+      useSortBy
+    );
 
   return (
     <div className="overflow-x-auto min-w-full rounded-xl bg-white dark:bg-gray-600 border border-gray-300 shadow-md ">
@@ -26,7 +28,7 @@ const Table = ({ columns, data, buttons, params }) => {
                   className="py-3 px-4 border-b font-semibold text-sm text-gray-600 uppercase tracking-wider text-start"
                   key={columnIndex}
                 >
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
               {buttons && <th className="py-3 px-4 border-b"></th>}

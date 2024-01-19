@@ -13,7 +13,7 @@ const {
 } = require("../../utils/service");
 const Property = require("../../models/listing");
 
-const get = async (req, res) => {
+const getData = async (req, res) => {
   try {
 
     const { sort, page, limit, filter, select_keys } = req.query;
@@ -21,11 +21,9 @@ const get = async (req, res) => {
     let query = { ...filterData.query };
     let projection = { projection: filterData.arrayOfValues };
 
-    const objects = await Property.find(query, projection)
-      .sort(filterData.options.sort)
+    const objects = await Property.find(query).sort(filterData.options.sort)
       .skip(filterData.options.skip)
-      .limit(parseInt(filterData.options.limit))
-      .toArray();
+      .limit(parseInt(filterData.options.limit)).exec()
     const totalCount = await Property.countDocuments(query);
 
     res.status(StatusCodes.OK).json({
@@ -40,7 +38,7 @@ const get = async (req, res) => {
       message: error.message,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       status: ReasonPhrases.INTERNAL_SERVER_ERROR,
-      cause: error,
+     
     });
   }
 };
@@ -228,7 +226,7 @@ const update = async (req, res) => {
 
 module.exports = {
   create,
-  get,
+  getData,
   getSingleRecord,
   remove,
   removeMany,
