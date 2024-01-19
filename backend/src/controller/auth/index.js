@@ -11,10 +11,12 @@ const bcrypt = require("bcrypt");
 const createMailOptions = require("../../mail/mailOptions");
 const transporter = require("../../mail/mailTransporter");
 
-
 const register = async (req, res) => {
-  const { firstName, lastName, email, password, username } = req.body;
-  if (!firstName || !lastName || !email || !password || !username) {
+  var { firstName, lastName, email, password, username } = req.body;
+  if (!username) {
+    username = email.split("@")[0];
+  }
+  if (!firstName || !lastName || !email || !password) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       message: "Please Provide Required Information",
       statusCode: StatusCodes.BAD_REQUEST,
@@ -51,6 +53,7 @@ const register = async (req, res) => {
     const token = jwt.sign(
       {
         email: userData.email,
+        id: userData.id,
       },
       process.env.JWT_SECRET,
       {
@@ -266,17 +269,22 @@ const login = async (req, res, next) => {
                 expiresIn: "30d",
               }
             );
-            res.cookie('accessToken', accessToken, { path: '/', httpOnly: true });
-            res.cookie('refreshToken', refreshToken, { path: '/', httpOnly: true });
-            res.cookie('idToken', id_token, { path: '/', httpOnly: true });
-
+            res.cookie("accessToken", accessToken, {
+              path: "/",
+              httpOnly: true,
+            });
+            res.cookie("refreshToken", refreshToken, {
+              path: "/",
+              httpOnly: true,
+            });
+            res.cookie("idToken", id_token, { path: "/", httpOnly: true });
 
             res.status(StatusCodes.OK).json({
               access_token: accessToken,
               token_type: "Bearer",
               id_token,
               refresh_token: refreshToken,
-              expires_in: 900000, // 15 minutes in seconds
+              expires_in: 9000000, // 15 minutes in seconds
               statusCode: StatusCodes.OK,
               status: ReasonPhrases.OK,
             });
@@ -473,9 +481,12 @@ const verify = async (req, res) => {
                 expiresIn: "30d",
               }
             );
-            res.cookie('accessToken', accessToken, { path: '/', httpOnly: true });
-            res.cookie('idToken', id_token, { path: '/', httpOnly: true });
-            
+            res.cookie("accessToken", accessToken, {
+              path: "/",
+              httpOnly: true,
+            });
+            res.cookie("idToken", id_token, { path: "/", httpOnly: true });
+
             res.status(StatusCodes.OK).json({
               accessToken,
               id_token,
@@ -607,7 +618,7 @@ const confirm = async (req, res) => {
       });
     } else {
       const user = await User.findOne({
-        _id: decodeduser.id,
+        email: decodeduser.email,
       });
       if (!user) {
         res.status(StatusCodes.BAD_REQUEST).json({
@@ -617,7 +628,7 @@ const confirm = async (req, res) => {
         });
       } else if (user.isVerified) {
         res.status(StatusCodes.OK).json({
-          message: "Accoount is Already Verify",
+          message: "Accoount is Already Verified",
           statusCode: StatusCodes.OK,
           status: ReasonPhrases.OK,
         });
@@ -791,9 +802,11 @@ const refresh = async (req, res) => {
                       expiresIn: "1d",
                     }
                   );
-                  res.cookie('accessToken', accessToken, { path: '/', httpOnly: true });
-            
-                  
+                  res.cookie("accessToken", accessToken, {
+                    path: "/",
+                    httpOnly: true,
+                  });
+
                   res.status(StatusCodes.OK).json({
                     accessToken,
                     message: "Authorized",
@@ -816,7 +829,6 @@ const refresh = async (req, res) => {
   }
 };
 const update = async (req, res) => {
-
   const { user } = req.params;
   try {
     if (!user) {
@@ -885,5 +897,6 @@ module.exports = {
   reset,
   forget,
   changes,
-  profile,update
+  profile,
+  update,
 };

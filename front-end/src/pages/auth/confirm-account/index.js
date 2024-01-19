@@ -1,6 +1,7 @@
 
 import Layout from '@/components/global/layout'
 import ConfirmForm from '@/components/pages/auth/confirmAccount'
+import { serverMethod } from '@/lib/helper/network'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,15 +12,15 @@ const index = (props) => {
     <Layout>
 
       <Head>
-        <title>{"Confirm Your Account"}</title>
+        <title>{props.title}</title>
         <meta name="description" content="Your Real State Website Description" />
         <meta name="keywords" content="Real State, online shopping" />
         <meta name="author" content="Kishor Sarkar" />
       </Head>
 
-      <div className="flex w-full flex-col justify-center px-5">
+      <div className="flex w-full flex-col justify-center px-5 h-full">
         <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center h-auto">
             <Link className="mb-7 inline-block max-w-[64px] lg:mb-9" href="/">
               <Image
                 alt="Isomorphic"
@@ -37,11 +38,11 @@ const index = (props) => {
           </h2> */}
           </div>
 
-          <ConfirmForm userData={props.data} />
-          <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
+          <ConfirmForm userData={props.result} />
+          <p className="mt-6 text-center text-[15px] leading-loose  md:mt-7 lg:mt-9 lg:text-base">
             Please
             <Link
-              className="font-semibold text-gray-700 transition-colors hover:text-primary ml-1 mr-1"
+              className="font-semibold  transition-colors hover:text-primary ml-1 mr-1"
               href="/auth/signin"
             >
               Sign in
@@ -58,22 +59,21 @@ export default index
 
 
 export async function getServerSideProps(context) {
-  // const session = await getSession(context);
+  
 
-  // if (session) {
-  //   return {
-  //     redirect: {
-  //       destination: '/',
-  //       permanent: false,
-  //     }
-  //   }
-  // } else {
-  //   return {
-  //     props: { title: "Real State Reset your password" }
-  //   }
-  // }
+  const params = {
+    method: "post",
+    header: {
+
+    },
+  };
+  const result = await serverMethod(
+    `/authentication/user/confirm/${context.query.token}`,
+    params
+  );
+
 
   return {
-    props: { title: "Forget Password" }
+    props: { title: "Confirm Account",result }
   }
 }
