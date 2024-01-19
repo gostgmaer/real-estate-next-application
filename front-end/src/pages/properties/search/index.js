@@ -1,6 +1,6 @@
 import Layout from "@/components/global/layout";
 import Search from "@/components/pages/listing/search";
-import { convertObject, parseUrlWithQueryParams } from "@/lib/helper/functions";
+import { convertObject, generatePropertyRecord, parseUrlWithQueryParams } from "@/lib/helper/functions";
 import { serverMethod } from "@/lib/helper/network";
 import { appId, propertyContainer } from "@/setting";
 import Head from "next/head";
@@ -18,7 +18,8 @@ const Index = (props) => {
           Properties
         </h1>
         <div className="flex flex-col md:flex-row max-w-7xl  m-auto">
-          {" "}
+
+            <button onClick={generatePropertyRecord}>Generate</button>
           <Search data={props} />
         </div>
       </div>
@@ -39,7 +40,7 @@ export const getServerSideProps = async (ctx) => {
     query: { ...query, filter: JSON.stringify(query.filter) },
   };
   const result = await serverMethod(
-    `/realstate/record/`,
+    `/realstate/record`,
     params
   );
 
