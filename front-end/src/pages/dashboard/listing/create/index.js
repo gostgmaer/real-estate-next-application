@@ -37,7 +37,60 @@ const Index = () => {
             </Link>
           </div>
           <div className=" ">
-            <PropertyForm props={undefined} />
+            <PropertyForm
+              props={undefined}
+              initialValues={{
+                property_id: "",
+                name: "",
+                type: "",
+                location: {
+                  city: "",
+                  state: "",
+                  country: "",
+                  zipcode: "",
+                },
+                description: "",
+                amenities: [],
+                capacity: 0,
+                bedrooms: 0,
+                bathrooms: 0,
+                price_per_night: 0,
+                currency: "",
+                availability: {
+                  start_date: "",
+                  end_date: "",
+                },
+                images: [],
+                host: {
+                  host_id: "",
+                  host_name: "",
+                  host_contact: "",
+                  host_image: [],
+                },
+                year_of_construction: 0,
+                construction_status: "",
+                parking: false,
+                is_furnished: "",
+                floor: {
+                  number: 0,
+                  total_floors: 0,
+                },
+                size: {
+                  area: 0,
+                  unit: "",
+                },
+                rating: 0,
+                reviews: [],
+                rules: [],
+                contact_person: {
+                  name: "",
+                  email: "",
+                  phone: "",
+                },
+                booking_policy: "",
+                additional_info: "",
+              }}
+            />
           </div>
         </div>
       </div>

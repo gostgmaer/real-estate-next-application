@@ -27,7 +27,7 @@ const Index = (props) => {
             </Link>
           </div>
           <div className=" dark:bg-gray-700">
-            <PropertyForm props={props.data} />
+            <PropertyForm props={props.data} initialValues={props.data.result} />
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@ const Index = (props) => {
 export default Index;
 
 export const getServerSideProps = async (ctx) => {
-  console.log(ctx);
+  // console.log(ctx);
 
   const { id } = ctx.params;
   const params = {

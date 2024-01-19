@@ -45,7 +45,7 @@ const getData = async (req, res) => {
 
 const getSingleRecord = async (req, res) => {
   try {
-    const { appId, containerId } = req.params;
+    
     const objectId = req.params.id;
     if (!objectId) {
       res.status(StatusCodes.NOT_FOUND).json({
@@ -54,8 +54,8 @@ const getSingleRecord = async (req, res) => {
         status: ReasonPhrases.NOT_FOUND,
       });
     }
-    const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await Property.findOne({ appId, containerId, _id: ID });
+
+    const object = await Property.findById(objectId);
     if (!object) {
       res.status(StatusCodes.NOT_FOUND).json({
         result: object,

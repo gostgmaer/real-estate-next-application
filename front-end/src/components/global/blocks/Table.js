@@ -4,6 +4,7 @@ import { useSortBy, useTable } from "react-table";
 import PaginationBlock from "./pagination/paginationBlock";
 
 const Table = ({ columns, data, buttons, params }) => {
+ 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -12,7 +13,7 @@ const Table = ({ columns, data, buttons, params }) => {
       },
       useSortBy
     );
-
+  
   return (
     <div className="overflow-x-auto min-w-full rounded-xl bg-white dark:bg-gray-600 border border-gray-300 shadow-md ">
       <table

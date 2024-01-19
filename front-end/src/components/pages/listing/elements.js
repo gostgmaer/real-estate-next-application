@@ -1,4 +1,3 @@
-import { imgArr } from "@/assets/img/data";
 import PaginationBlock from "@/components/global/blocks/pagination/paginationBlock";
 import PropertyBlock from "@/components/global/blocks/propertyBlock";
 import { useGlobalContext } from "@/context/globalContext";

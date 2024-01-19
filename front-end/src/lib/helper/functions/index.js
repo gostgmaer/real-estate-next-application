@@ -1,13 +1,12 @@
-
 import axios from "axios";
 import useSWR from "swr";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import moment from "moment";
 import { baseurl } from "@/setting";
 import { useCallback } from "react";
+import { faker } from "@faker-js/faker";
+import { post } from "../network";
 // Export the calculateTimeGap function with maxGap parameter
-
-
 
 export function calculateTimeGap(date1, date2, maxGap) {
   const momentDate1 = moment(date1, "YYYY-MM-DD HH:mm:ss");
@@ -57,15 +56,12 @@ export const findIndex = (array, index) => {
   return found;
 };
 
-
 // export const setClientCookie = (name, value, timestamp) => {
 //   const expirationDate = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
 //   Cookies.set(name, value, { expires: expirationDate });
 // };
 
-
- 
-export function objectToQueryString(obj, parentKey = '') {
+export function objectToQueryString(obj, parentKey = "") {
   const params = [];
 
   for (const key in obj) {
@@ -73,30 +69,38 @@ export function objectToQueryString(obj, parentKey = '') {
       const value = obj[key];
       const fullKey = parentKey ? `${parentKey}.${key}` : key;
 
-      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      if (
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value)
+      ) {
         // Recursively handle nested objects
         params.push(objectToQueryString(value, fullKey));
-      } else if (value !== undefined && value !== null && value !== '') {
-        params.push(`${encodeURIComponent(fullKey)}=${encodeURIComponent(value)}`);
+      } else if (value !== undefined && value !== null && value !== "") {
+        params.push(
+          `${encodeURIComponent(fullKey)}=${encodeURIComponent(value)}`
+        );
       }
     }
   }
 
-  return params.join('&');
+  return params.join("&");
 }
 
 export function generateUrlFromNestedObject(nestedObject) {
   const queryParams = [];
 
-  const processNestedObject = (obj, prefix = '') => {
+  const processNestedObject = (obj, prefix = "") => {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const value = obj[key];
 
-        if (typeof value === 'object' && value !== null) {
-          processNestedObject(value, prefix + key + '.');
+        if (typeof value === "object" && value !== null) {
+          processNestedObject(value, prefix + key + ".");
         } else {
-          queryParams.push(`${encodeURIComponent(prefix + key)}=${encodeURIComponent(value)}`);
+          queryParams.push(
+            `${encodeURIComponent(prefix + key)}=${encodeURIComponent(value)}`
+          );
         }
       }
     }
@@ -105,16 +109,16 @@ export function generateUrlFromNestedObject(nestedObject) {
   processNestedObject(nestedObject);
 
   if (queryParams.length > 0) {
-    return '?' + queryParams.join('&');
+    return "?" + queryParams.join("&");
   } else {
-    return '';
+    return "";
   }
 }
 
 export function deleteEmptyKeys(obj) {
   for (var prop in obj) {
     if (obj.hasOwnProperty(prop)) {
-      if (typeof obj[prop] === 'object') {
+      if (typeof obj[prop] === "object") {
         // Recursively call deleteEmptyKeys for nested objects
         deleteEmptyKeys(obj[prop]);
 
@@ -122,7 +126,11 @@ export function deleteEmptyKeys(obj) {
         if (Object.keys(obj[prop]).length === 0) {
           delete obj[prop];
         }
-      } else if (obj[prop] === null || obj[prop] === undefined || obj[prop] === '') {
+      } else if (
+        obj[prop] === null ||
+        obj[prop] === undefined ||
+        obj[prop] === ""
+      ) {
         // Delete key if the value is null, undefined, or an empty string
         delete obj[prop];
       }
@@ -131,7 +139,7 @@ export function deleteEmptyKeys(obj) {
 }
 
 export function parseUrlWithQueryParams(url) {
-  const queryString = url.split('?')[1];
+  const queryString = url.split("?")[1];
   if (!queryString) {
     return {};
   }
@@ -140,7 +148,7 @@ export function parseUrlWithQueryParams(url) {
   const nestedObject = {};
 
   params.forEach((value, key) => {
-    const keys = key.split('.');
+    const keys = key.split(".");
     let currentLevel = nestedObject;
 
     for (let i = 0; i < keys.length - 1; i++) {
@@ -149,7 +157,8 @@ export function parseUrlWithQueryParams(url) {
     }
 
     // Check for empty or undefined values before decoding
-    const decodedValue = value === 'undefined' ? undefined : decodeURIComponent(value);
+    const decodedValue =
+      value === "undefined" ? undefined : decodeURIComponent(value);
     currentLevel[keys[keys.length - 1]] = decodedValue;
   });
 
@@ -157,65 +166,62 @@ export function parseUrlWithQueryParams(url) {
 }
 
 export function leftFillNum(num, targetLength) {
-    return num.toString().padStart(targetLength, "0");
+  return num.toString().padStart(targetLength, "0");
+}
+
+export const initialValue = 0;
+// export const sumWithInitial = array1.reduce(
+//   (accumulator, currentValue) => accumulator + currentValue,
+//   initialValue
+// );
+
+export const sumWithInitial = (array1) => {
+  return array1.reduce((sum, { subtotal }) => sum + subtotal, 0);
+};
+
+export const cleanQueryparam = (query) => {
+  return Object.keys(query).forEach(
+    (key) =>
+      (query[key] === "" || query[key] == null || query[key] === undefined) &&
+      delete query[key]
+  );
+};
+
+export function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
   }
-  
-  export const initialValue = 0;
-  // export const sumWithInitial = array1.reduce(
-  //   (accumulator, currentValue) => accumulator + currentValue,
-  //   initialValue
-  // );
-  
-  export const sumWithInitial = (array1) => {
-   return array1.reduce( ( sum, { subtotal } ) => sum + subtotal , 0)
-  
-  };
-  
-  export const cleanQueryparam = (query) => {
-    return Object.keys(query).forEach(
-      (key) =>
-        (query[key] === "" || query[key] == null || query[key] === undefined) &&
-        delete query[key]
-    );
-  };
-  
-  
-  export function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+export function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
+// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
+// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
+// with exampleArray.slice().sort(exampleComparator)
+
+export function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
     }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-  
-  export function getComparator(order, orderBy) {
-    return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-  
-  // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-  // stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-  // only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-  // with exampleArray.slice().sort(exampleComparator)
-  
-  export function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
 
-
-
-const AUTH_TOKEN = "asdjkashdjkashdjashduiasgdhiuasdijahsdiuhasuidhauisdhiauhdiuhaid"
+const AUTH_TOKEN =
+  "asdjkashdjkashdjashduiasgdhiuasdijahsdiuhasuidhauisdhiauhdiuhaid";
 // export const getToken = () => {
 //   window.localStorage.getItem(AUTH_TOKEN);
 // };
@@ -246,7 +252,7 @@ export function useFetcher(endpoint) {
   };
 }
 
-export function useGetFetcher(endpoint,fetcherData) {
+export function useGetFetcher(endpoint, fetcherData) {
   const { data, error, isLoading } = useSWR(
     `${baseurl}${endpoint}?populate=*`,
     fetcherData
@@ -259,14 +265,11 @@ export function useGetFetcher(endpoint,fetcherData) {
   };
 }
 
-
-
-
 export function storeCookiesOfObject(data) {
   if (data) {
     const userKeys = Object.keys(data);
 
-    userKeys.forEach(key => {
+    userKeys.forEach((key) => {
       const value = data[key];
       Cookies.set(key, value);
     });
@@ -290,7 +293,7 @@ export function convertToNestedObject(flatObject) {
   //   });
   // });
   Object.keys(flatObject).forEach((key) => {
-    const keys = key.split('.');
+    const keys = key.split(".");
     let currentObj = result;
 
     keys.forEach((nestedKey, index) => {
@@ -324,7 +327,7 @@ export function transformKeysToObject(obj) {
       }
 
       // If the value is an object, recursively call the function
-      if (typeof obj[key] === 'object') {
+      if (typeof obj[key] === "object") {
         transformKeysToObject(obj[key]);
       }
     }
@@ -333,10 +336,7 @@ export function transformKeysToObject(obj) {
   return obj;
 }
 
-
-
-export  function convertNumericKeysToObject(obj) {
-
+export function convertNumericKeysToObject(obj) {
   function processObject(obj) {
     for (const key in obj) {
       if (/^\d/.test(key)) {
@@ -346,7 +346,7 @@ export  function convertNumericKeysToObject(obj) {
         // Convert the numeric key to an array with the original value
         obj[key.split(":")[0]] = [value];
         delete obj[key]; // Remove the original key-value pair
-      } else if (typeof obj[key] === 'object') {
+      } else if (typeof obj[key] === "object") {
         // Recursively process nested objects
         processObject(obj[key]);
       }
@@ -357,7 +357,6 @@ export  function convertNumericKeysToObject(obj) {
   return obj; // Explicitly return the modified object
 }
 
-
 export function convertObject(inputObject) {
   const outputObject = {};
 
@@ -365,7 +364,7 @@ export function convertObject(inputObject) {
     if (inputObject.hasOwnProperty(key)) {
       const value = inputObject[key];
 
-      if (typeof value === 'object' && !Array.isArray(value)) {
+      if (typeof value === "object" && !Array.isArray(value)) {
         const subKey = Object.keys(value)[0];
         const subValue = value[subKey];
 
@@ -383,9 +382,7 @@ export function convertObject(inputObject) {
   }
 
   return outputObject;
-
 }
-
 
 export const setToken = (name, value, days, type) => {
   if (type === "ACCESS_TOKEN") {
@@ -397,8 +394,100 @@ export const setToken = (name, value, days, type) => {
   }
 };
 
-
 export const setClientCookie = (name, value, timestamp) => {
   const expirationDate = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
   Cookies.set(name, value, { expires: expirationDate });
+};
+
+export const generatePropertyRecord = () => {
+  function generateImageURL() {
+    return faker.image.url();
+  }
+  function generateRecord(index) {
+    return {
+      location: {
+        city: faker.location.city(),
+        state: faker.location.state(),
+        country: "IN",
+        zipcode: faker.location.zipCode(),
+      },
+      availability: {
+        start_date: faker.date.future().toISOString(),
+        end_date: faker.date.future().toISOString(),
+      },
+      host: {
+        host_id: faker.string.uuid(),
+        host_name: faker.person.firstName(),
+        host_contact: faker.internet.email(),
+        host_image: [generateImageURL()],
+      },
+      property_id: faker.string.uuid(),
+      name: faker.commerce.productName(),
+      type: String(faker.number.int({ min: 1, max: 3 })),
+      description: faker.lorem.paragraph(),
+      amenities: Array.from(
+        { length: faker.number.int({ min: 1, max: 3 }) },
+        () => faker.word.sample()
+      ),
+      capacity: faker.number.int({ min: 1, max: 10 }),
+      bedrooms: faker.number.int({ min: 1, max: 5 }),
+      bathrooms: faker.number.int({ min: 1, max: 3 }),
+      price_per_night: faker.number.int({ min: 200, max: 125412 }),
+      currency: faker.finance.currencyCode(),
+      floor: {
+        number: faker.number.int({ min: 1, max: 10 }),
+        total_floors: faker.number.int({ min: 1, max: 50 }),
+      },
+      size: {
+        area: faker.number.int({ min: 200, max: 52414 }),
+        unit: "sq.ft",
+      },
+      images: Array.from(
+        { length: faker.number.int({ min: 1, max: 3 }) },
+        () => ({ url: generateImageURL(), name: "" })
+      ),
+      year_of_construction: faker.number.int({ min: 1996, max: 2020 }),
+      construction_status: faker.helpers.arrayElement([
+        "Complete",
+        "Under Construction",
+      ]),
+      parking: faker.datatype.boolean(),
+      is_furnished: faker.helpers.arrayElement(["Yes", "No"]),
+      rating: Number(faker.finance.amount(3, 5, 1)),
+      reviews: Array.from(
+        { length: faker.number.int({ min: 0, max: 3 }) },
+        () => ({
+          user: faker.person.firstName(),
+          comment: faker.lorem.sentence(),
+          rating: Number(faker.finance.amount(3, 5, 1)),
+        })
+      ),
+      rules: Array.from({ length: faker.number.int({ min: 0, max: 2 }) }, () =>
+        faker.lorem.sentence()
+      ),
+      booking_policy: faker.helpers.arrayElement(["Flexible", "Strict"]),
+      additional_info: faker.lorem.paragraph(),
+      createdAt: faker.date.recent().toISOString(),
+      updatedAt: faker.date.recent().toISOString(),
+    };
+  }
+  const records = Array.from({ length: 1000 }, (_, i) => generateRecord(i + 1));
+
+  const postRecord = async (data) => {
+    try {
+      const response = await post("/realstate/record", data);
+      console.log("POST request successful!");
+      // console.log("Response:", response.data);
+    } catch (error) {
+      console.error("POST request failed:", error.message);
+    }
+  };
+
+  const postAllRecords = async () => {
+    for (const data of records) {
+      await postRecord(data);
+    }
+  };
+
+  postAllRecords();
 };
