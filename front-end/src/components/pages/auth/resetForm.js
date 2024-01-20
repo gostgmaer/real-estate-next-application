@@ -22,7 +22,7 @@ const ResetForm = () => {
       );
       if (reset.status == "OK") {
         notifySuccess(reset.message,5000)
-        router.push("/auth/login");
+        router.push("/auth/signin");
       }
     } catch (error) {
       const myErr = error?.["message"];

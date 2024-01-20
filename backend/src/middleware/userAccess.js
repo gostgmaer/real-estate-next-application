@@ -28,7 +28,8 @@ async function userMiddleWare(req, res, next) {
     // Decode the token to get the user's ID
     const decode = jwtDecode(tokenValue)
     const userData = getUserInfo(req)
-    req.query = { ...req.query, filter:JSON.stringify(userData) }
+    req.params = {...req.params,...userData}
+    req.query = { ...req.query }
     next();
   } catch (error) {
     console.error(error);

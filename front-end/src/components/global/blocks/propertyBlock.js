@@ -13,7 +13,7 @@ import {
 } from "react-icons/md";
 
 const PropertyBlock = ({ data }) => {
-  console.log(data);
+
   return (
     <Link href={`/properties/search/${data._id}`} className=" w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer flex flex-col gap-2 dark:shadow-gray-500">
       <div className=" relative bg-gray-700 rounded-2xl flex items-center justify-center">
