@@ -6,6 +6,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { loginValidationSchema } from "@/lib/validation";
 import Input from "@/components/global/fields/input";
+import { notifyerror } from "@/lib/notify/notice";
 
 const LoginForm = () => {
 
@@ -25,6 +26,7 @@ const LoginForm = () => {
         redirect: false,
         ...values,
       });
+
       if (res.ok) {
         if (res.url) {
           const parsedUrl = new URL(res.url);
@@ -37,17 +39,13 @@ const LoginForm = () => {
         } else {
           route.push("/home");
         }
+      }else{
+        notifyerror(res.error,5000)
       }
     },
   });
 
-  const handleLogin = async () => {};
 
-  // useEffect(() => {
-  //   if (userId) {
-  //     route.push("/my-account/" + userId["user_id"]);
-  //   }
-  // }, [userId]);
 
   return (
     <>
