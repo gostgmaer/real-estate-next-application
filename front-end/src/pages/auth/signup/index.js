@@ -1,6 +1,7 @@
 
 import Layout from "@/components/global/layout";
 import RegisterForm from "@/components/pages/auth/register";
+import { SignUpForm } from "@/components/pages/auth/signup";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
@@ -17,7 +18,7 @@ const index = (props) => {
         <meta name="author" content="Kishor Sarkar" />
       </Head>
       <div className="flex w-full flex-col justify-center px-5">
-        <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
+        <div className="mx-auto w-full max-w-lg py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
           <div className="flex flex-col items-center">
             <Link className="mb-7 inline-block max-w-[64px] lg:mb-9" href="/">
               <img
@@ -56,7 +57,7 @@ const index = (props) => {
             </span>
           </div>
 
-          <RegisterForm />
+          <SignUpForm props={undefined} />
           <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
             Already have an account?
             <Link

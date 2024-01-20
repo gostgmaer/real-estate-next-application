@@ -92,9 +92,8 @@ export const post = async (endpint, body,header) => {
     try {
         response = await axios.request(option);
     } catch (e) {
-        error = e.response;
-
-        // throw new Error(JSON.stringify(e.response));
+        error = e.response?.data?e.response?.data:e.response;
+   
     }
 
     // if success return value

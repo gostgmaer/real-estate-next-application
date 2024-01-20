@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { loginValidationSchema } from "@/lib/validation";
+import Input from "@/components/global/fields/input";
+import { notifyerror } from "@/lib/notify/notice";
 
 const LoginForm = () => {
 
@@ -24,6 +26,7 @@ const LoginForm = () => {
         redirect: false,
         ...values,
       });
+
       if (res.ok) {
         if (res.url) {
           const parsedUrl = new URL(res.url);
@@ -36,50 +39,61 @@ const LoginForm = () => {
         } else {
           route.push("/home");
         }
+      }else{
+        notifyerror(res.error,5000)
       }
     },
   });
 
-  const handleLogin = async () => {};
 
-  // useEffect(() => {
-  //   if (userId) {
-  //     route.push("/my-account/" + userId["user_id"]);
-  //   }
-  // }, [userId]);
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="space-y-5 lg:space-y-6">
-          <div className="rizzui-input-root flex flex-col [&amp;>label>span]:font-medium">
-            <label className="block">
-              <span className="rizzui-input-label block text-base mb-2">
-                Email
-              </span>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2  placeholder:text-sm border rounded-md focus:outline-none focus:border-blue-500 pr-0"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
-            </label>
+     <div className=" bg-white max-w-7xl m-auto rounded-xl dark:bg-gray-700 p-5">
+      <form
+        onSubmit={formik.handleSubmit}
+        className=" mx-auto p-5 bg-gray-50 dark:bg-gray-900 grid rounded-lg"
+      >
+        <div className="  w-full mx-auto my-5 grid  gap-5 sm:grid-cols-2 col-span-full">
+       
+
+          <div className="col-span-full">
+            <Input
+              label={"email"}
+              type={"email"}
+              additionalAttrs={{
+                ...formik.getFieldProps("email"),
+                placeholder: "info@mail.com",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"email"}
+            />
+            {formik.errors.email && formik.touched.email && (
+              <div className="text-red-500 text-sm">{formik.errors.email}</div>
+            )}
           </div>
-          <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
-            <label className="block">
-              <span className="rizzui-password-label block text-base mb-2">
-                Password
-              </span>
-              <PasswordField
-                value={formik.values.password}
-                handleChange={formik.handleChange}
-                placeholder={"Password"}
-                name={"password"}
-              />
-            </label>
+          <div className="col-span-full">
+            <Input
+              label={"Password"}
+              type={"password"}
+              additionalAttrs={{
+                ...formik.getFieldProps("password"),
+                placeholder: "Password",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"password"}
+            />
+            {formik.errors.password && formik.touched.password && (
+              <div className="text-red-500 text-sm">
+                {formik.errors.password}
+              </div>
+            )}
           </div>
+         
+
+          <div className=" col-span-full mt-10">
           <div className="flex items-center justify-between pb-1">
             <div className="rizzui-checkbox-root flex flex-col [&amp;>label>span]:font-medium">
               <label className="rizzui-checkbox-container flex flex-row items-center">
@@ -102,19 +116,21 @@ const LoginForm = () => {
               Forgot Password?
             </Link>
           </div>
+          </div>
+        </div>
+
+        <div className="col-span-full w-full  mx-auto mt-20">
           <button
-            className="rizzui-button inline-flex font-medium items-center justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-8 py-2.5 text-base  rounded-md border border-transparent focus-visible:ring-offset-2 bg-gray-900 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0 w-full text-white"
             type="submit"
+            disabled={!formik.isValid}
+            className="bg-blue-500 text-white w-full px-4 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300  disabled:bg-gray-500"
           >
-            Sign In
+            Signin
           </button>
         </div>
-        {/* {authError && (
-          <div className="error text-red-500 font-medium text-sm py-2">
-            <p className="text-center">{authError.message}</p>
-          </div>
-        )} */}
       </form>
+    </div>
+     
     </>
   );
 };
