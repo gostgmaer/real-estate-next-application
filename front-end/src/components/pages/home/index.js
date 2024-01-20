@@ -43,7 +43,7 @@ export default function Index({ data }) {
                     </video>
                   ) : (
                     <img
-                      src={listing.images[0].url}
+                      src={listing?.images[0]?.url?listing?.images[0]?.url:""}
                       alt=""
                       className="absolute inset-0 object-cover w-full h-full opacity-50 pointer-events-none"
                     />
@@ -87,12 +87,12 @@ export default function Index({ data }) {
         <div className="max-w-7xl m-auto  gap-5 flex flex-col xs:flex-row  flex-wrap justify-center ">
           {data.data.result.map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               className=" xs:w-[45%] md:w-[22.5%] w-full p-4 pb-0 shadow-md rounded-2xl cursor-pointer dark:shadow-slate-600"
-              onClick={() => handleRadioChange(item.id)}
+              onClick={() => handleRadioChange(item._id)}
             >
               <img
-                src={item.images[0].url}
+                src={item?.images[0]?.url?item?.images[0]?.url:""}
                 alt=""
                 className=" rounded-2xl"
               />
