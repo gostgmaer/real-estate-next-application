@@ -839,11 +839,17 @@ const update = async (req, res) => {
       });
     }
 
-    const user = await User.findById(user);
-    if (user) {
+    const userdata = await User.findById(user);
+    if (userdata) {
       try {
-        // const body = { ...req.body };
-        User.findOneAndUpdate(user, { $set: req.body }, { upsert: true }).then(
+        // const result = await User.findOneAndUpdate(
+        //   {_id: user},
+        //   { $set: req.body },
+        //   { returnOriginal: false }
+        // );
+
+        // // const body = { ...req.body };
+        User.findOneAndUpdate({_id: user}, { $set: req.body }, { upsert: true },{ returnOriginal: false }).then(
           (data, err) => {
             if (err)
               res.status(StatusCodes.NOT_MODIFIED).json({
@@ -853,11 +859,12 @@ const update = async (req, res) => {
                 cause: err,
               });
             else {
+
+              const {id} =data
               res.status(StatusCodes.OK).json({
-                message: "User Update Successfully",
+                message: "Profile is  Update Successfully",
                 status: ReasonPhrases.OK,
                 statusCode: StatusCodes.OK,
-                data: data,
               });
             }
           }
@@ -882,7 +889,6 @@ const update = async (req, res) => {
       message: error.message,
       statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       status: ReasonPhrases.INTERNAL_SERVER_ERROR,
-      cause: error,
     });
   }
 };

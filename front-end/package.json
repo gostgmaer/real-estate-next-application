@@ -25,6 +25,7 @@
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
     "nextjs-progressbar": "^0.0.16",
+    "nextjs-toploader": "^1.6.4",
     "preline": "^2.0.3",
     "qs": "^6.11.2",
     "react": "^18",

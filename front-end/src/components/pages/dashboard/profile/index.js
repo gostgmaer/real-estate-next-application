@@ -1,4 +1,5 @@
 // pages/profile.js
+import ImageUpload from "@/components/global/fields/ImageUpload";
 import { get, patch } from "@/lib/helper/network";
 import { notifySuccess, notifyerror } from "@/lib/notify/notice";
 import React, { useEffect, useState } from "react";
@@ -7,7 +8,7 @@ const Profile = ({ props }) => {
   const [user, setUser] = useState(props.data.result);
   const [editMode, setEditMode] = useState(false);
   const [editedUser, setEditedUser] = useState(props.data.result);
-
+  const [file, setFile] = useState(props.data.result.profilePicture);
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -19,11 +20,11 @@ const Profile = ({ props }) => {
   };
 
   const handleSaveClick = async () => {
+    console.log(user);
     const body = {
       firstName: editedUser.firstName,
       lastName: editedUser.lastName,
-      contactNumber: editedUser.contactNumber,
-      profilePicture: editedUser.profilePicture,
+      profilePicture: file,
       phoneNumber: editedUser.phoneNumber,
       dateOfBirth: editedUser.dateOfBirth,
     };
@@ -61,16 +62,40 @@ const Profile = ({ props }) => {
           >
             Cancel
           </button>
-        ):   <button
-        onClick={handleEditClick}
-        className="bg-blue-500 text-white  px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-      >
-        Edit profile
-      </button>}
+        ) : (
+          <button
+            onClick={handleEditClick}
+            className="bg-blue-500 text-white  px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+          >
+            Edit profile
+          </button>
+        )}
       </div>
 
       <div className=" mx-auto mt-8 p-5 bg-gray-50 grid rounded-lg">
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
+          <div className="col-span-full">
+            <label
+              className={`text-sm font-medium text-gray-700 mb-2 ${
+                editMode ? "block" : "flex w-full items-center gap-5"
+              }`}
+            >
+              Email Address:
+              <input
+                type="text"
+                name="email"
+                value={editedUser?.email}
+                onChange={handleInputChange}
+                className={` ${
+                  editMode
+                    ? "w-full mt-1 p-2 border rounded-md"
+                    : "bg-transparent border-none "
+                }`}
+                disabled={true}
+              />
+            </label>
+          </div>
+
           <div className="sm:col-span-1">
             <label
               className={`text-sm font-medium text-gray-700 mb-2 ${
@@ -92,6 +117,95 @@ const Profile = ({ props }) => {
               />
             </label>
           </div>
+          <div className="sm:col-span-1">
+            <label
+              className={`text-sm font-medium text-gray-700 mb-2 ${
+                editMode ? "block" : "flex w-full items-center gap-5"
+              }`}
+            >
+              Last Name:
+              <input
+                type="text"
+                name="lastName"
+                value={editedUser?.lastName}
+                onChange={handleInputChange}
+                className={` ${
+                  editMode
+                    ? "w-full mt-1 p-2 border rounded-md"
+                    : "bg-transparent border-none "
+                }`}
+                disabled={!editMode}
+              />
+            </label>
+          </div>
+          <div className="sm:col-span-1">
+            <label
+              className={`text-sm font-medium text-gray-700 mb-2 ${
+                editMode ? "block" : "flex w-full items-center gap-5"
+              }`}
+            >
+              Date fo Birth:
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={editedUser?.dateOfBirth}
+                onChange={handleInputChange}
+                className={` ${
+                  editMode
+                    ? "w-full mt-1 p-2 border rounded-md"
+                    : "bg-transparent border-none "
+                }`}
+                disabled={!editMode}
+              />
+            </label>
+          </div>
+          <div className="sm:col-span-1">
+            <label
+              className={`text-sm font-medium text-gray-700 mb-2 ${
+                editMode ? "block" : "flex w-full items-center gap-5"
+              }`}
+            >
+              Phone Number:
+              <input
+                type="text"
+                name="phoneNumber"
+                value={editedUser?.phoneNumber}
+                placeholder="+910000000000"
+                onChange={handleInputChange}
+                className={` ${
+                  editMode
+                    ? "w-full mt-1 p-2 border rounded-md"
+                    : "bg-transparent border-none "
+                }`}
+                disabled={!editMode}
+              />
+            </label>
+          </div>
+          <div className="col-span-full">
+            <label
+              className={`text-sm font-medium text-gray-700 mb-2 ${
+                editMode ? "block" : "flex w-full items-center gap-5"
+              }`}
+            >
+              {!editMode && editedUser?.profilePicture && (
+                <div className=" flex flex-col gap-5">
+                  <span>Profile Image</span>
+                  <img
+                    src={user.profilePicture}
+                    alt={user.firstName}
+                    className=" w-40 h-40 rounded-md"
+                  />
+                </div>
+              )}
+              {editMode && (
+                <ImageUpload
+                  imagePreview={file}
+                  setImagePreview={setFile}
+                  label={"Profile Picture"}
+                />
+              )}
+            </label>
+          </div>
         </div>
 
         <div className="col-span-full  w-2/6 mx-auto mt-20">
@@ -103,7 +217,7 @@ const Profile = ({ props }) => {
             >
               Save Profile
             </button>
-          ) }
+          )}
         </div>
       </div>
     </div>

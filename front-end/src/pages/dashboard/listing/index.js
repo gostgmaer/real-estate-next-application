@@ -14,9 +14,11 @@ import { serverMethod } from "@/lib/helper/network";
 import { appId, propertyContainer } from "@/setting";
 
 import React from "react";
+import { useAxios } from "@/lib/helper/network/interceptors";
 var Url = require("url-parse");
 
 const Index = (props) => {
+  const [spinner]= useAxios()
 
 
 
@@ -43,6 +45,7 @@ const Index = (props) => {
           </div>
         </div>
       </div>
+      {spinner}
     </DashboardLayout>
   );
 };

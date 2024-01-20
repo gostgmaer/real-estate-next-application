@@ -2,12 +2,16 @@ import { PropertyForm } from "@/components/global/forms/addproperty";
 import Layout from "@/components/global/layout";
 import DashboardLayout from "@/components/pages/dashboard/blocks/DashboardLayout";
 import { serverMethod } from "@/lib/helper/network";
+import { useAxios } from "@/lib/helper/network/interceptors";
 import { appId, propertyContainer } from "@/setting";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
 const Index = (props) => {
+  const [spinner]= useAxios()
+
+
   return (
     <DashboardLayout>
       <Head>
@@ -31,6 +35,7 @@ const Index = (props) => {
           </div>
         </div>
       </div>
+      {spinner}
     </DashboardLayout>
   );
 };
