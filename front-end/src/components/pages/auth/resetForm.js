@@ -1,5 +1,6 @@
 import PasswordField from "@/components/global/fields/PasswordField";
 import { post } from "@/lib/helper/network";
+import { notifySuccess } from "@/lib/notify/notice";
 import { resetPasswordValidation } from "@/lib/validation";
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -16,10 +17,11 @@ const ResetForm = () => {
   const handleSubmit = async (values) => {
     try {
       const reset = await post(
-        `/user/auth/reset-password/${param.getAll("token")[0]}`,
+        `/authentication/user/reset-password/${param.getAll("token")[0]}`,
         { password: values.password }
       );
       if (reset.status == "OK") {
+        notifySuccess(reset.message,5000)
         router.push("/auth/login");
       }
     } catch (error) {

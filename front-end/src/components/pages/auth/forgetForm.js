@@ -1,6 +1,5 @@
-
 import { post } from "@/lib/helper/network";
-import { notifyerror } from "@/lib/notify/notice";
+import { notifySuccess, notifyerror } from "@/lib/notify/notice";
 import { forgetPasswordValidation } from "@/lib/validation";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
@@ -8,16 +7,22 @@ import { useRouter } from "next/navigation";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 const ForgetForm = () => {
-
   const router = useRouter();
 
   const handleSubmit = async (values) => {
     try {
-      const res = await post("/user/auth/forget-password", values);
+      const res = await post("/authentication/user/forget-password", values);
+      if (res.statusCode != 200) {
+        notifyerror(res.message, 5000);
+      } else {
+        notifySuccess(res.message, 5000);
+      }
+
       return res;
     } catch (error) {
+      console.log(error);
       const myErr = error?.message;
-  notifyerror(myErr,2000)
+      notifyerror(error?.message, 5000);
     }
   };
 

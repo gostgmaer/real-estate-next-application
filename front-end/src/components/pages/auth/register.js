@@ -1,10 +1,12 @@
 import PasswordField from "@/components/global/fields/PasswordField";
+import Input from "@/components/global/fields/input";
 import { post } from "@/lib/helper/network";
 import { notifyerror } from "@/lib/notify/notice";
 import { registerValidationSchema } from "@/lib/validation";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 import { FaArrowRight } from "react-icons/fa";
 
 const RegisterForm = () => {
@@ -12,7 +14,7 @@ const RegisterForm = () => {
   const handleSubmit = async (values) => {
     try {
       const res = await post("/authentication/user/register", values);
-      if (res.status="OK") {
+      if ((res.status = "OK")) {
         router.push("/auth/signin");
       }
     } catch (error) {
@@ -123,7 +125,24 @@ const RegisterForm = () => {
           )}
         </div>
         <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
-          <label className="block ">
+          <Input
+            label={"Confirm password"}
+            type={"password"}
+            additionalAttrs={{
+              ...formik.getFieldProps("confirmPassword"),
+              placeholder: "confirmPassword",
+            }}
+            classes={undefined}
+            icon={undefined}
+            id={"confirmPassword"}
+          />
+          {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+            <div className="text-red-500 text-sm">
+              {formik.errors.confirmPassword}
+            </div>
+          )}
+
+          {/* <label className="block ">
             <span className="rizzui-password-label block text-sm mb-1.5 ">
               Confirm Password
             </span>
@@ -138,7 +157,7 @@ const RegisterForm = () => {
             <div className="text-red-500 text-sm">
               {formik.errors.confirmPassword}
             </div>
-          )}
+          )} */}
         </div>
         <div className="col-span-2 flex items-start ">
           <div className="rizzui-checkbox-root flex flex-col [&amp;>label>span]:font-medium [&amp;>label]:items-start">
