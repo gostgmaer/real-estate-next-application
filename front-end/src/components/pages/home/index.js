@@ -21,7 +21,7 @@ export default function Index({ data }) {
     setSelectedItemId(id);
   };
 
-  console.log(data);
+
 
   return (
     <div className="w-full">

@@ -24,7 +24,7 @@ export const SignUpForm = ({ props }) => {
     validationSchema: registerValidationSchema,
     onSubmit: (values) => {
       console.log(values);
-      handleSubmit();
+      handleSubmit(values);
     },
   });
   const handleSubmit = async (values) => {
