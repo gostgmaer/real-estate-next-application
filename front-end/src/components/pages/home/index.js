@@ -14,12 +14,14 @@ import { Propertieslist, PropertyListSlider } from "@/components/global/blocks/L
 export default function Index({ data }) {
   SwiperCore.use([Navigation, Pagination]);
 
-  console.log(data);
+
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   const handleRadioChange = (id) => {
     setSelectedItemId(id);
   };
+
+  console.log(data);
 
   return (
     <div className="w-full">
@@ -184,10 +186,10 @@ export default function Index({ data }) {
         </div>
       </div>
       <div className="max-w-full feature-properties p-5">
-        <PropertyListSlider data={{ title: "New Items",data:data.data.result }} />
+        <PropertyListSlider data={{ title: "New Items",data:data.newItems.result }} />
       </div>
       <div className="max-w-full feature-properties p-5">
-        <Propertieslist data={{title:"New Sale Items",list:data.data.result}}  />
+        <Propertieslist data={{title:"Sale Items",list:data.data.result}}  />
       </div>
       <div className=" max-w-full feature-properties p-5 mb-10">
         <div className="flex flex-col items-center justify-center gap-5 py-5 max-w-7xl m-auto  flex-wrap  ">

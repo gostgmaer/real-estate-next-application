@@ -48,15 +48,15 @@ export const SingleContainer = ({ data }) => {
       <section className="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[calc(100vh-80px-130px)] max-w-7xl m-auto py-5 pt-10">
         <div className="col-span-full lg:col-span-1 flex items-center h-full p-5">
           {/* <SingleImageSlider /> */}
-          <Slider data={data.result.images} />
+          <Slider data={data.data.result.images} />
         </div>
         <div className="col-span-full lg:col-span-1 flex items-center">
-          <Details data={data.result} />
+          <Details data={data.data.result} />
         </div>
       </section>
-      <Elements data={data.result} />
-      <MapContainer data={data.result} />
-      {/* {pathname?.includes('dashboard')?"": <SimilarProperty data={data} />} */}
+      <Elements data={data.data.result} />
+      <MapContainer data={data.data.result} />
+      {pathname?.includes('dashboard') && data.relative ?"": <SimilarProperty data={data.relative} />}
     </div>
   );
 };
@@ -163,7 +163,7 @@ const SimilarProperty = ({ data }) => {
   return (
     <div className="mt-10">
       {/* <PropertyListSlider data={{ title: "Similar Property" }} /> */}
-      <Propertieslist data={{ title: "Similar Property" }} />
+      <Propertieslist data={{ title: "Similar Property",list:data.result }} />
     </div>
   );
 };

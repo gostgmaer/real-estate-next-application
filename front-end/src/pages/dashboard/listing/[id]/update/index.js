@@ -27,7 +27,7 @@ const Index = (props) => {
             </Link>
           </div>
           <div className=" dark:bg-gray-700">
-            <PropertyForm props={props.data} initialValues={props.data.result} />
+            <PropertyForm props={props.data} initialValues={{...props.data.result}} />
           </div>
         </div>
       </div>

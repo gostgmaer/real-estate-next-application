@@ -9,7 +9,7 @@ const Index = (props) => {
   return (
     <Layout>
       <div>
-        <SingleContainer data={props.data} />
+        <SingleContainer data={props} />
       </div>
     </Layout>
   );
@@ -18,21 +18,49 @@ const Index = (props) => {
 export default Index;
 
 export const getServerSideProps = async (ctx) => {
-  console.log(ctx);
-
-  const {id}= ctx.params
+  const { id } = ctx.params;
   const params = {
     method: "get",
     header: {},
   };
-  const result = await serverMethod(
-    `/realstate/record/${id}`,
-    params
-  );
+  const result = await serverMethod(`/realstate/record/${id}`, params);
+  if (result.status === "OK") {
+    const relativeparams = {
+      method: "get",
+      header: {},
+      query: {
+        filter: JSON.stringify({
+          // bedrooms: result.result.bedrooms,
+          "location.state": result.result.location.state,
+        }),
+      },
+    };
+    const Currrelative = await serverMethod(
+      `/realstate/record`,
+      relativeparams
+    );
+    var relative = {};
 
-  return {
-    props: {
-      data: result,
-    },
-  };
+    if (Currrelative.status == "OK") {
+      relative = {
+        ...Currrelative,
+        result: Currrelative.result.filter(
+          (item) => item._id != result.result._id
+        ),
+      };
+    }
+
+    return {
+      props: {
+        data: result,
+        relative,
+      },
+    };
+  } else {
+    return {
+      props: {
+        data: result,
+      },
+    };
+  }
 };
