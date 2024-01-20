@@ -3,9 +3,10 @@ require("dotenv").config();
 const connectDB = require("./src/db/connect");
 const { dbUrl, serverPort } = require("./src/config/setting");
 var cors = require("cors");
-const realStateRoute = require("./src/routes/realState");
+
 const authRoute = require("./src/routes/auth");
 const userRouter = require("./src/routes/user");
+const resumeRoute = require("./src/routes/resume");
 
 const app = express();
 app.use(cors());
@@ -20,7 +21,7 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/v1", userRouter);
-app.use("/api/v1", realStateRoute);
+app.use("/api/v1", resumeRoute);
 app.use("/api/v1", authRoute);
 
 const port = serverPort || 5000;

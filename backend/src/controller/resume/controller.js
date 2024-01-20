@@ -11,7 +11,7 @@ const {
   createProjectionFromArray,
   FilterOptions,
 } = require("../../utils/service");
-const Property = require("../../models/listing");
+const Resume = require("../../models/resume");
 
 const getData = async (req, res) => {
   try {
@@ -21,10 +21,10 @@ const getData = async (req, res) => {
     let query = { ...filterData.query };
     let projection = { projection: filterData.arrayOfValues };
 
-    const objects = await Property.find(query).sort(filterData.options.sort)
+    const objects = await Resume.find(query).sort(filterData.options.sort)
       .skip(filterData.options.skip)
       .limit(parseInt(filterData.options.limit)).exec()
-    const totalCount = await Property.countDocuments(query);
+    const totalCount = await Resume.countDocuments(query);
 
     res.status(StatusCodes.OK).json({
       result: objects,
@@ -55,7 +55,7 @@ const getSingleRecord = async (req, res) => {
       });
     }
 
-    const object = await Property.findById(objectId);
+    const object = await Resume.findById(objectId);
     if (!object) {
       res.status(StatusCodes.NOT_FOUND).json({
         result: object,
@@ -82,7 +82,7 @@ const getSingleRecord = async (req, res) => {
 };
 const create = async (req, res) => {
   try {
-    const result = await Property.create(req.body);
+    const result = await Resume.create(req.body);
     res.status(StatusCodes.CREATED).json({
       message: "Record Created Successfully!",
       status: ReasonPhrases.CREATED,
@@ -111,7 +111,7 @@ const remove = async (req, res) => {
       });
     }
     const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await Property.findOneAndUpdate(
+    const object = await Resume.findOneAndUpdate(
       { _id: ID },
       { $set: { ...req.body, status: "INACTIVE" } },
       { returnOriginal: false }
@@ -152,7 +152,7 @@ const removeMany = async (req, res) => {
       });
     }
     const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await Property.bulkWrite(
+    const object = await Resume.bulkWrite(
       { _id: ID },
       { $set: { ...req.body, status: "INACTIVE" } },
       { returnOriginal: false }
@@ -194,7 +194,7 @@ const update = async (req, res) => {
     const ID = new mongoose.Types.ObjectId(objectId);
     const objectToUpdate = req.body;
 
-    const result = await Property.findOneAndUpdate(
+    const result = await Resume.findOneAndUpdate(
       { _id: ID },
       { $set: objectToUpdate },
       { returnOriginal: false }
