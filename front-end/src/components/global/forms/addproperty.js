@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { propertySchema } from "@/lib/validation";
@@ -23,7 +24,6 @@ export const PropertyForm = ({ props, initialValues }) => {
   const params = useParams();
   const [file, setFile] = useState([]);
   const [hostimg, setHostimg] = useState(undefined);
-
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -55,6 +55,12 @@ export const PropertyForm = ({ props, initialValues }) => {
       type: "Vacation",
       attributes: ["Cabin", "Beach House", "Mountain Retreat"],
     },
+  ];
+
+  const furnishedoptions = [
+    { value: "1", label: "Furnished" },
+    { value: "2", label: "Semi-Furnished" },
+    { value: "3", label: "Not Furnished" },
   ];
 
   const handleSubmit = (second) => {
@@ -153,24 +159,24 @@ export const PropertyForm = ({ props, initialValues }) => {
             )}
           </div>
           <div className="sm:col-span-1">
-            <Input
-              label={"price_per_night"}
-              type={"number"}
+            <SelectField
+              options={furnishedoptions}
+              id={"is_furnished"}
+              label={"Is Furnished"}
               additionalAttrs={{
-                ...formik.getFieldProps("price_per_night"),
-                placeholder: "price_per_night",
+                ...formik.getFieldProps("is_furnished"),
+                placeholder: "Slect",
               }}
-              classes={undefined}
-              icon={<FaRupeeSign />}
-              id={"price_per_night"}
+              placeholder={"All"}
+              optionkeys={{ key: "value", value: "label" }}
             />
-            {formik.errors.price_per_night &&
-              formik.touched.price_per_night && (
-                <div className="text-red-500 text-sm">
-                  {formik.errors.price_per_night}
-                </div>
-              )}
+            {formik.errors.is_furnished && formik.touched.is_furnished && (
+              <div className="text-red-500 text-sm">
+                {formik.errors.is_furnished}
+              </div>
+            )}
           </div>
+       
           <div className="sm:col-span-1">
             <Input
               label={"bedrooms"}
@@ -245,6 +251,49 @@ export const PropertyForm = ({ props, initialValues }) => {
                 </div>
               )}
           </div>
+         
+          <div className=" sm:col-span-1">
+            <div className="flex flex-col w-full h-full items-center justify-end">
+              <label className="flex w-full items-center gap-5">
+                <span className="  text-sm capitalize font-semibold  mb-1.5 w-max">
+                  Parking Space:
+                </span>
+                <span
+                  className={`flex items-center peer transition duration-200  rounded-md bg-transparent focus:ring-[0.6px] `}
+                >
+                  <input
+                    className={` rounded leading-tight focus:outline-none  border px-3.5 h-10 
+                       `}
+                    type="checkbox"
+                    name="parking"
+                    {...formik.getFieldProps("parking")}
+                    id={"parking"}
+                  />
+                </span>
+              </label>
+            </div>
+          </div>
+          <div className=" sm:col-span-1">
+            <div className="flex flex-col w-full h-full items-center justify-end">
+              <label className="flex w-full items-center gap-5">
+                <span className="  text-sm capitalize font-semibold  mb-1.5 w-max">
+                  is Featured Items:
+                </span>
+                <span
+                  className={`flex items-center peer transition duration-200  rounded-md bg-transparent focus:ring-[0.6px] `}
+                >
+                  <input
+                    className={` rounded leading-tight focus:outline-none  border px-3.5 h-10 
+                       `}
+                    type="checkbox"
+                    name="is_featured"
+                    {...formik.getFieldProps("is_featured")}
+                    id={"is_featured"}
+                  />
+                </span>
+              </label>
+            </div>
+          </div>
           <div className="col-span-full">
             <MultiImageUploadr
               selectedFiles={file}
@@ -274,6 +323,53 @@ export const PropertyForm = ({ props, initialValues }) => {
             )}
           </div>
         </div>
+
+        <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
+          <h2 className="col-span-full text-2xl font-semibold mb-2">
+            Price 
+          </h2>
+          <div className="sm:col-span-1">
+            <Input
+              label={"Current Price"}
+              type={"number"}
+              additionalAttrs={{
+                ...formik.getFieldProps("price_per_night"),
+                placeholder: "price_per_night",
+              }}
+              classes={undefined}
+              icon={<FaRupeeSign />}
+              id={"price_per_night"}
+            />
+            {formik.errors.price_per_night &&
+              formik.touched.price_per_night && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.price_per_night}
+                </div>
+              )}
+          </div>
+
+          <div className="sm:col-span-1">
+            <Input
+              label={"Sale Price"}
+              type={"number"}
+              additionalAttrs={{
+                ...formik.getFieldProps("sale_price"),
+                placeholder: "Sale Price",
+              }}
+              classes={undefined}
+              icon={<FaRupeeSign />}
+              id={"sale_price"}
+            />
+            {formik.errors.sale_price &&
+              formik.touched.sale_price && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.sale_price}
+                </div>
+              )}
+          </div>
+
+        </div>
+
         <div className="  w-5/6 mx-auto mt-8 grid  gap-3 sm:grid-cols-2 col-span-full">
           <h2 className="col-span-full text-2xl font-semibold mb-2">
             Availability

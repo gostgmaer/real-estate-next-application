@@ -53,6 +53,8 @@ const Index = () => {
                 amenities: [],
                 capacity: 0,
                 bedrooms: 0,
+                sale_price:0,
+                is_featured:false,
                 bathrooms: 0,
                 price_per_night: 0,
                 currency: "",
