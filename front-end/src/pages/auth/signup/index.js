@@ -13,8 +13,8 @@ const index = (props) => {
     <Layout>
       <Head>
         <title>{props.title}</title>
-        <meta name="description" content="Your Real State Website Description" />
-        <meta name="keywords" content="Real State, online shopping, login" />
+        <meta name="description" content="Your real estate Website Description" />
+        <meta name="keywords" content="real estate, online shopping, login" />
         <meta name="author" content="Kishor Sarkar" />
       </Head>
       <div className="flex w-full flex-col justify-center px-5">
@@ -88,11 +88,11 @@ export async function getServerSideProps(context) {
   //   }
   // } else {
   //   return {
-  //     props: { title: "Real State Signup" }
+  //     props: { title: "real estate Signup" }
   //   }
   // }
 
   return {
-    props: { title: "Real State Signup" }
+    props: { title: "real estate Signup" }
   }
 }

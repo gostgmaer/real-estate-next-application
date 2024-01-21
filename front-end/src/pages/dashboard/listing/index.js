@@ -64,7 +64,7 @@ export const getServerSideProps = async (ctx) => {
     query: { ...query},
   };
   const result = await serverMethod(
-    `/realstate/record`,
+    `/realestate/record`,
     params
   );
 

@@ -23,7 +23,7 @@ export const getServerSideProps = async (ctx) => {
     method: "get",
     header: {},
   };
-  const result = await serverMethod(`/realstate/record/${id}`, params);
+  const result = await serverMethod(`/realestate/record/${id}`, params);
   if (result.status === "OK") {
     const relativeparams = {
       method: "get",
@@ -36,7 +36,7 @@ export const getServerSideProps = async (ctx) => {
       },
     };
     const Currrelative = await serverMethod(
-      `/realstate/record`,
+      `/realestate/record`,
       relativeparams
     );
     var relative = {};

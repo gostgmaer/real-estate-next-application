@@ -27,7 +27,6 @@ export const PropertyForm = ({ props, initialValues }) => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: propertySchema,
     onSubmit: (values) => {
       console.log(values);
       handleSubmit();
@@ -76,7 +75,7 @@ export const PropertyForm = ({ props, initialValues }) => {
   const handleUpdate = async (values, id) => {
     console.log(id, params);
     const body = generateBody(values);
-    const request = await patch(`/realstate/record`, body, id);
+    const request = await patch(`/realestate/record`, body, id);
     if (request.status === "OK") {
       notifyinfo(request.message, 5000);
     }
@@ -84,7 +83,7 @@ export const PropertyForm = ({ props, initialValues }) => {
 
   const handleSave = async (values) => {
     const body = generateBody(values);
-    const request = await post(`/realstate/record`, body);
+    const request = await post(`/realestate/record`, body);
     if (request.status === "Created") {
       notifySuccess(request.message, 5000);
     }

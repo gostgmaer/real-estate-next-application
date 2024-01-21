@@ -1,5 +1,5 @@
 const express = require("express");
-const realStateRoute = express.Router();
+const realestateRoute = express.Router();
 const {
   create,
   getData,
@@ -7,15 +7,15 @@ const {
   remove,
   removeMany,
   update,
-} = require("../controller/realstate/controller");
+} = require("../controller/realestate/controller");
 const createMiddleWare = require("../middleware/createMiddleWare");
 const userMiddleWare = require("../middleware/userAccess");
 
-realStateRoute.route("/realstate/record").post(createMiddleWare, create);
-realStateRoute.route("/realstate/record").get(getData);
-realStateRoute.route("/realstate/record/:id").get(getSingleRecord);
-realStateRoute.route("/realstate/record/:id").patch(update);
-realStateRoute.route("/realstate/record/:id").put(update);
-realStateRoute.route("/realstate/record/:id").delete(remove);
-realStateRoute.route("/realstate/record/bulk").delete(removeMany);
-module.exports = realStateRoute;
+realestateRoute.route("/realestate/record").post(createMiddleWare, create);
+realestateRoute.route("/realestate/record").get(getData);
+realestateRoute.route("/realestate/record/:id").get(getSingleRecord);
+realestateRoute.route("/realestate/record/:id").patch(update);
+realestateRoute.route("/realestate/record/:id").put(update);
+realestateRoute.route("/realestate/record/:id").delete(remove);
+realestateRoute.route("/realestate/record/bulk").delete(removeMany);
+module.exports = realestateRoute;
