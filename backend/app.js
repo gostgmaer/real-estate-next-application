@@ -3,7 +3,7 @@ require("dotenv").config();
 const connectDB = require("./src/db/connect");
 const { dbUrl, serverPort } = require("./src/config/setting");
 var cors = require("cors");
-const realStateRoute = require("./src/routes/realState");
+const realestateRoute = require("./src/routes/realestate");
 const authRoute = require("./src/routes/auth");
 const userRouter = require("./src/routes/user");
 
@@ -20,7 +20,7 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/v1", userRouter);
-app.use("/api/v1", realStateRoute);
+app.use("/api/v1", realestateRoute);
 app.use("/api/v1", authRoute);
 
 const port = serverPort || 5000;

@@ -1,5 +1,5 @@
 {
-  "name": "real-state-backend-service",
+  "name": "real-estate-backend-service",
   "version": "1.0.0",
   "description": "this backend service is only going to use for handling crud operation of single or multirecord using mongodb for now",
   "main": "app.js",

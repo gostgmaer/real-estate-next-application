@@ -475,7 +475,7 @@ export const setClientCookie = (name, value, timestamp) => {
 
 //   const postRecord = async (data) => {
 //     try {
-//       const response = await post("/realstate/record", data);
+//       const response = await post("/realestate/record", data);
 //       console.log("POST request successful!");
 //       // console.log("Response:", response.data);
 //     } catch (error) {

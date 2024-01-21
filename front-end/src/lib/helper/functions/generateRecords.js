@@ -9,7 +9,7 @@
 // const axios = require("axios");
 
 // const apiUrl =
-//   "https://real-state-next-application-backend.vercel.app/api/v1/realstate/record";
+//   "https://real-estate-next-application-backend.vercel.app/api/v1/realestate/record";
 
 // // Create a data object with the length of the array
 // const data = {

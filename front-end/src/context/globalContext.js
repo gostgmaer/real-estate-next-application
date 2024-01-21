@@ -70,7 +70,7 @@ const AppProvider = ({ children }) => {
       filter: JSON.stringify(query.filter),
     };
     const request = await get(
-      `/realstate/record`,
+      `/realestate/record`,
       params
     );
     setSearchData(request)

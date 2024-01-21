@@ -8,7 +8,7 @@ export default function Home(props) {
   return (
     <Layout>
       <Head>
-        <title>Real State Web Application</title>
+        <title>real estate Web Application</title>
       </Head>
       <Index data={props} />
     </Layout>
@@ -61,10 +61,10 @@ thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       }),
     },
   };
-  const newItems = await serverMethod(`/realstate/record`, newparams);
+  const newItems = await serverMethod(`/realestate/record`, newparams);
   const saleItems = {};
-  const featured = await serverMethod(`/realstate/record`, featuredparams);
-  const result = await serverMethod(`/realstate/record`, params);
+  const featured = await serverMethod(`/realestate/record`, featuredparams);
+  const result = await serverMethod(`/realestate/record`, params);
 
   if (
     result?.data?.error ||
